@@ -108,7 +108,7 @@ class Form extends Webiny.Ui.View {
                     <Ui.View.Form>
                         <Ui.View.Header title="Demo Form" description="Demo form to demonstrate most of the input components Webiny offers">
                             <Ui.Link type="default" align="right" route="Demo.List">Back to list</Ui.Link>
-                            <Ui.Copy.Button copied="Stolen!" type="secondary" icon="icon-pencil" value="You just stole a record!"
+                            <Ui.Copy.Button onSuccessMessage="Stolen!" type="secondary" icon="icon-pencil" value="You just stole a record!"
                                             label="Steal it..." align="right"/>
                         </Ui.View.Header>
                         <Ui.View.Body noPadding>
