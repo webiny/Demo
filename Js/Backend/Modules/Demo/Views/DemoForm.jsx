@@ -254,6 +254,21 @@ class Form extends Webiny.Ui.View {
                                         </Ui.Grid.Col>
                                     </Ui.Grid.Row>
                                 </Ui.Tabs.Tab>
+                                <Ui.Tabs.Tab label="Upload components" icon="icon-picture-1">
+                                    <Ui.Files.ImageUploader
+                                        onUploadSuccess={image => console.log(image)}
+                                        cropper={{
+                                            title: 'Crop your image',
+                                            action: 'Upload image',
+                                            config: {
+                                                closeOnClick: false,
+                                                autoCropArea: 0.7,
+                                                guides: false,
+                                                strict: true,
+                                                mouseWheelZoom: false,
+                                                touchDragZoom: false
+                                            }}}/>
+                                </Ui.Tabs.Tab>
                             </Ui.Tabs.Tabs>
                         </Ui.View.Body>
                         <Ui.View.Footer>
