@@ -116,7 +116,7 @@ class Form extends Webiny.Ui.View {
                                 <Ui.Tabs.Tab label="Input components" icon="icon-gauge">
                                     <Ui.Grid.Row>
                                         <Ui.Grid.Col all={3}>
-                                            <Ui.Input label="Email" name="email" validate="required,email"/>
+                                            <Ui.Input label="Email" name="email" validate="required,email" tooltip="Your email address"/>
                                         </Ui.Grid.Col>
                                         <Ui.Grid.Col all={3}>
                                             <Ui.Select {...userGroupSelect} />
