@@ -14,8 +14,9 @@ class Module extends Webiny.Module {
         );
 
         this.registerRoutes(
-            new Webiny.Route('Demo.Form', '/demo/:id', Views.Form),
-            new Webiny.Route('Demo.List', '/demo', Views.List),
+            new Webiny.Route('Demo.Create', '/demo/create', Views.Form, 'Create New Record'),
+            new Webiny.Route('Demo.Form', '/demo/:id', Views.Form, 'Edit Record'),
+            new Webiny.Route('Demo.List', '/demo', Views.List, 'List Records'),
             new Webiny.Route('Demo.Settings', '/settings/demo', Views.Settings, 'Demo Settings')
         );
     }

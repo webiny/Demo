@@ -16,6 +16,36 @@ class List extends Webiny.Ui.View {
         return (
             <Ui.View.List>
                 <Ui.View.Header title="Demo List">
+                    <Ui.DownloadLink type="secondary" align="right" download={download => {
+                        const submit = filters => download('GET', '/entities/demo/records/report/summary', null, filters);
+                        return (
+                            <Ui.Modal.Dialog ui="exportModal">
+                                <Ui.Modal.Header title="Export records"/>
+                                <Ui.Modal.Body>
+                                    <Ui.Form.Container ui="exportModalForm" onSubmit={submit}>
+                                        {() => (
+                                            <Ui.Grid.Row>
+                                                <Ui.Grid.Col all={12}>
+                                                    <Ui.Select name="enabled" label="Filter by status" placeholder="All records" allowClear>
+                                                        <option value="true">Enabled</option>
+                                                        <option value="false">Disabled</option>
+                                                    </Ui.Select>
+                                                </Ui.Grid.Col>
+                                            </Ui.Grid.Row>
+                                        )}
+                                    </Ui.Form.Container>
+                                </Ui.Modal.Body>
+                                <Ui.Modal.Footer align="right">
+                                    <Ui.Button type="default" label="Cancel" onClick={this.ui('exportModal:hide')}/>
+                                    <Ui.Button type="primary" label="Export" onClick={this.ui('exportModalForm:submit')}/>
+                                </Ui.Modal.Footer>
+                            </Ui.Modal.Dialog>
+                        );
+                    }}>
+                        <Ui.Icon icon="icon-file-o"/>
+                        Export records
+                    </Ui.DownloadLink>
+                    <Ui.Link type="secondary" route="Demo.Create" align="right"><Ui.Icon icon="icon-plus-circled"/>Create record</Ui.Link>
                     <Ui.ClickSuccess message="Simple!" onClose={() => console.log("Me closed!")}>
                         <Ui.Button type="primary" label="ClickSuccess" align="right" onClick={() => {}}/>
                     </Ui.ClickSuccess>
@@ -64,16 +94,15 @@ class List extends Webiny.Ui.View {
                         <Ui.Tabs.Tab label="List with table">
                             <Ui.List.ApiContainer
                                 connectToRouter={true}
-                                api="/entities/core/users"
-                                query={{enabled:  true}}
+                                api="/entities/demo/records"
                                 sort="email"
-                                fields="id,enabled,firstName,lastName,email,createdOn"
+                                fields="id,enabled,name,email,createdOn,contacts,reports"
                                 searchFields="name,email">
                                 <Table.Table>
                                     <Table.Row>
                                         <Table.RowDetailsField/>
-                                        <Table.Field name="firstName" align="left" label="First Name" sort="firstName">
-                                            <Table.FieldInfo title="About first name">
+                                        <Table.Field name="name" align="left" label="Name" sort="name" route="Demo.Form">
+                                            <Table.FieldInfo title="About name">
                                                 <div className="table-responsive">
                                                     <table className="table table-simple">
                                                         <thead>
@@ -128,32 +157,66 @@ class List extends Webiny.Ui.View {
                                             <case value={true}>Enabled</case>
                                             <case value={false}>Disabled</case>
                                         </Table.CaseField>
+                                        <Table.ToggleField name="enabled" align="center" label="Status"/>
                                         <Table.Field name="createdOn" align="left" label="Created On" sort="createdOn"/>
                                         <Table.DateTimeField name="createdOn" align="left" label="Created On" sort="createdOn"/>
                                         <Table.TimeAgoField name="createdOn" align="left" label="Created On" sort="createdOn"/>
                                         <Table.Actions>
                                             <Table.EditAction route="Demo.Form"/>
+                                            <Ui.Dropdown.Header title="Reports"/>
+                                            <Table.Action label="Business Card" icon="icon-doc-text" download={(download, data) => {
+                                                download('GET', data.reports.businessCard);
+                                            }}/>
+                                            <Table.ModalAction label="Export contacts" icon="icon-external-link">
+                                                {(record, listActions, modalActions, download) => {
+                                                    const submit = model => download('GET', record.reports.contacts, null, model);
+                                                    return (
+                                                        <Ui.Modal.Dialog>
+                                                            <Ui.Modal.Header title={'Contacts for ' + record.name}/>
+                                                            <Ui.Modal.Body>
+                                                                <Ui.Form.Container ui="exportModal" onSubmit={submit}>
+                                                                    {model => (
+                                                                        <Ui.DateRange
+                                                                            name="range"
+                                                                            label="Filter contacts by date"
+                                                                            placeholder="Select a date range"
+                                                                            validate="required"/>
+                                                                    )}
+                                                                </Ui.Form.Container>
+                                                                <Ui.Alert type="info">
+                                                                    NOTE: this won't filter anything in the report, it's just here to show
+                                                                    you an example of how you would create a report configuration dialog in
+                                                                    your own app.<br/><br/>
+                                                                    Once you submit the form, see how the parameters are appended to URL.
+                                                                    It is up to you to handle the query parameters in you API methods and
+                                                                    pass them to report itself or process the data passed to the report.
+                                                                </Ui.Alert>
+                                                            </Ui.Modal.Body>
+                                                            <Ui.Modal.Footer align="right">
+                                                                <Ui.Button type="default" label="Cancel" onClick={modalActions.hide}/>
+                                                                <Ui.Button type="primary" label="Export" onClick={this.ui('exportModal:submit')}/>
+                                                            </Ui.Modal.Footer>
+                                                        </Ui.Modal.Dialog>
+                                                    );
+                                                }}
+                                            </Table.ModalAction>
                                             <Ui.Dropdown.Divider/>
                                             <Table.DeleteAction/>
                                         </Table.Actions>
                                     </Table.Row>
                                     <Table.RowDetails>
                                         {(data, rowDetails) => {
-                                            const detailsProps = {
-                                                api: '/entities/core/user-groups',
-                                                fields: 'id,name,tag'
-                                            };
                                             return (
-                                                <Ui.List.ApiContainer {...detailsProps}>
+                                                <Ui.List.StaticContainer data={data.contacts}>
                                                     <Ui.List.Loader/>
                                                     <Table.Table>
                                                         <Table.Row>
-                                                            <Table.Field name="id" label="ID"/>
-                                                            <Table.Field name="name" label="Name"/>
-                                                            <Table.Field name="tag" label="Tag"/>
+                                                            <Table.Field name="key" label="Key"/>
+                                                            <Table.Field name="value" label="Value"/>
+                                                            <Table.Field name="createdBy" label="User ID"/>
                                                         </Table.Row>
                                                     </Table.Table>
-                                                </Ui.List.ApiContainer>
+                                                </Ui.List.StaticContainer>
                                             );
                                         }}
                                     </Table.RowDetails>
@@ -178,11 +241,10 @@ class List extends Webiny.Ui.View {
                         </Ui.Tabs.Tab>
                         <Ui.Tabs.Tab label="Custom list view">
                             <Ui.List.ApiContainer
-                                api="/entities/core/users"
-                                query={{enabled:  true}}
+                                api="/entities/demo/records"
                                 perPage={3}
                                 sort="email"
-                                fields="id,enabled,firstName,lastName,email,createdOn"
+                                fields="id,enabled,name,email,createdOn"
                                 searchFields="name,email"
                                 layout={null}>
                                 {(data, meta, list) => {
@@ -216,7 +278,7 @@ class List extends Webiny.Ui.View {
                                                 {data.map(row => {
                                                     return (
                                                         <pre key={row.id}>
-                                                        <strong>{row.firstName}</strong> ({row.email})
+                                                        <strong>{row.name}</strong> ({row.email})
                                                         <Ui.ClickConfirm message="Delete this user?">
                                                             <Ui.Link onClick={() => list.recordDelete(row.id)}>
                                                                 <Ui.Icon icon="icon-cancel"/>

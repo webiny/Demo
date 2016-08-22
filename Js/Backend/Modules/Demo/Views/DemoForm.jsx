@@ -8,8 +8,8 @@ class Form extends Webiny.Ui.View {
     render() {
         const formProps = {
             ui: 'myForm',
-            api: '/entities/core/users',
-            fields: 'id,firstName,lastName,email,settings,enabled,avatar.id@avatar',
+            api: '/entities/demo/records',
+            fields: 'id,name,email,contacts,enabled,avatar.id@avatar,datetime,date,time,daterange,access,description,tags,icon',
             connectToRouter: true,
             onSubmitSuccess: 'Demo.List',
             onCancel: 'Demo.List'
@@ -63,7 +63,7 @@ class Form extends Webiny.Ui.View {
         };
 
         const settings = (
-            <Ui.Dynamic.Fieldset name="settings">
+            <Ui.Dynamic.Fieldset name="contacts">
                 <Ui.Dynamic.Row>
                     {function (record, index, actions) {
                         return (
@@ -116,14 +116,13 @@ class Form extends Webiny.Ui.View {
                                 <Ui.Tabs.Tab label="Input components" icon="icon-gauge">
                                     <Ui.Grid.Row>
                                         <Ui.Grid.Col all={3}>
-                                            <Ui.Input label="Email" name="email" validate="required,email" tooltip="Your email address"/>
+                                            <Ui.Input label="Name" name="name" validate="required,minLength:3"/>
                                         </Ui.Grid.Col>
                                         <Ui.Grid.Col all={3}>
-                                            <Ui.Select {...userGroupSelect} />
+                                            <Ui.Input label="Email" name="email" validate="required,email" tooltip="Your email address"/>
                                         </Ui.Grid.Col>
                                         <Ui.Grid.Col all={6}>
                                             <Ui.Search
-                                                validate="required"
                                                 name="avatar"
                                                 textAttr="name"
                                                 label="Find file"
@@ -137,19 +136,22 @@ class Form extends Webiny.Ui.View {
                                         </Ui.Grid.Col>
                                     </Ui.Grid.Row>
                                     <Ui.Grid.Row>
-                                        <Ui.Grid.Col all={4}>
+                                        <Ui.Grid.Col all={3}>
                                             <Ui.DateTime label="Date & Time" name="datetime" placeholder="Select date and time"/>
                                         </Ui.Grid.Col>
-                                        <Ui.Grid.Col all={4}>
+                                        <Ui.Grid.Col all={3}>
                                             <Ui.Date label="Date" name="date" placeholder="Select a date"/>
                                         </Ui.Grid.Col>
-                                        <Ui.Grid.Col all={4}>
+                                        <Ui.Grid.Col all={3}>
                                             <Ui.Time label="Time" name="time" placeholder="Select time"/>
+                                        </Ui.Grid.Col>
+                                        <Ui.Grid.Col all={3}>
+                                            <Ui.DateRange label="Date range" name="daterange"/>
                                         </Ui.Grid.Col>
                                     </Ui.Grid.Row>
                                     <Ui.Grid.Row>
                                         <Ui.Grid.Col all={4}>
-                                            <Ui.DateRange label="Date range" name="range"/>
+                                            <Ui.Select {...userGroupSelect} />
                                         </Ui.Grid.Col>
                                         <Ui.Grid.Col all={4}>
                                             <Ui.Select name="staticSelect" label="Static select" placeholder="Select an option">
@@ -161,6 +163,11 @@ class Form extends Webiny.Ui.View {
                                             </Ui.Select>
                                         </Ui.Grid.Col>
                                         <Ui.Grid.Col all={4}>
+                                            <Ui.Icon.Picker name="icon" tooltip="Put any tooltip text here..." label="Your icon" allowClear={true} placeholder="Select your icon"/>
+                                        </Ui.Grid.Col>
+                                    </Ui.Grid.Row>
+                                    <Ui.Grid.Row>
+                                        <Ui.Grid.Col all={12}>
                                             <Ui.Switch label="Enabled" name="enabled"/>
                                         </Ui.Grid.Col>
                                     </Ui.Grid.Row>
@@ -241,7 +248,7 @@ class Form extends Webiny.Ui.View {
                                     <Ui.Grid.Row>
                                         {/* RADIO */}
                                         <Ui.Grid.Col all={6}>
-                                            <Ui.RadioGroup label="Roles (static)" name="access" grid={12} validate="required">
+                                            <Ui.RadioGroup label="Roles (static)" name="access" grid={12}>
                                                 <option value="Admin">Admin</option>
                                                 <option value="Billing">Billing</option>
                                                 <option value="Crm">CRM</option>
