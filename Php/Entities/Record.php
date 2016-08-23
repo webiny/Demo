@@ -88,6 +88,6 @@ class Record extends AbstractEntity
             return new ReportsArchive($records, function ($record) {
                 return new BusinessCardReport($record);
             }, 'records.zip');
-        });Removed
+        });
     }
 }
