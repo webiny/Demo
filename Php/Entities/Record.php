@@ -51,7 +51,10 @@ class Record extends AbstractEntity
         $this->attr('contacts')->arr();
         $this->attr('tags')->arr();
         $this->attr('access')->char();
-        $this->attr('avatar')->smart(new FileAttribute());
+        $this->attr('avatar')->smart(new FileAttribute())->setDimensions([
+            'thumbnail' => [100, 100],
+            'wideThumbnail' => [300, 100],
+        ]);
         $this->attr('gallery')->smart(new FilesAttribute());
         $this->attr('gravatar')->dynamic(function () {
             return md5($this->email);

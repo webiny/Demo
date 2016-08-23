@@ -9,7 +9,7 @@ class Form extends Webiny.Ui.View {
         const formProps = {
             ui: 'myForm',
             api: '/entities/demo/records',
-            fields: 'id,name,email,contacts,enabled,avatar.id@avatar,datetime,date,time,daterange,access,description,tags,icon',
+            fields: 'id,name,email,contacts,enabled,avatar,datetime,date,time,daterange,access,description,tags,icon,gallery',
             connectToRouter: true,
             onSubmitSuccess: 'Demo.List',
             onCancel: 'Demo.List'
@@ -262,6 +262,8 @@ class Form extends Webiny.Ui.View {
                                     </Ui.Grid.Row>
                                 </Ui.Tabs.Tab>
                                 <Ui.Tabs.Tab label="Upload components" icon="icon-picture-1">
+                                    <Ui.Files.Image name="avatar"/>
+                                    <Ui.Files.Gallery name="gallery" confirmDelete/>
                                     <Ui.Files.ImageUploader
                                         onUploadSuccess={image => console.log(image)}
                                         cropper={{

@@ -167,39 +167,37 @@ class List extends Webiny.Ui.View {
                                             <Table.Action label="Business Card" icon="icon-doc-text" download={(download, data) => {
                                                 download('GET', data.reports.businessCard);
                                             }}/>
-                                            <Table.ModalAction label="Export contacts" icon="icon-external-link">
-                                                {(record, listActions, modalActions, download) => {
-                                                    const submit = model => download('GET', record.reports.contacts, null, model);
-                                                    return (
-                                                        <Ui.Modal.Dialog>
-                                                            <Ui.Modal.Header title={'Contacts for ' + record.name}/>
-                                                            <Ui.Modal.Body>
-                                                                <Ui.Form.Container ui="exportModal" onSubmit={submit}>
-                                                                    {model => (
-                                                                        <Ui.DateRange
-                                                                            name="range"
-                                                                            label="Filter contacts by date"
-                                                                            placeholder="Select a date range"
-                                                                            validate="required"/>
-                                                                    )}
-                                                                </Ui.Form.Container>
-                                                                <Ui.Alert type="info">
-                                                                    NOTE: this won't filter anything in the report, it's just here to show
-                                                                    you an example of how you would create a report configuration dialog in
-                                                                    your own app.<br/><br/>
-                                                                    Once you submit the form, see how the parameters are appended to URL.
-                                                                    It is up to you to handle the query parameters in you API methods and
-                                                                    pass them to report itself or process the data passed to the report.
-                                                                </Ui.Alert>
-                                                            </Ui.Modal.Body>
-                                                            <Ui.Modal.Footer align="right">
-                                                                <Ui.Button type="default" label="Cancel" onClick={modalActions.hide}/>
-                                                                <Ui.Button type="primary" label="Export" onClick={this.ui('exportModal:submit')}/>
-                                                            </Ui.Modal.Footer>
-                                                        </Ui.Modal.Dialog>
-                                                    );
-                                                }}
-                                            </Table.ModalAction>
+                                            <Table.Action label="Export contacts" icon="icon-external-link" download={(download, record) => {
+                                                const submit = model => download('GET', record.reports.contacts, null, model);
+                                                return (
+                                                    <Ui.Modal.Dialog ui="exportContactsModal">
+                                                        <Ui.Modal.Header title={'Contacts for ' + record.name}/>
+                                                        <Ui.Modal.Body>
+                                                            <Ui.Form.Container ui="exportModal" onSubmit={submit}>
+                                                                {model => (
+                                                                    <Ui.DateRange
+                                                                        name="range"
+                                                                        label="Filter contacts by date"
+                                                                        placeholder="Select a date range"
+                                                                        validate="required"/>
+                                                                )}
+                                                            </Ui.Form.Container>
+                                                            <Ui.Alert type="info">
+                                                                NOTE: this won't filter anything in the report, it's just here to show
+                                                                you an example of how you would create a report configuration dialog in
+                                                                your own app.<br/><br/>
+                                                                Once you submit the form, see how the parameters are appended to URL.
+                                                                It is up to you to handle the query parameters in you API methods and
+                                                                pass them to report itself or process the data passed to the report.
+                                                            </Ui.Alert>
+                                                        </Ui.Modal.Body>
+                                                        <Ui.Modal.Footer align="right">
+                                                            <Ui.Button type="default" label="Cancel" onClick={this.ui('exportContactsModal:hide')}/>
+                                                            <Ui.Button type="primary" label="Export" onClick={this.ui('exportModal:submit')}/>
+                                                        </Ui.Modal.Footer>
+                                                    </Ui.Modal.Dialog>
+                                                );
+                                            }}/>
                                             <Ui.Dropdown.Divider/>
                                             <Table.DeleteAction/>
                                         </Table.Actions>
@@ -224,6 +222,32 @@ class List extends Webiny.Ui.View {
                                 <Ui.List.Pagination/>
                                 <Ui.List.MultiActions>
                                     <Ui.List.MultiAction label="Log" onAction={this.log}/>
+                                    <Ui.List.MultiAction label="Export" allowEmpty download={(download, data) => {
+                                        const submit = filters => download('GET', '/entities/demo/records/report/summary', null, filters);
+                                        return (
+                                            <Ui.Modal.Dialog ui="exportModal">
+                                                <Ui.Modal.Header title="Export records"/>
+                                                <Ui.Modal.Body>
+                                                    <Ui.Form.Container ui="exportModalForm" onSubmit={submit}>
+                                                        {() => (
+                                                            <Ui.Grid.Row>
+                                                                <Ui.Grid.Col all={12}>
+                                                                    <Ui.Select name="enabled" label="Filter by status" placeholder="All records" allowClear>
+                                                                        <option value="true">Enabled</option>
+                                                                        <option value="false">Disabled</option>
+                                                                    </Ui.Select>
+                                                                </Ui.Grid.Col>
+                                                            </Ui.Grid.Row>
+                                                        )}
+                                                    </Ui.Form.Container>
+                                                </Ui.Modal.Body>
+                                                <Ui.Modal.Footer align="right">
+                                                    <Ui.Button type="default" label="Cancel" onClick={this.ui('exportModal:hide')}/>
+                                                    <Ui.Button type="primary" label="Export" onClick={this.ui('exportModalForm:submit')}/>
+                                                </Ui.Modal.Footer>
+                                            </Ui.Modal.Dialog>
+                                        );
+                                    }}/>
                                     <Ui.Dropdown.Divider/>
                                     <Ui.List.DeleteMultiAction>
                                         {rows => {
