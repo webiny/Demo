@@ -88,11 +88,6 @@ class Record extends AbstractEntity
             return new ReportsArchive($records, function ($record) {
                 return new BusinessCardReport($record);
             }, 'records.zip');
-        });
-
-        // TODO: this is just an idea for report registration using notification manager
-        /*$this->wService('NotificationManager')->report(__CLASS__, 'invoice', function(){
-            return new RecordsReport(...func_get_args());
-        });*/
+        });Removed
     }
 }
