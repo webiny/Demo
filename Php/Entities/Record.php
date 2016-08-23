@@ -3,6 +3,7 @@ namespace Apps\Demo\Php\Entities;
 
 use Apps\Core\Php\DevTools\Entity\Attributes\FileAttribute;
 use Apps\Core\Php\DevTools\Entity\Attributes\FilesAttribute;
+use Apps\Core\Php\DevTools\Reports\ReportsArchive;
 use Apps\Core\Php\DevTools\WebinyTrait;
 use Apps\Core\Php\DevTools\Entity\AbstractEntity;
 use Apps\Demo\Php\Reports\BusinessCardReport;
@@ -52,7 +53,7 @@ class Record extends AbstractEntity
         $this->attr('tags')->arr();
         $this->attr('access')->char();
         $this->attr('avatar')->smart(new FileAttribute())->setDimensions([
-            'thumbnail' => [100, 100],
+            'thumbnail'     => [100, 100],
             'wideThumbnail' => [300, 100],
         ]);
         $this->attr('gallery')->smart(new FilesAttribute());
@@ -81,9 +82,17 @@ class Record extends AbstractEntity
         });
 
         $this->api('POST', 'report/business-cards', function () {
-            $records = self::find($this->wRequest()->getRequestData()['ids']);
+            $query = ['id' => $this->wRequest()->getRequestData()['ids']];
+            $records = self::find($query);
 
-            return new RecordsReport($records);
+            return new ReportsArchive($records, function ($record) {
+                return new BusinessCardReport($record);
+            }, 'records.zip');
         });
+
+        // TODO: this is just an idea for report registration using notification manager
+        /*$this->wService('NotificationManager')->report(__CLASS__, 'invoice', function(){
+            return new RecordsReport(...func_get_args());
+        });*/
     }
 }
