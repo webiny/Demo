@@ -9,7 +9,7 @@ class Form extends Webiny.Ui.View {
         const formProps = {
             ui: 'myForm',
             api: '/entities/demo/records',
-            fields: 'id,name,email,contacts,enabled,avatar,datetime,date,time,daterange,access,description,tags,icon,gallery',
+            fields: 'id,name,email,contacts,enabled,avatar,datetime,date,time,daterange,access,description,tags,icon,gallery,html',
             connectToRouter: true,
             onSubmitSuccess: 'Demo.List',
             onCancel: 'Demo.List'
@@ -163,7 +163,8 @@ class Form extends Webiny.Ui.View {
                                             </Ui.Select>
                                         </Ui.Grid.Col>
                                         <Ui.Grid.Col all={4}>
-                                            <Ui.Icon.Picker name="icon" tooltip="Put any tooltip text here..." label="Your icon" allowClear={true} placeholder="Select your icon"/>
+                                            <Ui.Icon.Picker name="icon" tooltip="Put any tooltip text here..." label="Your icon"
+                                                            allowClear={true} placeholder="Select your icon"/>
                                         </Ui.Grid.Col>
                                     </Ui.Grid.Row>
                                     <Ui.Grid.Row>
@@ -277,6 +278,9 @@ class Form extends Webiny.Ui.View {
                                                 mouseWheelZoom: false,
                                                 touchDragZoom: false
                                             }}}/>
+                                </Ui.Tabs.Tab>
+                                <Ui.Tabs.Tab label="WYSIWYG" icon="fa-font">
+                                    <Ui.HtmlEditor name="html"/>
                                 </Ui.Tabs.Tab>
                             </Ui.Tabs.Tabs>
                         </Ui.View.Body>

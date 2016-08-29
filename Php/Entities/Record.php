@@ -1,8 +1,8 @@
 <?php
 namespace Apps\Demo\Php\Entities;
 
-use Apps\Core\Php\DevTools\Entity\Attributes\FileAttribute;
-use Apps\Core\Php\DevTools\Entity\Attributes\FilesAttribute;
+use Apps\Core\Php\DevTools\Entity\Attributes\ImageAttribute;
+use Apps\Core\Php\DevTools\Entity\Attributes\ImagesAttribute;
 use Apps\Core\Php\DevTools\Reports\ReportsArchive;
 use Apps\Core\Php\DevTools\WebinyTrait;
 use Apps\Core\Php\DevTools\Entity\AbstractEntity;
@@ -37,6 +37,7 @@ class Record extends AbstractEntity
 
         $this->attr('name')->char()->setValidators('required')->setToArrayDefault();
         $this->attr('description')->char();
+        $this->attr('html')->char();
         $this->attr('enabled')->boolean()->setDefaultValue(true);
         $this->attr('email')->char()->setValidators('required,email,unique')->onSet(function ($email) {
             return trim(strtolower($email));
@@ -52,11 +53,11 @@ class Record extends AbstractEntity
         $this->attr('contacts')->arr();
         $this->attr('tags')->arr();
         $this->attr('access')->char();
-        $this->attr('avatar')->smart(new FileAttribute())->setDimensions([
-            'thumbnail'     => [100, 100],
+        $this->attr('avatar')->smart(new ImageAttribute())->setDimensions([
+            'thumbnail'     => [200, 200],
             'wideThumbnail' => [300, 100],
-        ]);
-        $this->attr('gallery')->smart(new FilesAttribute());
+        ])->setStorage($this->wStorage('Demo'));
+        $this->attr('gallery')->smart(new ImagesAttribute())->setStorage($this->wStorage('Demo'))->setTags(['demo-gallery']);
         $this->attr('gravatar')->dynamic(function () {
             return md5($this->email);
         });

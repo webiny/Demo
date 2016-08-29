@@ -6,3 +6,16 @@ Description: The Demo app is a showcase of different view types and components t
 AuthorName: Webiny LTD
 AuthorLink: http://www.webiny.com
 AuthorEmail: info@webiny.com
+
+Storage:
+    Services:
+        Demo:
+            Class: \Webiny\Component\Storage\Storage
+            Arguments:
+                Driver:
+                    Object: \Webiny\Component\Storage\Driver\Local\LocalStorageDriver
+                    ObjectArguments:
+                        - __DIR__/../../public_html/uploads/demo
+                        - __Application.WebPath__/uploads/demo
+                        - true
+                        - true
