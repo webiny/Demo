@@ -20,7 +20,7 @@ class List extends Webiny.Ui.View {
                         const submit = filters => download('GET', '/entities/demo/records/report/summary', null, filters);
                         return (
                             <Ui.Modal.Dialog ui="exportModal">
-                                <Ui.Modal.Header title="Export records"/>
+                                <Ui.Modal.Header title="Export summary"/>
                                 <Ui.Modal.Body>
                                     <Ui.Form.Container ui="exportModalForm" onSubmit={submit}>
                                         {() => (
@@ -43,7 +43,11 @@ class List extends Webiny.Ui.View {
                         );
                     }}>
                         <Ui.Icon icon="icon-file-o"/>
-                        Export records
+                        Export summary
+                    </Ui.DownloadLink>
+                    <Ui.DownloadLink type="secondary" align="right" download="/entities/demo/records/report/summary/csv">
+                        <Ui.Icon icon="icon-file-o"/>
+                        Export CSV
                     </Ui.DownloadLink>
                     <Ui.Link type="secondary" route="Demo.Create" align="right"><Ui.Icon icon="icon-plus-circled"/>Create record</Ui.Link>
                     <Ui.ClickSuccess message="Simple!" onClose={() => console.log("Me closed!")}>

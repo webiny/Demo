@@ -8,19 +8,18 @@ use Apps\Core\Php\DevTools\WebinyTrait;
 use Apps\Core\Php\DevTools\Entity\AbstractEntity;
 use Apps\Demo\Php\Reports\BusinessCardReport;
 use Apps\Demo\Php\Reports\ContactsReport;
+use Apps\Demo\Php\Reports\RecordsCsv;
 use Apps\Demo\Php\Reports\RecordsReport;
-use Webiny\Component\Entity\EntityCollection;
 
 /**
  * Class User
  *
- * @property string           $id
- * @property string           $email
- * @property string           $password
- * @property string           $firstName
- * @property string           $lastName
- * @property EntityCollection $groups
- * @property bool             $enabled
+ * @property string $id
+ * @property string $name
+ * @property string $email
+ * @property string $daterange
+ * @property string $date
+ * @property bool   $enabled
  *
  * @package Apps\Core\Php\Entities
  *
@@ -89,6 +88,12 @@ class Record extends AbstractEntity
             return new ReportsArchive($records, function ($record) {
                 return new BusinessCardReport($record);
             }, 'records.zip');
+        });
+
+        $this->api('GET', 'report/summary/csv', function () {
+            $records = self::find($this->wRequest()->query());
+
+            return new RecordsCsv($records);
         });
     }
 }
