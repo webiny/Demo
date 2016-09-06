@@ -55,8 +55,8 @@ class Record extends AbstractEntity
         $this->attr('avatar')->smart(new ImageAttribute())->setDimensions([
             'thumbnail'     => [200, 200],
             'wideThumbnail' => [300, 100],
-        ])->setStorage($this->wStorage('Demo'));
-        $this->attr('gallery')->smart(new ImagesAttribute())->setStorage($this->wStorage('Demo'))->setTags(['demo-gallery']);
+        ])->setStorage($this->wStorage('Demo'))->setFolder('UserFiles/Avatars');
+        $this->attr('gallery')->smart(new ImagesAttribute())->setStorage($this->wStorage('Demo'))->setFolder('UserFiles/Gallery')->setTags(['demo-gallery']);
         $this->attr('gravatar')->dynamic(function () {
             return md5($this->email);
         });

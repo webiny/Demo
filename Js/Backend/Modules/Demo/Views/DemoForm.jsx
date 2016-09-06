@@ -168,8 +168,11 @@ class Form extends Webiny.Ui.View {
                                         </Ui.Grid.Col>
                                     </Ui.Grid.Row>
                                     <Ui.Grid.Row>
-                                        <Ui.Grid.Col all={12}>
+                                        <Ui.Grid.Col all={6}>
                                             <Ui.Switch label="Enabled" name="enabled"/>
+                                        </Ui.Grid.Col>
+                                        <Ui.Grid.Col all={6}>
+                                            <Ui.Password label="Password" name="password"/>
                                         </Ui.Grid.Col>
                                     </Ui.Grid.Row>
                                     <Ui.Grid.Row>
