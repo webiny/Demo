@@ -56,7 +56,11 @@ class Record extends AbstractEntity
             'thumbnail'     => [200, 200],
             'wideThumbnail' => [300, 100],
         ])->setStorage($this->wStorage('Demo'))->setFolder('UserFiles/Avatars');
-        $this->attr('gallery')->smart(new ImagesAttribute())->setStorage($this->wStorage('Demo'))->setFolder('UserFiles/Gallery')->setTags(['demo-gallery']);
+        $this->attr('gallery')
+             ->smart(new ImagesAttribute())
+             ->setStorage($this->wStorage('Demo'))
+             ->setFolder('UserFiles/Gallery')
+             ->setTags(['demo-gallery']);
         $this->attr('gravatar')->dynamic(function () {
             return md5($this->email);
         });
@@ -96,4 +100,16 @@ class Record extends AbstractEntity
             return new RecordsCsv($records);
         });
     }
+/*
+    public function getSearchValues()
+    {
+        return [$this->email, $this->name];
+    }
+
+    public function getSearchQuery(Search $search)
+    {
+        if($this->wAuth()->getUser()){
+            $search->addQuery(['company' => $company]);
+        }
+    }*/
 }

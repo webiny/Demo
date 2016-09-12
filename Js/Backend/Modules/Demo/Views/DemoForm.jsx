@@ -3,7 +3,6 @@ import Webiny from 'Webiny';
 const Ui = Webiny.Ui.Components;
 const UiD = Webiny.Ui.Dispatcher;
 
-
 class Form extends Webiny.Ui.View {
     render() {
         const formProps = {
@@ -12,16 +11,20 @@ class Form extends Webiny.Ui.View {
             fields: 'id,name,email,contacts,enabled,avatar,datetime,date,time,daterange,access,description,tags,icon,gallery,html',
             connectToRouter: true,
             onSubmitSuccess: 'Demo.List',
-            onCancel: 'Demo.List'
+            onCancel: 'Demo.List',
+            onProgress: function (pe) {
+                const cmp = <div>Uploading form data...{pe.progress}%</div>;
+                Webiny.Growl(<Ui.Growl.Warning id={this.growlId} title="Custom progress" sticky={true}>{cmp}</Ui.Growl.Warning>);
+            }
         };
 
-        const userGroupSelect = {
-            label: 'User group',
-            name: 'userGroup',
-            placeholder: 'Select user group',
+        const userRoleSelect = {
+            label: 'User role',
+            name: 'userRole',
+            placeholder: 'Select user role',
             allowClear: true,
-            api: '/entities/core/user-groups',
-            fields: 'tag,name,id,createdOn',
+            api: '/entities/core/user-roles',
+            fields: 'slug,name,id,createdOn',
             perPage: 2,
             optionRenderer: (item) => {
                 return (
@@ -39,15 +42,15 @@ class Form extends Webiny.Ui.View {
             }
         };
 
-        const userGroupsSelect = {
-            label: 'User groups',
-            name: 'nestedGroups',
-            placeholder: 'Select user groups',
+        const userRolesSelect = {
+            label: 'User roles',
+            name: 'nestedRoles',
+            placeholder: 'Select user roles',
             allowClear: true,
-            api: '/entities/core/user-groups',
-            fields: 'tag,name',
+            api: '/entities/core/user-roles',
+            fields: 'slug,name',
             perPage: 2,
-            valueAttr: 'tag',
+            valueAttr: 'slug',
             textAttr: 'name'
         };
 
@@ -131,7 +134,7 @@ class Form extends Webiny.Ui.View {
                                                 searchFields="name"
                                                 allowFreeInput={false}
                                                 useDataAsValue={false}
-                                                filterBy="userGroup"
+                                                filterBy="userRole"
                                                 onChange={(newValue, oldValue, input) => console.log(newValue, input.getCurrentData())}/>
                                         </Ui.Grid.Col>
                                     </Ui.Grid.Row>
@@ -151,7 +154,7 @@ class Form extends Webiny.Ui.View {
                                     </Ui.Grid.Row>
                                     <Ui.Grid.Row>
                                         <Ui.Grid.Col all={4}>
-                                            <Ui.Select {...userGroupSelect} />
+                                            <Ui.Select {...userRoleSelect} />
                                         </Ui.Grid.Col>
                                         <Ui.Grid.Col all={4}>
                                             <Ui.Select name="staticSelect" label="Static select" placeholder="Select an option">
@@ -242,7 +245,7 @@ class Form extends Webiny.Ui.View {
                                         </Ui.Grid.Col>
                                         <Ui.Grid.Col all={6}>
                                             <Ui.Form.Fieldset title="Dynamic checkboxes with nested options"/>
-                                            <Ui.CheckboxGroup {...userGroupsSelect} label="User groups (API)">
+                                            <Ui.CheckboxGroup {...userRolesSelect} label="User roles (API)">
                                                 <Ui.CheckboxGroup className="mt5" api="/entities/core/users" textAttr="email"/>
                                             </Ui.CheckboxGroup>
                                         </Ui.Grid.Col>
@@ -267,7 +270,7 @@ class Form extends Webiny.Ui.View {
                                 </Ui.Tabs.Tab>
                                 <Ui.Tabs.Tab label="Upload components" icon="icon-picture-1">
                                     <Ui.Files.Image name="avatar"/>
-                                    <Ui.Files.Gallery name="gallery" confirmDelete/>
+                                    <Ui.Files.Gallery name="gallery" maxImages={7}/>
                                     <Ui.Files.ImageUploader
                                         onUploadSuccess={image => console.log(image)}
                                         cropper={{
