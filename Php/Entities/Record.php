@@ -3,9 +3,11 @@ namespace Apps\Demo\Php\Entities;
 
 use Apps\Core\Php\DevTools\Entity\Attributes\ImageAttribute;
 use Apps\Core\Php\DevTools\Entity\Attributes\ImagesAttribute;
+use Apps\Core\Php\DevTools\Interfaces\NoAuthorizationInterface;
 use Apps\Core\Php\DevTools\Reports\ReportsArchive;
 use Apps\Core\Php\DevTools\WebinyTrait;
 use Apps\Core\Php\DevTools\Entity\AbstractEntity;
+use Apps\Core\Php\Entities\User;
 use Apps\Demo\Php\Reports\BusinessCardReport;
 use Apps\Demo\Php\Reports\ContactsReport;
 use Apps\Demo\Php\Reports\RecordsCsv;
@@ -34,6 +36,7 @@ class Record extends AbstractEntity
     {
         parent::__construct();
 
+        $this->attr('author')->many2one()->setEntity('\Apps\Core\Php\Entities\User')->setDefaultValue($this->wAuth()->getUser());
         $this->attr('name')->char()->setValidators('required')->setToArrayDefault();
         $this->attr('description')->char();
         $this->attr('html')->char();
@@ -50,12 +53,13 @@ class Record extends AbstractEntity
         $this->attr('daterange')->char();
         $this->attr('icon')->char();
         $this->attr('contacts')->arr();
+        $this->attr('roles')->arr();
         $this->attr('tags')->arr();
         $this->attr('access')->char();
         $this->attr('avatar')->smart(new ImageAttribute())->setDimensions([
             'thumbnail'     => [200, 200],
             'wideThumbnail' => [300, 100],
-        ])->setStorage($this->wStorage('Demo'))->setFolder('UserFiles/Avatars');
+        ])->setStorage($this->wStorage('Demo'))->setFolder('UserFiles/Avatars')->setOnDelete('cascade');
         $this->attr('gallery')
              ->smart(new ImagesAttribute())
              ->setStorage($this->wStorage('Demo'))
@@ -99,17 +103,26 @@ class Record extends AbstractEntity
 
             return new RecordsCsv($records);
         });
-    }
-/*
-    public function getSearchValues()
-    {
-        return [$this->email, $this->name];
-    }
 
-    public function getSearchQuery(Search $search)
-    {
-        if($this->wAuth()->getUser()){
-            $search->addQuery(['company' => $company]);
-        }
-    }*/
+        $this->attr('users')->one2many('record')->setEntity('\Apps\Demo\Php\Entities\Record2User');
+    }
 }
+
+/**
+ * Class Record2User
+ * @package Apps\Demo\Php\Entities
+ */
+class Record2User extends AbstractEntity
+{
+    protected static $entityCollection = 'DemoRecord2User';
+    function __construct()
+    {
+        parent::__construct();
+        $this->attr('record')->many2one()->setEntity('\Apps\Demo\Php\Entities\Record');
+        $this->attr('user')->many2one()->setEntity('\Apps\Core\Php\Entities\User');
+    }
+}
+
+User::onExtend(function (User $user) {
+    $user->attr('records')->one2many('user')->setEntity('\Apps\Demo\Php\Entities\Record2User');
+});

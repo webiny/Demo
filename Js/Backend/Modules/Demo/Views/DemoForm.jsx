@@ -8,7 +8,7 @@ class Form extends Webiny.Ui.View {
         const formProps = {
             ui: 'myForm',
             api: '/entities/demo/records',
-            fields: 'id,name,email,contacts,enabled,avatar,datetime,date,time,daterange,access,description,tags,icon,gallery,html',
+            fields: 'id,name,email,contacts,enabled,avatar,datetime,date,time,daterange,access,description,tags,icon,gallery,html,roles,users[id,user.id,user.email]',
             connectToRouter: true,
             onSubmitSuccess: 'Demo.List',
             onCancel: 'Demo.List',
@@ -45,8 +45,6 @@ class Form extends Webiny.Ui.View {
         const userRolesSelect = {
             label: 'User roles',
             name: 'nestedRoles',
-            placeholder: 'Select user roles',
-            allowClear: true,
             api: '/entities/core/user-roles',
             fields: 'slug,name',
             perPage: 2,
@@ -63,6 +61,18 @@ class Form extends Webiny.Ui.View {
             fields: 'id,email',
             valueAttr: 'id',
             textAttr: 'email'
+        };
+
+        const recordUsers = {
+            label: 'Record users',
+            name: 'users',
+            api: '/entities/core/users',
+            fields: 'id,email',
+            textAttr: 'email',
+            valueKey: 'user.id',
+            formatValue: value => {
+                return {user: {id: value.id}};
+            }
         };
 
         const settings = (
@@ -245,9 +255,12 @@ class Form extends Webiny.Ui.View {
                                         </Ui.Grid.Col>
                                         <Ui.Grid.Col all={6}>
                                             <Ui.Form.Fieldset title="Dynamic checkboxes with nested options"/>
-                                            <Ui.CheckboxGroup {...userRolesSelect} label="User roles (API)">
-                                                <Ui.CheckboxGroup className="mt5" api="/entities/core/users" textAttr="email"/>
-                                            </Ui.CheckboxGroup>
+                                            <Ui.NestedCheckboxGroup {...userRolesSelect} label="User roles (API)">
+                                                <Ui.NestedCheckboxGroup className="mt5" api="/entities/core/users" textAttr="email"/>
+                                            </Ui.NestedCheckboxGroup>
+                                        </Ui.Grid.Col>
+                                        <Ui.Grid.Col all={12}>
+                                            <Ui.CheckboxGroup {...recordUsers}/>
                                         </Ui.Grid.Col>
                                     </Ui.Grid.Row>
                                 </Ui.Tabs.Tab>
