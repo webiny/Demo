@@ -20,14 +20,13 @@ class CustomLayout extends Webiny.Ui.Component {
             onClick: this.props.container.setPage.bind(null, 2)
         };
 
-        const inputProps = {
+        const inputProps = _.assign({
             onEnter: e => this.props.container.setSearchQuery(e.target.value),
-            placeholder: 'Search...',
-            valueLink: this.bindTo('search')
-        };
+            placeholder: 'Search...'
+        }, this.bindTo('search'));
 
         return (
-            <Ui.Panel.Panel>
+            <Ui.Panel>
                 <Ui.Panel.Header title="Custom element layout">
                     <Ui.Button {...buttonProps}/>
                 </Ui.Panel.Header>
@@ -39,7 +38,7 @@ class CustomLayout extends Webiny.Ui.Component {
                 <Ui.Panel.Footer>
                     Filters: {this.props.filters}
                 </Ui.Panel.Footer>
-            </Ui.Panel.Panel>
+            </Ui.Panel>
         );
     }
 }

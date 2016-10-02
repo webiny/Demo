@@ -8,7 +8,7 @@ class Form extends Webiny.Ui.View {
         const formProps = {
             ui: 'myForm',
             api: '/entities/demo/records',
-            fields: 'id,name,email,contacts,enabled,avatar,datetime,date,time,daterange,access,description,tags,icon,gallery,html,roles,users[id,user.id,user.email]',
+            fields: 'id,createdBy,name,email,contacts,enabled,avatar,datetime,date,time,daterange,access,description,tags,icon,gallery,html,roles,users[id,user.id,user.email]',
             connectToRouter: true,
             onSubmitSuccess: 'Demo.List',
             onCancel: 'Demo.List',
@@ -40,16 +40,6 @@ class Form extends Webiny.Ui.View {
             onChange: (newValue, oldValue, input) => {
                 console.log(newValue, input.getCurrentData());
             }
-        };
-
-        const userRolesSelect = {
-            label: 'User roles',
-            name: 'nestedRoles',
-            api: '/entities/core/user-roles',
-            fields: 'slug,name',
-            perPage: 2,
-            valueAttr: 'slug',
-            textAttr: 'name'
         };
 
         const createdBySelect = {
@@ -116,7 +106,7 @@ class Form extends Webiny.Ui.View {
         );
 
         return (
-            <Ui.Form.Container {...formProps}>
+            <Ui.Form {...formProps}>
                 {(model, container) => (
                     <Ui.View.Form>
                         <Ui.View.Header title="Demo Form" description="Demo form to demonstrate most of the input components Webiny offers">
@@ -125,7 +115,7 @@ class Form extends Webiny.Ui.View {
                                             label="Steal it..." align="right"/>
                         </Ui.View.Header>
                         <Ui.View.Body noPadding>
-                            <Ui.Tabs.Tabs size="large">
+                            <Ui.Tabs size="large">
                                 <Ui.Tabs.Tab label="Input components" icon="icon-gauge">
                                     <Ui.Grid.Row>
                                         <Ui.Grid.Col all={3}>
@@ -145,7 +135,7 @@ class Form extends Webiny.Ui.View {
                                                 allowFreeInput={false}
                                                 useDataAsValue={false}
                                                 filterBy="userRole"
-                                                onChange={(newValue, oldValue, input) => console.log(newValue, input.getCurrentData())}/>
+                                                onChange={(newValue, oldValue, input) => console.log(newValue, input)}/>
                                         </Ui.Grid.Col>
                                     </Ui.Grid.Row>
                                     <Ui.Grid.Row>
@@ -153,13 +143,13 @@ class Form extends Webiny.Ui.View {
                                             <Ui.DateTime label="Date & Time" name="datetime" placeholder="Select date and time"/>
                                         </Ui.Grid.Col>
                                         <Ui.Grid.Col all={3}>
-                                            <Ui.Date label="Date" name="date" placeholder="Select a date"/>
+                                            <Ui.Date label="Date" name="date" placeholder="Select a date" validate="required"/>
                                         </Ui.Grid.Col>
                                         <Ui.Grid.Col all={3}>
                                             <Ui.Time label="Time" name="time" placeholder="Select time"/>
                                         </Ui.Grid.Col>
                                         <Ui.Grid.Col all={3}>
-                                            <Ui.DateRange label="Date range" name="daterange"/>
+                                            <Ui.DateRange label="Date range" name="daterange" placeholder="Select a date range"/>
                                         </Ui.Grid.Col>
                                     </Ui.Grid.Row>
                                     <Ui.Grid.Row>
@@ -254,12 +244,7 @@ class Form extends Webiny.Ui.View {
                                             </Ui.CheckboxGroup>
                                         </Ui.Grid.Col>
                                         <Ui.Grid.Col all={6}>
-                                            <Ui.Form.Fieldset title="Dynamic checkboxes with nested options"/>
-                                            <Ui.NestedCheckboxGroup {...userRolesSelect} label="User roles (API)">
-                                                <Ui.NestedCheckboxGroup className="mt5" api="/entities/core/users" textAttr="email"/>
-                                            </Ui.NestedCheckboxGroup>
-                                        </Ui.Grid.Col>
-                                        <Ui.Grid.Col all={12}>
+                                            <Ui.Form.Fieldset title="Dynamic checkboxes for manual aggregation"/>
                                             <Ui.CheckboxGroup {...recordUsers}/>
                                         </Ui.Grid.Col>
                                     </Ui.Grid.Row>
@@ -276,13 +261,13 @@ class Form extends Webiny.Ui.View {
                                             </Ui.RadioGroup>
                                         </Ui.Grid.Col>
                                         <Ui.Grid.Col all={6}>
-                                            <Ui.RadioGroup label="User (API)" name="user" api="/entities/core/users"
-                                                           textAttr="email" grid={12}/>
+                                            <Ui.RadioGroup label="User (API)" name="createdBy" api="/entities/core/users"
+                                                           textAttr="email" valueKey="id" grid={12}/>
                                         </Ui.Grid.Col>
                                     </Ui.Grid.Row>
                                 </Ui.Tabs.Tab>
                                 <Ui.Tabs.Tab label="Upload components" icon="icon-picture-1">
-                                    <Ui.Files.Image name="avatar"/>
+                                    <Ui.Files.Image name="avatar2"/>
                                     <Ui.Files.Gallery name="gallery" maxImages={7}/>
                                     <Ui.Files.ImageUploader
                                         onUploadSuccess={image => console.log(image)}
@@ -301,7 +286,7 @@ class Form extends Webiny.Ui.View {
                                 <Ui.Tabs.Tab label="WYSIWYG" icon="fa-font">
                                     <Ui.HtmlEditor name="html"/>
                                 </Ui.Tabs.Tab>
-                            </Ui.Tabs.Tabs>
+                            </Ui.Tabs>
                         </Ui.View.Body>
                         <Ui.View.Footer>
                             <Ui.Button type="default" onClick={container.cancel} label="Cancel"/>
@@ -309,7 +294,7 @@ class Form extends Webiny.Ui.View {
                         </Ui.View.Footer>
                     </Ui.View.Form>
                 )}
-            </Ui.Form.Container>
+            </Ui.Form>
         );
     }
 }

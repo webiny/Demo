@@ -41,42 +41,21 @@ class CustomLayout extends Webiny.Ui.Component {
 
     render() {
         return (
-            <Ui.Form.Container>
+            <Ui.Form>
                 {model => (
                     <Ui.View.Form>
                         <Ui.View.Body>
                             <Ui.Grid.Row>
                                 <Ui.Grid.Col all={6} xsOffset={3}>
-                                    <Ui.Input
-                                        placeholder="Enter your email"
-                                        label="Email"
-                                        name="email"
-                                        validate="required,email"
-                                        tooltip="Your email address"
-                                        info="Info text for your input fields"
-                                        description="This is your user account email"/>
-                                    <Ui.Input
-                                        placeholder="Enter your email"
-                                        label="Email"
-                                        name="email2"
-                                        validate="required,email"
-                                        tooltip="Your email address"
-                                        info="Info text for your input fields"
-                                        description="This is your user account email"/>
-                                    <Ui.Input
-                                        placeholder="Enter your email"
-                                        label="Email"
-                                        name="email3"
-                                        validate="required,email"
-                                        tooltip="Your email address"
-                                        info="Info text for your input fields"
-                                        description="This is your user account email"/>
+                                    <Ui.ChangeConfirm message={value => value ? 'Are you sure you want to turn this switch on?' : null}>
+                                        <Ui.Switch name="enabled"/>
+                                    </Ui.ChangeConfirm>
                                 </Ui.Grid.Col>
                             </Ui.Grid.Row>
                         </Ui.View.Body>
                     </Ui.View.Form>
                 )}
-            </Ui.Form.Container>
+            </Ui.Form>
         );
     }
 }

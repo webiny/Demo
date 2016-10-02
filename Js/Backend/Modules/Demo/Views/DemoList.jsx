@@ -22,7 +22,7 @@ class List extends Webiny.Ui.View {
                             <Ui.Modal.Dialog ui="exportModal">
                                 <Ui.Modal.Header title="Export summary"/>
                                 <Ui.Modal.Body>
-                                    <Ui.Form.Container ui="exportModalForm" onSubmit={submit}>
+                                    <Ui.Form ui="exportModalForm" onSubmit={submit}>
                                         {() => (
                                             <Ui.Grid.Row>
                                                 <Ui.Grid.Col all={12}>
@@ -33,7 +33,7 @@ class List extends Webiny.Ui.View {
                                                 </Ui.Grid.Col>
                                             </Ui.Grid.Row>
                                         )}
-                                    </Ui.Form.Container>
+                                    </Ui.Form>
                                 </Ui.Modal.Body>
                                 <Ui.Modal.Footer align="right">
                                     <Ui.Button type="default" label="Cancel" onClick={this.ui('exportModal:hide')}/>
@@ -94,15 +94,15 @@ class List extends Webiny.Ui.View {
                     </Ui.ClickConfirm>
                 </Ui.View.Header>
                 <Ui.View.Body noPadding>
-                    <Ui.Tabs.Tabs size="large">
+                    <Ui.Tabs size="large">
                         <Ui.Tabs.Tab label="List with table">
-                            <Ui.List.ApiContainer
+                            <Ui.List
                                 connectToRouter={true}
                                 api="/entities/demo/records"
                                 sort="email"
                                 fields="id,enabled,name,email,createdOn,contacts,reports"
                                 searchFields="name,email">
-                                <Table.Table>
+                                <Table>
                                     <Table.Row>
                                         <Table.RowDetailsField/>
                                         <Table.Field name="name" align="left" label="Name" sort="name" route="Demo.Form">
@@ -177,7 +177,7 @@ class List extends Webiny.Ui.View {
                                                     <Ui.Modal.Dialog ui="exportContactsModal">
                                                         <Ui.Modal.Header title={'Contacts for ' + record.name}/>
                                                         <Ui.Modal.Body>
-                                                            <Ui.Form.Container ui="exportModal" onSubmit={submit}>
+                                                            <Ui.Form ui="exportModal" onSubmit={submit}>
                                                                 {model => (
                                                                     <Ui.DateRange
                                                                         name="range"
@@ -185,7 +185,7 @@ class List extends Webiny.Ui.View {
                                                                         placeholder="Select a date range"
                                                                         validate="required"/>
                                                                 )}
-                                                            </Ui.Form.Container>
+                                                            </Ui.Form>
                                                             <Ui.Alert type="info">
                                                                 NOTE: this won't filter anything in the report, it's just here to show
                                                                 you an example of how you would create a report configuration dialog in
@@ -209,20 +209,20 @@ class List extends Webiny.Ui.View {
                                     <Table.RowDetails>
                                         {(data, rowDetails) => {
                                             return (
-                                                <Ui.List.StaticContainer data={data.contacts}>
+                                                <Ui.List data={data.contacts}>
                                                     <Ui.List.Loader/>
-                                                    <Table.Table>
+                                                    <Table>
                                                         <Table.Row>
                                                             <Table.Field name="key" label="Key"/>
                                                             <Table.Field name="value" label="Value"/>
                                                             <Table.Field name="createdBy" label="User ID"/>
                                                         </Table.Row>
-                                                    </Table.Table>
-                                                </Ui.List.StaticContainer>
+                                                    </Table>
+                                                </Ui.List>
                                             );
                                         }}
                                     </Table.RowDetails>
-                                </Table.Table>
+                                </Table>
                                 <Ui.List.Pagination/>
                                 <Ui.List.MultiActions>
                                     <Ui.List.MultiAction label="Log" onAction={this.log}/>
@@ -242,10 +242,10 @@ class List extends Webiny.Ui.View {
                                         }}
                                     </Ui.List.DeleteMultiAction>
                                 </Ui.List.MultiActions>
-                            </Ui.List.ApiContainer>
+                            </Ui.List>
                         </Ui.Tabs.Tab>
                         <Ui.Tabs.Tab label="Custom list view">
-                            <Ui.List.ApiContainer
+                            <Ui.List
                                 api="/entities/demo/records"
                                 perPage={3}
                                 sort="email"
@@ -299,9 +299,9 @@ class List extends Webiny.Ui.View {
                                         </Ui.Grid.Row>
                                     );
                                 }}
-                            </Ui.List.ApiContainer>
+                            </Ui.List>
                         </Ui.Tabs.Tab>
-                    </Ui.Tabs.Tabs>
+                    </Ui.Tabs>
                 </Ui.View.Body>
             </Ui.View.List>
         );
