@@ -1,7 +1,7 @@
 import Webiny from 'Webiny';
 const Ui = Webiny.Ui.Components;
 
-window.createPropsTable = function (component, includeSource = true) {
+window.createPropsTable = function createPropsTable(component, includeSource = true) {
     const table = [
         '| Name | Description | Type | Default ' + (includeSource ? '| Source |' : '|'),
         '| --- | --- | --- | --- |' + (includeSource ? ' --- |' : '')
@@ -13,7 +13,7 @@ window.createPropsTable = function (component, includeSource = true) {
         if (_.isFunction(value)) {
             defaultValue = value === _.noop ? '`_.noop`' : 'function';
         } else {
-            defaultValue = _.isPlainObject(value) ? JSON.stringify(value) : value
+            defaultValue = _.isPlainObject(value) ? JSON.stringify(value) : value;
         }
         rows[name] = `| ${name} |  | ${typeof value} | ${defaultValue} |${includeSource ? ' |' : ''}`;
     });
@@ -28,7 +28,7 @@ window.createPropsTable = function (component, includeSource = true) {
         table.push(rows[keys[i]]);
     }
 
-    console.log(table.join('\n'))
+    console.log(table.join('\n'));
 };
 
 class CustomLayout extends Webiny.Ui.Component {
@@ -42,7 +42,7 @@ class CustomLayout extends Webiny.Ui.Component {
     render() {
         return (
             <Ui.Form>
-                {model => (
+                {() => (
                     <Ui.View.Form>
                         <Ui.View.Body>
                             <Ui.Grid.Row>

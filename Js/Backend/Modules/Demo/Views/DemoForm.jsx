@@ -68,9 +68,9 @@ class Form extends Webiny.Ui.View {
         const settings = (
             <Ui.Dynamic.Fieldset name="contacts">
                 <Ui.Dynamic.Row>
-                    {function (record, index, actions) {
+                    {function (record, actions) {
                         return (
-                            <Ui.Grid.Row key={index}>
+                            <Ui.Grid.Row>
                                 <Ui.Grid.Col all={3}>
                                     <Ui.Input placeholder="Key" name="key" validate="required"/>
                                 </Ui.Grid.Col>
@@ -82,8 +82,8 @@ class Form extends Webiny.Ui.View {
                                 </Ui.Grid.Col>
                                 <Ui.Grid.Col all={3}>
                                     <div className="btn-group">
-                                        <Ui.Button type="primary" label="Add" onClick={actions.add(index)}/>
-                                        <Ui.Button type="secondary" label="x" onClick={actions.remove(index)}/>
+                                        <Ui.Button type="primary" label="Add" onClick={actions.add(record)}/>
+                                        <Ui.Button type="secondary" label="x" onClick={actions.remove(record)}/>
                                     </div>
                                 </Ui.Grid.Col>
                             </Ui.Grid.Row>
@@ -96,7 +96,7 @@ class Form extends Webiny.Ui.View {
                             <Ui.Grid.Row>
                                 <Ui.Grid.Col all={12}>
                                     <h5>You have not created any settings yet. Click "Add settings" to start creating your settings!</h5>
-                                    <Ui.Button type="primary" label="Add settings" onClick={actions.add(0)}/>
+                                    <Ui.Button type="primary" label="Add settings" onClick={actions.add()}/>
                                 </Ui.Grid.Col>
                             </Ui.Grid.Row>
                         )
