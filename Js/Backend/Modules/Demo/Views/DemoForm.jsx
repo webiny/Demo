@@ -25,12 +25,12 @@ class Form extends Webiny.Ui.View {
             allowClear: true,
             api: '/entities/core/user-roles',
             fields: 'slug,name,id,createdOn',
-            perPage: 2,
+            perPage: 10,
             optionRenderer: (item) => {
                 return (
                     <div>
                         <strong>{item.data.name}</strong><br/>
-                        <span>Tag: {item.data.tag}</span>
+                        <span>Tag: {item.data.slug}</span>
                     </div>
                 );
             },
@@ -166,7 +166,7 @@ class Form extends Webiny.Ui.View {
                                             </Ui.Select>
                                         </Ui.Grid.Col>
                                         <Ui.Grid.Col all={4}>
-                                            <Ui.Icon.Picker name="icon" tooltip="Put any tooltip text here..." label="Your icon"
+                                            <Ui.Icon.Picker name="icon" label="Your icon"
                                                             allowClear={true} placeholder="Select your icon"/>
                                         </Ui.Grid.Col>
                                     </Ui.Grid.Row>
@@ -189,7 +189,7 @@ class Form extends Webiny.Ui.View {
                                     </Ui.Grid.Row>
                                     <Ui.Grid.Row>
                                         <Ui.Grid.Col all={12}>
-                                            <Ui.Textarea label="Description" name="description"/>
+                                            <Ui.Textarea label="Description" name="description" tooltip="Put any tooltip text here..."/>
                                         </Ui.Grid.Col>
                                     </Ui.Grid.Row>
                                     <Ui.Grid.Row>
@@ -218,11 +218,7 @@ class Form extends Webiny.Ui.View {
 
                                             <div className="clearfix"/>
                                             <Ui.Form.Fieldset title="Single checkbox"/>
-                                            <Ui.Checkbox label="Single checkbox" name="singleCheckbox" grid={12}>
-                                                <Ui.Tooltip target={<Ui.Icon icon="icon-info-circle"/>}>
-                                                    Set immediately
-                                                </Ui.Tooltip>
-                                            </Ui.Checkbox>
+                                            <Ui.Checkbox label="Single checkbox" name="singleCheckbox" grid={12} tooltip="Set immediately"/>
 
                                             <div className="clearfix"/>
                                             <Ui.Form.Fieldset title="Custom checkbox markup (using 'checkboxRenderer' prop)"/>
