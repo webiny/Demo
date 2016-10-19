@@ -14,7 +14,7 @@ class Slack extends AbstractService implements PublicApiInterface
             exec('df -h --local --output=pcent --type=ext4', $output);
 
             $post = [
-                'token'    => 'xoxb-91375422836-9Gl3yoLSq5BBcWoZEJY7AWlL',
+                'token'    => '',
                 'team'     => 'Webiny',
                 'channel'  => '@pavel',
                 'username' => 'selecto',
