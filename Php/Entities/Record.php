@@ -3,7 +3,6 @@ namespace Apps\Demo\Php\Entities;
 
 use Apps\Core\Php\DevTools\Entity\Attributes\ImageAttribute;
 use Apps\Core\Php\DevTools\Entity\Attributes\ImagesAttribute;
-use Apps\Core\Php\DevTools\Interfaces\NoAuthorizationInterface;
 use Apps\Core\Php\DevTools\Reports\ReportsArchive;
 use Apps\Core\Php\DevTools\WebinyTrait;
 use Apps\Core\Php\DevTools\Entity\AbstractEntity;
@@ -12,6 +11,7 @@ use Apps\Demo\Php\Reports\BusinessCardReport;
 use Apps\Demo\Php\Reports\ContactsReport;
 use Apps\Demo\Php\Reports\RecordsCsv;
 use Apps\Demo\Php\Reports\RecordsReport;
+use Webiny\Component\Mailer\Email;
 
 /**
  * Class User
@@ -104,6 +104,22 @@ class Record extends AbstractEntity
             return new RecordsCsv($records);
         });
 
+        $this->api('GET', '{id}/report/send', function () {
+            /* @var \Apps\NotificationManager\Php\Lib\Notification $notification */
+            $notification = $this->wService('NotificationManager')->getNotification('demo-record');
+            $notification->addEntity($this)->setRecipient(new Email($this->email, $this->name));
+            $notification->addCustomVariable('recipient', $this->email);
+
+            $report = new BusinessCardReport($this);
+            $pdf = $report->getReport(true);
+
+            $notification->addAttachment($pdf, $report->getFileName() . '.pdf', 'application/pdf');
+            $notification->send();
+            $pdf->delete();
+
+            return true;
+        });
+
         $this->attr('users')->one2many('record')->setEntity('\Apps\Demo\Php\Entities\Record2User');
     }
 }
@@ -115,6 +131,7 @@ class Record extends AbstractEntity
 class Record2User extends AbstractEntity
 {
     protected static $entityCollection = 'DemoRecord2User';
+
     function __construct()
     {
         parent::__construct();
