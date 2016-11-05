@@ -39,6 +39,7 @@ class Record extends AbstractEntity
         $this->attr('author')->many2one()->setEntity('\Apps\Core\Php\Entities\User')->setDefaultValue($this->wAuth()->getUser());
         $this->attr('name')->char()->setValidators('required')->setToArrayDefault();
         $this->attr('description')->char();
+        $this->attr('draft')->object();
         $this->attr('html')->char();
         $this->attr('enabled')->boolean()->setDefaultValue(true);
         $this->attr('email')->char()->setValidators('required,email,unique')->onSet(function ($email) {

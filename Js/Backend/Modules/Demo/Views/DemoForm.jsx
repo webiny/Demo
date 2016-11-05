@@ -4,11 +4,38 @@ const Ui = Webiny.Ui.Components;
 const UiD = Webiny.Ui.Dispatcher;
 
 class Form extends Webiny.Ui.View {
+    constructor(props) {
+        super(props);
+
+        this.plugins = [
+            new Webiny.Draft.Plugins.Heading(),
+            new Webiny.Draft.Plugins.Bold(),
+            new Webiny.Draft.Plugins.Italic(),
+            new Webiny.Draft.Plugins.Underline(),
+            new Webiny.Draft.Plugins.UnorderedList(),
+            new Webiny.Draft.Plugins.OrderedList(),
+            new Webiny.Draft.Plugins.AlignLeft(),
+            new Webiny.Draft.Plugins.AlignCenter(),
+            new Webiny.Draft.Plugins.AlignRight(),
+            new Webiny.Draft.Plugins.Link(),
+            new Webiny.Draft.Plugins.Blockquote(),
+            new Webiny.Draft.Plugins.Table(),
+            new Webiny.Draft.Plugins.Code(),
+            new Webiny.Draft.Plugins.CodeBlock(),
+            new Webiny.Draft.Plugins.ReactSandbox(),
+            new Webiny.Draft.Plugins.ToJSON()
+        ];
+
+        this.state = {
+            preview: false
+        };
+    }
+
     render() {
         const formProps = {
             ui: 'myForm',
             api: '/entities/demo/records',
-            fields: 'id,createdBy,name,email,contacts,enabled,avatar,datetime,date,time,daterange,access,description,tags,icon,gallery,html,roles,users[id,user.id,user.email]',
+            fields: 'id,createdBy,name,email,contacts,enabled,avatar,datetime,date,time,daterange,access,description,tags,icon,gallery,html,draft,roles,users[id,user.id,user.email]',
             connectToRouter: true,
             onSubmitSuccess: 'Demo.List',
             onCancel: 'Demo.List',
@@ -107,7 +134,7 @@ class Form extends Webiny.Ui.View {
 
         return (
             <Ui.Form {...formProps}>
-                {(model, container) => (
+                {(model, form) => (
                     <Ui.View.Form>
                         <Ui.View.Header title="Demo Form" description="Demo form to demonstrate most of the input components Webiny offers">
                             <Ui.Link type="default" align="right" route="Demo.List">Back to list</Ui.Link>
@@ -228,7 +255,7 @@ class Form extends Webiny.Ui.View {
                                                         <div className="form-group">
                                                             <div className="checkbox">
                                                                 <input type="checkbox" id={this.id} disabled={this.isDisabled()} checked={this.isChecked()} onChange={this.onChange}/>
-                                                                <label htmlFor={this.id}><span className="container-icon"></span>{this.props.label}</label>
+                                                                <label htmlFor={this.id}><span className="form-icon"></span>{this.props.label}</label>
                                                             </div>
                                                         </div>
                                                     </li>
@@ -282,11 +309,22 @@ class Form extends Webiny.Ui.View {
                                 <Ui.Tabs.Tab label="WYSIWYG" icon="fa-font">
                                     <Ui.HtmlEditor name="html"/>
                                 </Ui.Tabs.Tab>
+                                <Ui.Tabs.Tab label="Draft Editor" icon="fa-font">
+                                    <Ui.Button
+                                        label={this.state.preview ? 'Edit' : 'Preview'}
+                                        onClick={() => this.setState({preview: !this.state.preview})}/>
+                                    <hr/>
+                                    <Ui.Draft.Editor
+                                        name="draft"
+                                        placeholder="Tell a story..."
+                                        plugins={this.plugins}
+                                        preview={this.state.preview}/>
+                                </Ui.Tabs.Tab>
                             </Ui.Tabs>
                         </Ui.View.Body>
                         <Ui.View.Footer>
-                            <Ui.Button type="default" onClick={container.cancel} label="Cancel"/>
-                            <Ui.Button type="primary" onClick={container.submit} label="Submit" align="right"/>
+                            <Ui.Button type="default" onClick={form.cancel} label="Cancel"/>
+                            <Ui.Button type="primary" onClick={form.submit} label="Submit" align="right"/>
                         </Ui.View.Footer>
                     </Ui.View.Form>
                 )}

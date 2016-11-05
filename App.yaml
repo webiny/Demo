@@ -15,7 +15,7 @@ Storage:
                 Driver:
                     Object: \Webiny\Component\Storage\Driver\Local\LocalStorageDriver
                     ObjectArguments:
-                        - __DIR__/../../public_html/uploads/demo
-                        - __Application.WebPath__/uploads/demo
-                        - false
-                        - true
+                        Config:
+                            Directory: __DIR__/../../public_html/uploads/demo
+                            PublicUrl: __Application.WebPath__/uploads/demo
+                            Create: true
