@@ -92,6 +92,43 @@ class List extends Webiny.Ui.View {
                             });
                         }}/>
                     </Ui.ClickConfirm>
+                    {/* Import file example */}
+                    <Ui.ClickConfirm renderDialog={(confirm, cancel, confirmation) => {
+                        return (
+                            <Ui.Modal.Dialog onCancel={cancel}>
+                                {confirmation.renderLoader()}
+                                <Ui.Modal.Header title="Select file to import"/>
+                                <Ui.Modal.Body>
+                                    <Ui.Form ui="importFileForm" onSubmit={confirm}>
+                                        {() => (
+                                            <Ui.Grid.Row>
+                                                <Ui.Grid.Col all={12}>
+                                                    <Ui.Files.File
+                                                        accept={['text/csv']}
+                                                        name="records"
+                                                        label="Import from file"
+                                                        placeholder="Select a CSV file to import"
+                                                        description="Any file up to 2.5MB will do"
+                                                        validate="required"/>
+                                                </Ui.Grid.Col>
+                                            </Ui.Grid.Row>
+                                        )}
+                                    </Ui.Form>
+                                </Ui.Modal.Body>
+                                <Ui.Modal.Footer>
+                                    <Ui.Button type="primary" label="Import" align="right" onClick={this.ui('importFileForm:submit')}/>
+                                    <Ui.Button type="secondary" label="Cancel" align="right" onClick={cancel}/>
+                                </Ui.Modal.Footer>
+                            </Ui.Modal.Dialog>
+                        );
+                    }}>
+                        <Ui.Button type="primary" label="Import file" align="right" onClick={model => {
+                            return new Webiny.Api.Endpoint('/services/demo/import').post('import', model).then(res => {
+                                console.log(res.getData());
+                            })
+                        }}/>
+                    </Ui.ClickConfirm>
+                    {/* End of Import file example */}
                 </Ui.View.Header>
                 <Ui.View.Body noPadding>
                     <Ui.Tabs size="large">

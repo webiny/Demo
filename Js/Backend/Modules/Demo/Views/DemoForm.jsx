@@ -290,21 +290,41 @@ class Form extends Webiny.Ui.View {
                                     </Ui.Grid.Row>
                                 </Ui.Tabs.Tab>
                                 <Ui.Tabs.Tab label="Upload components" icon="icon-picture-1">
-                                    <Ui.Files.Image name="avatar2"/>
-                                    <Ui.Files.Gallery name="gallery" maxImages={7}/>
-                                    <Ui.Files.ImageUploader
-                                        onUploadSuccess={image => console.log(image)}
-                                        cropper={{
-                                            title: 'Crop your image',
-                                            action: 'Upload image',
-                                            config: {
-                                                closeOnClick: false,
-                                                autoCropArea: 0.7,
-                                                guides: false,
-                                                strict: true,
-                                                mouseWheelZoom: false,
-                                                touchDragZoom: false
-                                            }}}/>
+                                    <Ui.Grid.Row>
+                                        <Ui.Grid.Col all={6}>
+                                            <Ui.Files.Avatar name="avatar"/>
+                                            <br/>
+                                            <Ui.Files.File
+                                                name="avatar"
+                                                label="Avatar image"
+                                                placeholder="Select a file"
+                                                description="Any file up to 2.5MB will do"
+                                                validate="required"/>
+                                        </Ui.Grid.Col>
+                                        <Ui.Grid.Col all={6}>
+                                            <Ui.Files.Image name="avatar"/>
+                                        </Ui.Grid.Col>
+                                    </Ui.Grid.Row>
+                                    <Ui.Grid.Row>
+                                        <Ui.Grid.Col all={12}>
+                                            <Ui.Files.Gallery name="gallery" maxImages={7}/>
+
+                                            <Ui.Files.ImageUploader
+                                                onUploadSuccess={image => console.log(image)}
+                                                cropper={{
+                                                    title: 'Crop your image',
+                                                    action: 'Upload image',
+                                                    config: {
+                                                        closeOnClick: false,
+                                                        autoCropArea: 0.7,
+                                                        guides: false,
+                                                        strict: true,
+                                                        mouseWheelZoom: false,
+                                                        touchDragZoom: false
+                                                    }}}/>
+                                        </Ui.Grid.Col>
+                                    </Ui.Grid.Row>
+
                                 </Ui.Tabs.Tab>
                                 <Ui.Tabs.Tab label="WYSIWYG" icon="fa-font">
                                     <Ui.HtmlEditor name="html"/>
