@@ -106,6 +106,7 @@ class List extends Webiny.Ui.View {
                                                     <Ui.Files.File
                                                         accept={['text/csv']}
                                                         name="records"
+                                                        readAs="binary"
                                                         label="Import from file"
                                                         placeholder="Select a CSV file to import"
                                                         description="Any file up to 2.5MB will do"
