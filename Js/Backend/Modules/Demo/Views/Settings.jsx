@@ -8,7 +8,7 @@ class UiSettings extends Webiny.Ui.Component {
 UiSettings.defaultProps = {
     renderer() {
         return (
-            <Ui.Settings id="content-management">
+            <Ui.Settings api="/entities/demo/setting">
                 {(model, container) => (
                     <Ui.View.Form>
                         <Ui.View.Header
@@ -17,7 +17,7 @@ UiSettings.defaultProps = {
                         <Ui.View.Body>
                             <Ui.Grid.Row>
                                 <Ui.Grid.Col all={12}>
-                                    <Ui.Input label="Per page" name="settings.perPage" validate="required,number"/>
+                                    <Ui.Input label="Per page" name="perPage" validate="required,number"/>
                                 </Ui.Grid.Col>
                             </Ui.Grid.Row>
                         </Ui.View.Body>
