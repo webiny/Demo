@@ -2,11 +2,11 @@
 namespace Apps\Demo\Php\Entities;
 
 /**
- * Class Setting
+ * Class Settings
  *
  * @package Apps\Demo\Php\Entities
  */
-class Setting extends \Apps\Core\Php\Entities\Setting
+class Settings extends \Apps\Core\Php\Entities\Settings
 {
     protected static $key = 'demo';
 }

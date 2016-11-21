@@ -28,7 +28,7 @@
                     "get" : true
                 }
             },
-            "Apps\\Demo\\Php\\Entities\\Setting" : {
+            "Apps\\Demo\\Php\\Entities\\Settings" : {
                 "/" : {
                     "patch" : true,
                     "get" : true
