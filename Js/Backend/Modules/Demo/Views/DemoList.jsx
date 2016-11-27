@@ -209,6 +209,9 @@ class List extends Webiny.Ui.View {
                                             <Table.Action label="Business Card" icon="icon-doc-text" download={(download, data) => {
                                                 download('GET', data.reports.businessCard);
                                             }}/>
+                                            <Table.Action label="Send to my email" icon="icon-doc-text" download={(download, data) => {
+                                                download('POST', data.reports.emailBusinessCard);
+                                            }}/>
                                             <Table.Action label="Export contacts" icon="icon-external-link" download={(download, record) => {
                                                 const submit = model => download('GET', record.reports.contacts, null, model);
                                                 return (

@@ -72,6 +72,7 @@ class Record extends AbstractEntity
         $this->attr('reports')->dynamic(function () {
             return [
                 'businessCard' => $this->api('GET', '{id}/report/business-card')->getUrl(),
+                'emailBusinessCard' => $this->api('POST', '{id}/report/send')->getUrl(),
                 'contacts'     => $this->api('GET', '{id}/report/contacts')->getUrl()
             ];
         });
@@ -105,7 +106,7 @@ class Record extends AbstractEntity
             return new RecordsCsv($records);
         });
 
-        $this->api('GET', '{id}/report/send', function () {
+        $this->api('POST', '{id}/report/send', function () {
             /* @var \Apps\NotificationManager\Php\Lib\Notification $notification */
             $notification = $this->wService('NotificationManager')->getNotification('demo-record');
             $notification->addEntity($this)->setRecipient(new Email($this->email, $this->name));
