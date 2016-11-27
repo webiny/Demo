@@ -22,7 +22,6 @@ class Form extends Webiny.Ui.View {
             new Webiny.Draft.Plugins.Table(),
             new Webiny.Draft.Plugins.Code(),
             new Webiny.Draft.Plugins.CodeBlock(),
-            new Webiny.Draft.Plugins.ReactSandbox(),
             new Webiny.Draft.Plugins.ToJSON()
         ];
 
