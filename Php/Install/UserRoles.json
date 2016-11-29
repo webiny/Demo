@@ -1,8 +1,10 @@
-{
-    "name" : "Demo Manager",
-    "slug" : "demo-manager",
-    "description" : "This role allows user to manage demo app",
-    "permissions": [
-        "demo-app-manage-all"
-    ]
-}
+[
+    {
+        "name" : "Demo Manager",
+        "slug" : "demo-manager",
+        "description" : "This role allows user to manage demo app",
+        "permissions": [
+            "demo-app-manage-all"
+        ]
+    }
+]
