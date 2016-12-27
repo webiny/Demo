@@ -191,7 +191,7 @@ class List extends Webiny.Ui.View {
                                                     from a particular site.
                                                     Only requests that have the matching API key will get a proper response.
                                                     <br/><br/>
-                                                    The API key is sent via <span className="label label-default">X-Webiny-Api-Key</span>
+                                                    The API key is sent via <span className="label label-default">X-Webiny-Authorization</span>
                                                     HTTP
                                                     request
                                                     header.
