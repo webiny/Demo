@@ -11,7 +11,7 @@ use Apps\Demo\Php\Reports\BusinessCardReport;
 use Apps\Demo\Php\Reports\ContactsReport;
 use Apps\Demo\Php\Reports\RecordsCsv;
 use Apps\Demo\Php\Reports\RecordsReport;
-use Webiny\Component\Mailer\Email;
+use Apps\NotificationManager\Php\Lib\Recipients\Email;
 
 /**
  * Class User
