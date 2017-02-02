@@ -1,10 +1,7 @@
 /* eslint-disable */
 import Webiny from 'Webiny';
-import data from './data';
 const Ui = Webiny.Ui.Components;
 const Table = Ui.List.Table;
-const UiD = Webiny.Ui.Dispatcher;
-import CustomLayout from './CustomLayout';
 
 class List extends Webiny.Ui.View {
 
@@ -26,7 +23,8 @@ class List extends Webiny.Ui.View {
                                         {() => (
                                             <Ui.Grid.Row>
                                                 <Ui.Grid.Col all={12}>
-                                                    <Ui.Select name="enabled" label="Filter by status" placeholder="All records" allowClear>
+                                                    <Ui.Select name="enabled" label="Filter by status" placeholder="All records" allowClear
+                                                        tooltip="Filter me">
                                                         <option value="true">Enabled</option>
                                                         <option value="false">Disabled</option>
                                                     </Ui.Select>
@@ -91,10 +89,10 @@ class List extends Webiny.Ui.View {
                                 );
                             }}>
                                 <Ui.Button type="primary" label="ClickConfirm custom dialog" align="right" onClick={() => {
-                            return new Promise(r => {
-                                setTimeout(r, 1500);
-                            });
-                        }}/>
+                                return new Promise(r => {
+                                    setTimeout(r, 1500);
+                                });
+                            }}/>
                             </Ui.ClickConfirm>
                             {/* Import file example */}
                             <Ui.ClickConfirm renderDialog={(confirm, cancel, confirmation) => {
@@ -191,7 +189,8 @@ class List extends Webiny.Ui.View {
                                                     from a particular site.
                                                     Only requests that have the matching API key will get a proper response.
                                                     <br/><br/>
-                                                    The API key is sent via <span className="label label-default">X-Webiny-Api-Key</span>
+                                                    The API key is sent via <span
+                                                    className="label label-default">X-Webiny-Authorization</span>
                                                     HTTP
                                                     request
                                                     header.

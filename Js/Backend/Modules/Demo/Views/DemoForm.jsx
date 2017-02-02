@@ -304,7 +304,19 @@ class Form extends Webiny.Ui.View {
                                     </Ui.Grid.Row>
                                     <Ui.Grid.Row>
                                         <Ui.Grid.Col all={12}>
-                                            <Ui.Files.Gallery name="gallery" maxImages={7}/>
+                                            <Ui.Files.Gallery
+                                                name="gallery"
+                                                maxImages={7}
+                                                newCropper={{
+                                                    title: 'Crop your image',
+                                                    action: 'Upload image',
+                                                    config: {
+                                                        closeOnClick: false,
+                                                        autoCropArea: 0.7,
+                                                        aspectRatio: 1,
+                                                        width: 300,
+                                                        height: 300
+                                                    }}}/>
 
                                             <Ui.Files.ImageUploader
                                                 onUploadSuccess={image => console.log(image)}
@@ -312,12 +324,11 @@ class Form extends Webiny.Ui.View {
                                                     title: 'Crop your image',
                                                     action: 'Upload image',
                                                     config: {
+                                                        aspectRatio: 1,
                                                         closeOnClick: false,
                                                         autoCropArea: 0.7,
-                                                        guides: false,
-                                                        strict: true,
-                                                        mouseWheelZoom: false,
-                                                        touchDragZoom: false
+                                                        width: 300,
+                                                        height: 300
                                                     }}}/>
                                         </Ui.Grid.Col>
                                     </Ui.Grid.Row>

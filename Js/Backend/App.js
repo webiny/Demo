@@ -1,3 +1,13 @@
 import Webiny from 'Webiny';
+import DemoModule from './Modules/Demo';
 
-export default new Webiny.App('Demo.Backend');
+class Demo extends Webiny.App {
+    constructor() {
+        super('Demo.Backend');
+        this.modules = [
+            new DemoModule(this)
+        ];
+    }
+}
+
+Webiny.registerApp(new Demo());    
