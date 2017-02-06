@@ -19,6 +19,7 @@ class Form extends Webiny.Ui.View {
             new Webiny.Draft.Plugins.Blockquote(),
             new Webiny.Draft.Plugins.Table(),
             new Webiny.Draft.Plugins.Code(),
+            new Webiny.Draft.Plugins.Video(),
             new Webiny.Draft.Plugins.CodeBlock(),
             new Webiny.Draft.Plugins.ToJSON()
         ];
