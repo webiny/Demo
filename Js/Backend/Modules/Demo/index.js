@@ -4,6 +4,7 @@ import Views from './Views/Views';
 class Demo extends Webiny.Module {
 
     init() {
+        this.name = 'Demo';
         const Menu = Webiny.Ui.Menu;
 
         this.registerMenus(
