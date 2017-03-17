@@ -300,7 +300,7 @@ class List extends Webiny.Ui.View {
                                     return (
                                         <Ui.Grid.Row>
                                             <Ui.Grid.Col all={12}>
-                                                <Ui.Form.Fieldset
+                                                <Ui.Form.Section
                                                     title={`Found a total of ${meta.totalCount} records (showing ${meta.perPage} per page)`}/>
                                             </Ui.Grid.Col>
                                             <Ui.Grid.Col all={12}>

@@ -228,7 +228,7 @@ class Form extends Webiny.Ui.View {
                                     <Ui.Grid.Row>
                                         {/* CHECKBOXES */}
                                         <Ui.Grid.Col all={6}>
-                                            <Ui.Form.Fieldset title="Static checkboxes (hard-coded options)"/>
+                                            <Ui.Form.Section title="Static checkboxes (hard-coded options)"/>
                                             <Ui.CheckboxGroup name="roles" grid={12}>
                                                 <option value="Admin">Admin&nbsp;management</option>
                                                 <option value="Coupon">Coupon&nbsp;management</option>
@@ -242,11 +242,11 @@ class Form extends Webiny.Ui.View {
                                             </Ui.CheckboxGroup>
 
                                             <div className="clearfix"/>
-                                            <Ui.Form.Fieldset title="Single checkbox"/>
+                                            <Ui.Form.Section title="Single checkbox"/>
                                             <Ui.Checkbox label="Single checkbox" name="singleCheckbox" grid={12} tooltip="Set immediately"/>
 
                                             <div className="clearfix"/>
-                                            <Ui.Form.Fieldset title="Custom checkbox markup (using 'checkboxRenderer' prop)"/>
+                                            <Ui.Form.Section title="Custom checkbox markup (using 'checkboxRenderer' prop)"/>
                                             <Ui.CheckboxGroup name="roles" grid={12} checkboxRenderer={function renderCheckbox() {
                                                 return (
                                                     <li className="list-item col-xs-offset-1">
@@ -265,7 +265,7 @@ class Form extends Webiny.Ui.View {
                                             </Ui.CheckboxGroup>
                                         </Ui.Grid.Col>
                                         <Ui.Grid.Col all={6}>
-                                            <Ui.Form.Fieldset title="Dynamic checkboxes for manual aggregation"/>
+                                            <Ui.Form.Section title="Dynamic checkboxes for manual aggregation"/>
                                             <Ui.CheckboxGroup {...recordUsers}/>
                                         </Ui.Grid.Col>
                                     </Ui.Grid.Row>
