@@ -1,27 +1,27 @@
 /* eslint-disable */
 import Webiny from 'Webiny';
-const Ui = Webiny.Ui.Components;
-const UiD = Webiny.Ui.Dispatcher;
 
 class Form extends Webiny.Ui.View {
     constructor(props) {
         super(props);
 
+        const {Draft} = props;
+
         this.plugins = [
-            new Webiny.Draft.Plugins.Heading(),
-            new Webiny.Draft.Plugins.Bold(),
-            new Webiny.Draft.Plugins.Italic(),
-            new Webiny.Draft.Plugins.Underline(),
-            new Webiny.Draft.Plugins.UnorderedList(),
-            new Webiny.Draft.Plugins.OrderedList(),
-            new Webiny.Draft.Plugins.Alignment(),
-            new Webiny.Draft.Plugins.Link(),
-            new Webiny.Draft.Plugins.Blockquote(),
-            new Webiny.Draft.Plugins.Table(),
-            new Webiny.Draft.Plugins.Code(),
-            new Webiny.Draft.Plugins.Video(),
-            new Webiny.Draft.Plugins.CodeBlock(),
-            new Webiny.Draft.Plugins.ToJSON()
+            new Draft.Plugins.Heading(),
+            new Draft.Plugins.Bold(),
+            new Draft.Plugins.Italic(),
+            new Draft.Plugins.Underline(),
+            new Draft.Plugins.UnorderedList(),
+            new Draft.Plugins.OrderedList(),
+            new Draft.Plugins.Alignment(),
+            new Draft.Plugins.Link(),
+            new Draft.Plugins.Blockquote(),
+            new Draft.Plugins.Table(),
+            new Draft.Plugins.Code(),
+            new Draft.Plugins.Video(),
+            new Draft.Plugins.CodeBlock(),
+            new Draft.Plugins.ToJSON()
         ];
 
         this.state = {
@@ -30,6 +30,12 @@ class Form extends Webiny.Ui.View {
     }
 
     render() {
+        const {
+            Growl, Dynamic, Grid, Input, Button, Select, Form, View, Link, Copy, Tabs, Search, DateTime, Date, Time, DateRange,
+            IconPicker, Switch, Password, Tags, Textarea, CheckboxGroup, Section, Checkbox, RadioGroup, Avatar, File, Image, Gallery,
+            ImageUploader, Draft, HtmlEditor, ButtonGroup
+        } = this.props;
+
         const formProps = {
             ui: 'myForm',
             api: '/entities/demo/records',
@@ -39,7 +45,7 @@ class Form extends Webiny.Ui.View {
             onCancel: 'Demo.List',
             onProgress: function (pe) {
                 const cmp = <div>Uploading form data...{pe.progress}%</div>;
-                Webiny.Growl(<Ui.Growl.Warning id={this.growlId} title="Custom progress" sticky={true}>{cmp}</Ui.Growl.Warning>);
+                Webiny.Growl(<Growl.Warning id={this.growlId} title="Custom progress" sticky={true}>{cmp}</Growl.Warning>);
             }
         };
 
@@ -91,66 +97,71 @@ class Form extends Webiny.Ui.View {
         };
 
         const settings = (
-            <Ui.Dynamic.Fieldset name="contacts">
-                <Ui.Dynamic.Row>
+            <Dynamic.Fieldset name="contacts">
+                <Dynamic.Row>
                     {function (record, actions) {
                         return (
-                            <Ui.Grid.Row>
-                                <Ui.Grid.Col all={3}>
-                                    <Ui.Input placeholder="Key" name="key" validate="required"/>
-                                </Ui.Grid.Col>
-                                <Ui.Grid.Col all={3}>
-                                    <Ui.Input placeholder="Value" name="value" validate="required"/>
-                                </Ui.Grid.Col>
-                                <Ui.Grid.Col all={3}>
-                                    <Ui.Select {...createdBySelect} label={null}/>
-                                </Ui.Grid.Col>
-                                <Ui.Grid.Col all={3}>
-                                    <div className="btn-group">
-                                        <Ui.Button type="primary" label="Add" onClick={actions.add(record)}/>
-                                        <Ui.Button type="secondary" label="x" onClick={actions.remove(record)}/>
-                                    </div>
-                                </Ui.Grid.Col>
-                            </Ui.Grid.Row>
+                            <Grid.Row>
+                                <Grid.Col all={3}>
+                                    <Input placeholder="Key" name="key" validate="required"/>
+                                </Grid.Col>
+                                <Grid.Col all={3}>
+                                    <Input placeholder="Value" name="value" validate="required"/>
+                                </Grid.Col>
+                                <Grid.Col all={3}>
+                                    <Select {...createdBySelect} label={null}/>
+                                </Grid.Col>
+                                <Grid.Col all={3}>
+                                    <ButtonGroup>
+                                        <Button type="primary" label="Add" onClick={actions.add(record)}/>
+                                        <Button type="secondary" label="x" onClick={actions.remove(record)}/>
+                                    </ButtonGroup>
+                                </Grid.Col>
+                            </Grid.Row>
                         );
                     }}
-                </Ui.Dynamic.Row>
-                <Ui.Dynamic.Empty>
+                </Dynamic.Row>
+                <Dynamic.Empty>
                     {function (actions) {
                         return (
-                            <Ui.Grid.Row>
-                                <Ui.Grid.Col all={12}>
+                            <Grid.Row>
+                                <Grid.Col all={12}>
                                     <h5>You have not created any settings yet. Click "Add settings" to start creating your settings!</h5>
-                                    <Ui.Button type="primary" label="Add settings" onClick={actions.add()}/>
-                                </Ui.Grid.Col>
-                            </Ui.Grid.Row>
+                                    <Button type="primary" label="Add settings" onClick={actions.add()}/>
+                                </Grid.Col>
+                            </Grid.Row>
                         )
                     }}
-                </Ui.Dynamic.Empty>
-            </Ui.Dynamic.Fieldset>
+                </Dynamic.Empty>
+            </Dynamic.Fieldset>
         );
 
         return (
-            <Ui.Form {...formProps}>
+            <Form {...formProps}>
                 {(model, form) => (
-                    <Ui.View.Form>
-                        <Ui.View.Header title="Demo Form" description="Demo form to demonstrate most of the input components Webiny offers">
-                            <Ui.Link type="default" align="right" route="Demo.List">Back to list</Ui.Link>
-                            <Ui.Copy.Button onSuccessMessage="Stolen!" type="secondary" icon="icon-pencil" value="You just stole a record!"
-                                            label="Steal it..." align="right"/>
-                        </Ui.View.Header>
-                        <Ui.View.Body noPadding>
-                            <Ui.Tabs size="large">
-                                <Ui.Tabs.Tab label="Input components" icon="icon-gauge">
-                                    <Ui.Grid.Row>
-                                        <Ui.Grid.Col all={3}>
-                                            <Ui.Input label="Name" name="name" validate="required,minLength:3"/>
-                                        </Ui.Grid.Col>
-                                        <Ui.Grid.Col all={3}>
-                                            <Ui.Input label="Email" name="email" validate="required,email" tooltip="Your email address"/>
-                                        </Ui.Grid.Col>
-                                        <Ui.Grid.Col all={6}>
-                                            <Ui.Search
+                    <View.Form>
+                        <View.Header title="Demo Form" description="Demo form to demonstrate most of the input components Webiny offers">
+                            <Link type="default" align="right" route="Demo.List">Back to list</Link>
+                            <Copy.Button
+                                onSuccessMessage="Stolen!"
+                                type="secondary"
+                                icon="icon-pencil"
+                                value="You just stole a record!"
+                                label="Steal it..."
+                                align="right"/>
+                        </View.Header>
+                        <View.Body noPadding>
+                            <Tabs size="large">
+                                <Tabs.Tab label="Input components" icon="icon-gauge">
+                                    <Grid.Row>
+                                        <Grid.Col all={3}>
+                                            <Input label="Name" name="name" validate="required,minLength:3"/>
+                                        </Grid.Col>
+                                        <Grid.Col all={3}>
+                                            <Input label="Email" name="email" validate="required,email" tooltip="Your email address"/>
+                                        </Grid.Col>
+                                        <Grid.Col all={6}>
+                                            <Search
                                                 name="avatar"
                                                 textAttr="name"
                                                 label="Find file"
@@ -161,75 +172,75 @@ class Form extends Webiny.Ui.View {
                                                 useDataAsValue={false}
                                                 filterBy="userRole"
                                                 onChange={(newValue, oldValue, input) => console.log(newValue, input)}/>
-                                        </Ui.Grid.Col>
-                                    </Ui.Grid.Row>
-                                    <Ui.Grid.Row>
-                                        <Ui.Grid.Col all={3}>
-                                            <Ui.DateTime label="Date & Time" name="datetime" placeholder="Select date and time"/>
-                                        </Ui.Grid.Col>
-                                        <Ui.Grid.Col all={3}>
-                                            <Ui.Date label="Date" name="date" placeholder="Select a date" validate="required"/>
-                                        </Ui.Grid.Col>
-                                        <Ui.Grid.Col all={3}>
-                                            <Ui.Time label="Time" name="time" placeholder="Select time"/>
-                                        </Ui.Grid.Col>
-                                        <Ui.Grid.Col all={3}>
-                                            <Ui.DateRange label="Date range" name="daterange" placeholder="Select a date range"/>
-                                        </Ui.Grid.Col>
-                                    </Ui.Grid.Row>
-                                    <Ui.Grid.Row>
-                                        <Ui.Grid.Col all={4}>
-                                            <Ui.Select {...userRoleSelect} />
-                                        </Ui.Grid.Col>
-                                        <Ui.Grid.Col all={4}>
-                                            <Ui.Select name="staticSelect" label="Static select" placeholder="Select an option">
+                                        </Grid.Col>
+                                    </Grid.Row>
+                                    <Grid.Row>
+                                        <Grid.Col all={3}>
+                                            <DateTime label="Date & Time" name="datetime" placeholder="Select date and time"/>
+                                        </Grid.Col>
+                                        <Grid.Col all={3}>
+                                            <Date label="Date" name="date" placeholder="Select a date" validate="required"/>
+                                        </Grid.Col>
+                                        <Grid.Col all={3}>
+                                            <Time label="Time" name="time" placeholder="Select time"/>
+                                        </Grid.Col>
+                                        <Grid.Col all={3}>
+                                            <DateRange label="Date range" name="daterange" placeholder="Select a date range"/>
+                                        </Grid.Col>
+                                    </Grid.Row>
+                                    <Grid.Row>
+                                        <Grid.Col all={4}>
+                                            <Select {...userRoleSelect} />
+                                        </Grid.Col>
+                                        <Grid.Col all={4}>
+                                            <Select name="staticSelect" label="Static select" placeholder="Select an option">
                                                 <option value="yes">Yes</option>
                                                 <option value="no">
                                                     <webiny-no>No</webiny-no>
                                                 </option>
                                                 <option value="maybe"><strong>Maybe</strong></option>
-                                            </Ui.Select>
-                                        </Ui.Grid.Col>
-                                        <Ui.Grid.Col all={4}>
-                                            <Ui.Icon.Picker name="icon" label="Your icon"
-                                                            allowClear={true} placeholder="Select your icon"/>
-                                        </Ui.Grid.Col>
-                                    </Ui.Grid.Row>
-                                    <Ui.Grid.Row>
-                                        <Ui.Grid.Col all={6}>
-                                            <Ui.Switch label="Enabled" name="enabled"/>
-                                        </Ui.Grid.Col>
-                                        <Ui.Grid.Col all={6}>
-                                            <Ui.Password label="Password" name="password"/>
-                                        </Ui.Grid.Col>
-                                    </Ui.Grid.Row>
-                                    <Ui.Grid.Row>
-                                        <Ui.Grid.Col all={12}>
-                                            <Ui.Copy.Input label="Cron setup"
-                                                           value="* * * * * wget http://selecto.app:8001/api/services/cron-manager/runner/run >/dev/null 2>&1"/>
-                                        </Ui.Grid.Col>
-                                        <Ui.Grid.Col all={12}>
-                                            <Ui.Tags name="tags" placeholder="Add tag" label="Tags"/>
-                                        </Ui.Grid.Col>
-                                    </Ui.Grid.Row>
-                                    <Ui.Grid.Row>
-                                        <Ui.Grid.Col all={12}>
-                                            <Ui.Textarea label="Description" name="description" tooltip="Put any tooltip text here..."/>
-                                        </Ui.Grid.Col>
-                                    </Ui.Grid.Row>
-                                    <Ui.Grid.Row>
-                                        <Ui.Grid.Col all={12}>
+                                            </Select>
+                                        </Grid.Col>
+                                        <Grid.Col all={4}>
+                                            <IconPicker name="icon" label="Your icon"
+                                                        allowClear={true} placeholder="Select your icon"/>
+                                        </Grid.Col>
+                                    </Grid.Row>
+                                    <Grid.Row>
+                                        <Grid.Col all={6}>
+                                            <Switch label="Enabled" name="enabled"/>
+                                        </Grid.Col>
+                                        <Grid.Col all={6}>
+                                            <Password label="Password" name="password"/>
+                                        </Grid.Col>
+                                    </Grid.Row>
+                                    <Grid.Row>
+                                        <Grid.Col all={12}>
+                                            <Copy.Input label="Cron setup"
+                                                        value="* * * * * wget http://selecto.app:8001/api/services/cron-manager/runner/run >/dev/null 2>&1"/>
+                                        </Grid.Col>
+                                        <Grid.Col all={12}>
+                                            <Tags name="tags" placeholder="Add tag" label="Tags"/>
+                                        </Grid.Col>
+                                    </Grid.Row>
+                                    <Grid.Row>
+                                        <Grid.Col all={12}>
+                                            <Textarea label="Description" name="description" tooltip="Put any tooltip text here..."/>
+                                        </Grid.Col>
+                                    </Grid.Row>
+                                    <Grid.Row>
+                                        <Grid.Col all={12}>
                                             <h4>Settings</h4>
                                             {settings}
-                                        </Ui.Grid.Col>
-                                    </Ui.Grid.Row>
-                                </Ui.Tabs.Tab>
-                                <Ui.Tabs.Tab label="Checkboxes" icon="icon-columns">
-                                    <Ui.Grid.Row>
+                                        </Grid.Col>
+                                    </Grid.Row>
+                                </Tabs.Tab>
+                                <Tabs.Tab label="Checkboxes" icon="icon-columns">
+                                    <Grid.Row>
                                         {/* CHECKBOXES */}
-                                        <Ui.Grid.Col all={6}>
-                                            <Ui.Form.Section title="Static checkboxes (hard-coded options)"/>
-                                            <Ui.CheckboxGroup name="roles" grid={12}>
+                                        <Grid.Col all={6}>
+                                            <Section title="Static checkboxes (hard-coded options)"/>
+                                            <CheckboxGroup name="roles" grid={12} validate="minLength:2">
                                                 <option value="Admin">Admin&nbsp;management</option>
                                                 <option value="Coupon">Coupon&nbsp;management</option>
                                                 <option value="Crm">CRM</option>
@@ -239,21 +250,23 @@ class Form extends Webiny.Ui.View {
                                                     <div>Monthly&nbsp;<i>(One season minimum)</i></div>
                                                 </option>
                                                 <validator name="minLength">Please select at least 2 options</validator>
-                                            </Ui.CheckboxGroup>
+                                            </CheckboxGroup>
 
                                             <div className="clearfix"/>
-                                            <Ui.Form.Section title="Single checkbox"/>
-                                            <Ui.Checkbox label="Single checkbox" name="singleCheckbox" grid={12} tooltip="Set immediately"/>
+                                            <Section title="Single checkbox"/>
+                                            <Checkbox label="Single checkbox" name="singleCheckbox" grid={12} tooltip="Set immediately"/>
 
                                             <div className="clearfix"/>
-                                            <Ui.Form.Section title="Custom checkbox markup (using 'checkboxRenderer' prop)"/>
-                                            <Ui.CheckboxGroup name="roles" grid={12} checkboxRenderer={function renderCheckbox() {
+                                            <Section title="Custom checkbox markup (using 'checkboxRenderer' prop)"/>
+                                            <CheckboxGroup name="roles" grid={12} checkboxRenderer={function renderCheckbox() {
                                                 return (
                                                     <li className="list-item col-xs-offset-1">
                                                         <div className="form-group">
                                                             <div className="checkbox">
-                                                                <input type="checkbox" id={this.id} disabled={this.isDisabled()} checked={this.isChecked()} onChange={this.onChange}/>
-                                                                <label htmlFor={this.id}><span className="form-icon"></span>{this.props.label}</label>
+                                                                <input type="checkbox" id={this.id} disabled={this.isDisabled()}
+                                                                       checked={this.isChecked()} onChange={this.onChange}/>
+                                                                <label htmlFor={this.id}><span className="form-icon"/>{this.props.label}
+                                                                </label>
                                                             </div>
                                                         </div>
                                                     </li>
@@ -262,50 +275,55 @@ class Form extends Webiny.Ui.View {
                                                 <option value="Admin">Admin&nbsp;management</option>
                                                 <option value="Coupon">Coupon&nbsp;management</option>
                                                 <option value="Crm">CRM</option>
-                                            </Ui.CheckboxGroup>
-                                        </Ui.Grid.Col>
-                                        <Ui.Grid.Col all={6}>
-                                            <Ui.Form.Section title="Dynamic checkboxes for manual aggregation"/>
-                                            <Ui.CheckboxGroup {...recordUsers}/>
-                                        </Ui.Grid.Col>
-                                    </Ui.Grid.Row>
-                                </Ui.Tabs.Tab>
-                                <Ui.Tabs.Tab label="Radio buttons" icon="icon-columns">
-                                    <Ui.Grid.Row>
+                                            </CheckboxGroup>
+                                        </Grid.Col>
+                                        <Grid.Col all={6}>
+                                            <Section title="Dynamic checkboxes for manual aggregation"/>
+                                            <CheckboxGroup {...recordUsers}/>
+                                        </Grid.Col>
+                                    </Grid.Row>
+                                </Tabs.Tab>
+                                <Tabs.Tab label="Radio buttons" icon="icon-columns">
+                                    <Grid.Row>
                                         {/* RADIO */}
-                                        <Ui.Grid.Col all={6}>
-                                            <Ui.RadioGroup label="Roles (static)" name="access" grid={12}>
+                                        <Grid.Col all={6}>
+                                            <RadioGroup label="Roles (static)" name="access" grid={12}>
                                                 <option value="Admin">Admin</option>
                                                 <option value="Billing">Billing</option>
                                                 <option value="Crm">CRM</option>
                                                 <option value="Dashboard">Dashboard</option>
-                                            </Ui.RadioGroup>
-                                        </Ui.Grid.Col>
-                                        <Ui.Grid.Col all={6}>
-                                            <Ui.RadioGroup label="User (API)" name="createdBy" api="/entities/core/users"
-                                                           textAttr="email" valueKey="id" grid={12}/>
-                                        </Ui.Grid.Col>
-                                    </Ui.Grid.Row>
-                                </Ui.Tabs.Tab>
-                                <Ui.Tabs.Tab label="Upload components" icon="icon-picture-1">
-                                    <Ui.Grid.Row>
-                                        <Ui.Grid.Col all={6}>
-                                            <Ui.Files.Avatar name="avatar"/>
+                                            </RadioGroup>
+                                        </Grid.Col>
+                                        <Grid.Col all={6}>
+                                            <RadioGroup
+                                                label="User (API)"
+                                                name="createdBy"
+                                                api="/entities/core/users"
+                                                textAttr="email"
+                                                valueKey="id"
+                                                grid={12}/>
+                                        </Grid.Col>
+                                    </Grid.Row>
+                                </Tabs.Tab>
+                                <Tabs.Tab label="Upload components" icon="icon-picture-1">
+                                    <Grid.Row>
+                                        <Grid.Col all={6}>
+                                            <Avatar name="avatar"/>
                                             <br/>
-                                            <Ui.Files.File
+                                            <File
                                                 name="avatar"
                                                 label="Avatar image"
                                                 placeholder="Select a file"
                                                 description="Any file up to 2.5MB will do"
                                                 validate="required"/>
-                                        </Ui.Grid.Col>
-                                        <Ui.Grid.Col all={6}>
-                                            <Ui.Files.Image name="avatar"/>
-                                        </Ui.Grid.Col>
-                                    </Ui.Grid.Row>
-                                    <Ui.Grid.Row>
-                                        <Ui.Grid.Col all={12}>
-                                            <Ui.Files.Gallery
+                                        </Grid.Col>
+                                        <Grid.Col all={6}>
+                                            <Image name="avatar"/>
+                                        </Grid.Col>
+                                    </Grid.Row>
+                                    <Grid.Row>
+                                        <Grid.Col all={12}>
+                                            <Gallery
                                                 name="gallery"
                                                 maxImages={7}
                                                 newCropper={{
@@ -317,9 +335,10 @@ class Form extends Webiny.Ui.View {
                                                         aspectRatio: 1,
                                                         width: 300,
                                                         height: 300
-                                                    }}}/>
+                                                    }
+                                                }}/>
 
-                                            <Ui.Files.ImageUploader
+                                            <ImageUploader
                                                 onUploadSuccess={image => console.log(image)}
                                                 cropper={{
                                                     title: 'Crop your image',
@@ -330,36 +349,43 @@ class Form extends Webiny.Ui.View {
                                                         autoCropArea: 0.7,
                                                         width: 300,
                                                         height: 300
-                                                    }}}/>
-                                        </Ui.Grid.Col>
-                                    </Ui.Grid.Row>
+                                                    }
+                                                }}/>
+                                        </Grid.Col>
+                                    </Grid.Row>
 
-                                </Ui.Tabs.Tab>
-                                <Ui.Tabs.Tab label="WYSIWYG" icon="fa-font">
-                                    <Ui.HtmlEditor name="html"/>
-                                </Ui.Tabs.Tab>
-                                <Ui.Tabs.Tab label="Draft Editor" icon="fa-font">
-                                    <Ui.Button
+                                </Tabs.Tab>
+                                <Tabs.Tab label="WYSIWYG" icon="fa-font">
+                                    <HtmlEditor name="html"/>
+                                </Tabs.Tab>
+                                <Tabs.Tab label="Draft Editor" icon="fa-font">
+                                    <Button
                                         label={this.state.preview ? 'Edit' : 'Preview'}
                                         onClick={() => this.setState({preview: !this.state.preview})}/>
                                     <hr/>
-                                    <Ui.Draft.Editor
+                                    <Draft.Editor
                                         name="draft"
                                         placeholder="Tell a story..."
                                         plugins={this.plugins}
                                         preview={this.state.preview}/>
-                                </Ui.Tabs.Tab>
-                            </Ui.Tabs>
-                        </Ui.View.Body>
-                        <Ui.View.Footer>
-                            <Ui.Button type="default" onClick={form.cancel} label="Cancel"/>
-                            <Ui.Button type="primary" onClick={form.submit} label="Submit" align="right"/>
-                        </Ui.View.Footer>
-                    </Ui.View.Form>
+                                </Tabs.Tab>
+                            </Tabs>
+                        </View.Body>
+                        <View.Footer>
+                            <Button type="default" onClick={form.cancel} label="Cancel"/>
+                            <Button type="primary" onClick={form.submit} label="Submit" align="right"/>
+                        </View.Footer>
+                    </View.Form>
                 )}
-            </Ui.Form>
+            </Form>
         );
     }
 }
 
-export default Form;
+export default Webiny.createComponent(Form, {
+    modules: [
+        'Growl', 'Dynamic', 'Grid', 'Input', 'Button', 'Select', 'Form', 'View', 'Link', 'Copy', 'Tabs', 'Search', 'DateTime', 'Date', 'Time',
+        'DateRange', 'IconPicker', 'Switch', 'Password', 'Tags', 'Textarea', 'CheckboxGroup', 'Section', 'Checkbox', 'RadioGroup', 'Avatar',
+        'File', 'Image', 'Gallery', 'ImageUploader', 'Draft', 'HtmlEditor', 'ButtonGroup'
+    ]
+});

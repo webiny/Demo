@@ -1,5 +1,4 @@
 import Webiny from 'Webiny';
-const Ui = Webiny.Ui.Components;
 
 class UiSettings extends Webiny.Ui.Component {
 
@@ -7,28 +6,29 @@ class UiSettings extends Webiny.Ui.Component {
 
 UiSettings.defaultProps = {
     renderer() {
+        const {Settings, View, Grid, Input, Button} = this.props;
         return (
-            <Ui.Settings api="/entities/demo/setting">
+            <Settings api="/entities/demo/setting">
                 {(model, container) => (
-                    <Ui.View.Form>
-                        <Ui.View.Header
+                    <View.Form>
+                        <View.Header
                             title="Content Management Settings"
                             description="Set your CMS preferences here"/>
-                        <Ui.View.Body>
-                            <Ui.Grid.Row>
-                                <Ui.Grid.Col all={12}>
-                                    <Ui.Input label="Per page" name="perPage" validate="required,number"/>
-                                </Ui.Grid.Col>
-                            </Ui.Grid.Row>
-                        </Ui.View.Body>
-                        <Ui.View.Footer align="right">
-                            <Ui.Button type="primary" onClick={container.submit} label="Save settings"/>
-                        </Ui.View.Footer>
-                    </Ui.View.Form>
+                        <View.Body>
+                            <Grid.Row>
+                                <Grid.Col all={12}>
+                                    <Input label="Per page" name="perPage" validate="required,number"/>
+                                </Grid.Col>
+                            </Grid.Row>
+                        </View.Body>
+                        <View.Footer align="right">
+                            <Button type="primary" onClick={container.submit} label="Save settings"/>
+                        </View.Footer>
+                    </View.Form>
                 )}
-            </Ui.Settings>
+            </Settings>
         );
     }
 };
 
-export default UiSettings;
+export default Webiny.createComponent(UiSettings, {modules: ['Settings', 'View', 'Grid', 'Input', 'Button']});

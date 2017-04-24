@@ -1,5 +1,4 @@
 import Webiny from 'Webiny';
-const Ui = Webiny.Ui.Components;
 
 class CustomLayout extends Webiny.Ui.Component {
 
@@ -25,22 +24,24 @@ class CustomLayout extends Webiny.Ui.Component {
             placeholder: 'Search...'
         }, this.bindTo('search'));
 
+        const {Panel, Button, Input} = this.props;
+
         return (
-            <Ui.Panel>
-                <Ui.Panel.Header title="Custom element layout">
-                    <Ui.Button {...buttonProps}/>
-                </Ui.Panel.Header>
-                <Ui.Panel.Body>
-                    <Ui.Input {...inputProps}/>
+            <Panel>
+                <Panel.Header title="Custom element layout">
+                    <Button {...buttonProps}/>
+                </Panel.Header>
+                <Panel.Body>
+                    <Input {...inputProps}/>
                     {this.props.table}
                     {this.props.pagination}
-                </Ui.Panel.Body>
-                <Ui.Panel.Footer>
+                </Panel.Body>
+                <Panel.Footer>
                     Filters: {this.props.filters}
-                </Ui.Panel.Footer>
-            </Ui.Panel>
+                </Panel.Footer>
+            </Panel>
         );
     }
 }
 
-export default CustomLayout;
+export default Webiny.createComponent(CustomLayout, {modules: ['Panel', 'Button', 'Input']});
