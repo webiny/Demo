@@ -1,12 +1,12 @@
 <?php
 namespace Apps\Demo\Php\Entities;
 
-use Apps\Core\Php\DevTools\Entity\Attributes\ImageAttribute;
-use Apps\Core\Php\DevTools\Entity\Attributes\ImagesAttribute;
-use Apps\Core\Php\DevTools\Reports\ReportsArchive;
-use Apps\Core\Php\DevTools\WebinyTrait;
-use Apps\Core\Php\DevTools\Entity\AbstractEntity;
-use Apps\Core\Php\Entities\User;
+use Apps\Webiny\Php\DevTools\Entity\Attributes\ImageAttribute;
+use Apps\Webiny\Php\DevTools\Entity\Attributes\ImagesAttribute;
+use Apps\Webiny\Php\DevTools\Reports\ReportsArchive;
+use Apps\Webiny\Php\DevTools\WebinyTrait;
+use Apps\Webiny\Php\DevTools\Entity\AbstractEntity;
+use Apps\Webiny\Php\Entities\User;
 use Apps\Demo\Php\Reports\BusinessCardReport;
 use Apps\Demo\Php\Reports\ContactsReport;
 use Apps\Demo\Php\Reports\RecordsCsv;
@@ -23,7 +23,7 @@ use Apps\NotificationManager\Php\Lib\Recipients\Email;
  * @property string $date
  * @property bool   $enabled
  *
- * @package Apps\Core\Php\Entities
+ * @package Apps\Webiny\Php\Entities
  *
  */
 class Record extends AbstractEntity
@@ -36,7 +36,7 @@ class Record extends AbstractEntity
     {
         parent::__construct();
 
-        $this->attr('author')->many2one()->setEntity('\Apps\Core\Php\Entities\User')->setDefaultValue($this->wAuth()->getUser());
+        $this->attr('author')->many2one()->setEntity('\Apps\Webiny\Php\Entities\User')->setDefaultValue($this->wAuth()->getUser());
         $this->attr('name')->char()->setValidators('required')->setToArrayDefault();
         $this->attr('description')->char();
         $this->attr('draft')->object();
@@ -138,7 +138,7 @@ class Record2User extends AbstractEntity
     {
         parent::__construct();
         $this->attr('record')->many2one()->setEntity('\Apps\Demo\Php\Entities\Record');
-        $this->attr('user')->many2one()->setEntity('\Apps\Core\Php\Entities\User');
+        $this->attr('user')->many2one()->setEntity('\Apps\Webiny\Php\Entities\User');
     }
 }
 

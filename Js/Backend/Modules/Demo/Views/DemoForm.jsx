@@ -54,7 +54,7 @@ class Form extends Webiny.Ui.View {
             name: 'userRole',
             placeholder: 'Select user role',
             allowClear: true,
-            api: '/entities/core/user-roles',
+            api: '/entities/webiny/user-roles',
             fields: 'slug,name,id,createdOn',
             perPage: 10,
             optionRenderer: (item) => {
@@ -78,7 +78,7 @@ class Form extends Webiny.Ui.View {
             name: 'createdBy',
             placeholder: 'Select user',
             allowClear: true,
-            api: '/entities/core/users',
+            api: '/entities/webiny/users',
             fields: 'id,email',
             valueAttr: 'id',
             textAttr: 'email'
@@ -87,7 +87,7 @@ class Form extends Webiny.Ui.View {
         const recordUsers = {
             label: 'Record users',
             name: 'users',
-            api: '/entities/core/users',
+            api: '/entities/webiny/users',
             fields: 'id,email',
             textAttr: 'email',
             valueKey: 'user.id',
@@ -165,7 +165,7 @@ class Form extends Webiny.Ui.View {
                                                 name="avatar"
                                                 textAttr="name"
                                                 label="Find file"
-                                                api="/entities/core/files"
+                                                api="/entities/webiny/files"
                                                 fields="name,id,createdOn,ref"
                                                 searchFields="name"
                                                 allowFreeInput={false}
@@ -298,7 +298,7 @@ class Form extends Webiny.Ui.View {
                                             <RadioGroup
                                                 label="User (API)"
                                                 name="createdBy"
-                                                api="/entities/core/users"
+                                                api="/entities/webiny/users"
                                                 textAttr="email"
                                                 valueKey="id"
                                                 grid={12}/>

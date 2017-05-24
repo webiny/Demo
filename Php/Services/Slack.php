@@ -1,8 +1,8 @@
 <?php
 namespace Apps\Demo\Php\Services;
 
-use Apps\Core\Php\DevTools\Interfaces\PublicApiInterface;
-use Apps\Core\Php\DevTools\Services\AbstractService;
+use Apps\Webiny\Php\DevTools\Interfaces\PublicApiInterface;
+use Apps\Webiny\Php\DevTools\Services\AbstractService;
 
 class Slack extends AbstractService implements PublicApiInterface
 {
