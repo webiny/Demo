@@ -37,6 +37,7 @@ class Record extends AbstractEntity
         parent::__construct();
 
         $this->attr('author')->many2one()->setEntity('\Apps\Webiny\Php\Entities\User')->setDefaultValue($this->wAuth()->getUser());
+        $this->attr('assignedTo')->many2one()->setEntity('\Apps\Webiny\Php\Entities\User');
         $this->attr('name')->char()->setValidators('required')->setToArrayDefault();
         $this->attr('description')->char();
         $this->attr('draft')->object();

@@ -31,7 +31,7 @@ class Form extends Webiny.Ui.View {
 
     render() {
         const {
-            Growl, Dynamic, Grid, Input, Button, Select, Form, View, Link, Copy, Tabs, Search, DateTime, Date, Time, DateRange,
+            Growl, Dynamic, Grid, Input, Email, Button, Select, Form, View, Link, Copy, Tabs, Search, DateTime, Date, Time, DateRange,
             IconPicker, Switch, Password, Tags, Textarea, CheckboxGroup, Section, Checkbox, RadioGroup, Avatar, File, Image, Gallery,
             ImageUploader, Draft, HtmlEditor, ButtonGroup
         } = this.props;
@@ -39,7 +39,7 @@ class Form extends Webiny.Ui.View {
         const formProps = {
             ui: 'myForm',
             api: '/entities/demo/records',
-            fields: 'id,createdBy,name,email,contacts,enabled,avatar,datetime,date,time,daterange,access,description,tags,icon,gallery,html,draft,roles,users[id,user.id,user.email]',
+            fields: 'id,createdBy,assignedTo,name,email,contacts,enabled,avatar,datetime,date,time,daterange,access,description,tags,icon,gallery,html,draft,roles,users[id,user.id,user.email]',
             connectToRouter: true,
             onSubmitSuccess: 'Demo.List',
             onCancel: 'Demo.List',
@@ -90,7 +90,8 @@ class Form extends Webiny.Ui.View {
             api: '/entities/webiny/users',
             fields: 'id,email',
             textAttr: 'email',
-            valueKey: 'user.id',
+            valueKey: 'user.id', // Used to map API options to form model
+            useDataAsValue: true,
             formatValue: value => {
                 return {user: {id: value.id}};
             }
@@ -158,7 +159,7 @@ class Form extends Webiny.Ui.View {
                                             <Input label="Name" name="name" validate="required,minLength:3"/>
                                         </Grid.Col>
                                         <Grid.Col all={3}>
-                                            <Input label="Email" name="email" validate="required,email" tooltip="Your email address"/>
+                                            <Email label="Email" name="email" validate="required" tooltip="Your email address"/>
                                         </Grid.Col>
                                         <Grid.Col all={6}>
                                             <Search
@@ -297,10 +298,9 @@ class Form extends Webiny.Ui.View {
                                         <Grid.Col all={6}>
                                             <RadioGroup
                                                 label="User (API)"
-                                                name="createdBy"
+                                                name="assignedTo"
                                                 api="/entities/webiny/users"
                                                 textAttr="email"
-                                                valueKey="id"
                                                 grid={12}/>
                                         </Grid.Col>
                                     </Grid.Row>
@@ -384,7 +384,7 @@ class Form extends Webiny.Ui.View {
 
 export default Webiny.createComponent(Form, {
     modules: [
-        'Growl', 'Dynamic', 'Grid', 'Input', 'Button', 'Select', 'Form', 'View', 'Link', 'Copy', 'Tabs', 'Search', 'DateTime', 'Date', 'Time',
+        'Growl', 'Dynamic', 'Grid', 'Input', 'Email', 'Button', 'Select', 'Form', 'View', 'Link', 'Copy', 'Tabs', 'Search', 'DateTime', 'Date', 'Time',
         'DateRange', 'IconPicker', 'Switch', 'Password', 'Tags', 'Textarea', 'CheckboxGroup', 'Section', 'Checkbox', 'RadioGroup', 'Avatar',
         'File', 'Image', 'Gallery', 'ImageUploader', 'Draft', 'HtmlEditor', 'ButtonGroup'
     ]
