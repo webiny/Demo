@@ -39,7 +39,7 @@ class Form extends Webiny.Ui.View {
         const formProps = {
             ui: 'myForm',
             api: '/entities/demo/records',
-            fields: 'id,createdBy,assignedTo,name,email,contacts,enabled,avatar,datetime,date,time,daterange,access,description,tags,icon,gallery,html,draft,roles,users[id,user.id,user.email]',
+            fields: 'id,createdBy,assignedTo.id,name,email,contacts,enabled,avatar,datetime,date,time,daterange,access,description,tags,icon,gallery,html,draft,roles,users[id,user.id,user.email]',
             connectToRouter: true,
             onSubmitSuccess: 'Demo.List',
             onCancel: 'Demo.List',
@@ -92,7 +92,7 @@ class Form extends Webiny.Ui.View {
             textAttr: 'email',
             valueKey: 'user.id', // Used to map API options to form model
             useDataAsValue: true,
-            formatValue: value => {
+            formatOptionValue: value => {
                 return {user: {id: value.id}};
             }
         };
@@ -301,6 +301,10 @@ class Form extends Webiny.Ui.View {
                                                 name="assignedTo"
                                                 api="/entities/webiny/users"
                                                 textAttr="email"
+                                                useDataAsValue={true}
+                                                onChange={newValue => {
+                                                    console.log('Assigned to', newValue);
+                                                }}
                                                 grid={12}/>
                                         </Grid.Col>
                                     </Grid.Row>
