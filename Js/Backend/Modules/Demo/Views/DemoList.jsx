@@ -16,7 +16,7 @@ class List extends Webiny.Ui.View {
             <View.List>
                 <View.Header title="Demo List">
                     <DownloadLink type="secondary" align="right" download={download => {
-                        const submit = filters => download('GET', '/entities/demo/records/report/summary', null, filters);
+                        const submit = filters => download('GET', '/entities/demo/records/report/summary', filters);
                         return (
                             <Modal.Dialog ui="exportModal">
                                 <Modal.Header title="Export summary"/>
@@ -221,7 +221,7 @@ class List extends Webiny.Ui.View {
                                             }}/>
                                             <List.Table.Action label="Export contacts" icon="icon-external-link"
                                                                download={(download, record) => {
-                                                                   const submit = model => download('GET', record.reports.contacts, null, model);
+                                                                   const submit = model => download('GET', record.reports.contacts, model);
                                                                    return (
                                                                        <Modal.Dialog ui="exportContactsModal">
                                                                            <Modal.Header title={'Contacts for ' + record.name}/>
@@ -287,7 +287,7 @@ class List extends Webiny.Ui.View {
                                 <List.MultiActions>
                                     <List.MultiAction label="Log" onAction={this.log}/>
                                     <List.MultiAction label="Export ZIP" download={(download, data) => {
-                                        download('POST', '/entities/demo/records/report/business-cards', _.map(Array.from(data), 'id'))
+                                        download('POST', '/entities/demo/records/report/business-cards', {ids: _.map(Array.from(data), 'id')})
                                     }}/>
                                     <Dropdown.Divider/>
                                     <List.DeleteMultiAction>

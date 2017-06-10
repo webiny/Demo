@@ -8,8 +8,8 @@ use Apps\Webiny\Php\DevTools\WebinyTrait;
 use Apps\Webiny\Php\DevTools\Entity\AbstractEntity;
 use Apps\Webiny\Php\Entities\User;
 use Apps\Demo\Php\Reports\BusinessCardReport;
-use Apps\Demo\Php\Reports\ContactsReport;
-use Apps\Demo\Php\Reports\RecordsCsv;
+use Apps\Demo\Php\Reports\DemoCategoriesPdf;
+use Apps\Demo\Php\Reports\DemoCategoriesCsv;
 use Apps\Demo\Php\Reports\RecordsReport;
 use Apps\NotificationManager\Php\Lib\Recipients\Email;
 
@@ -83,7 +83,7 @@ class Record extends AbstractEntity
         });
 
         $this->api('GET', '{id}/report/contacts', function () {
-            return new ContactsReport($this);
+            return new DemoCategoriesPdf($this);
         });
 
         $this->api('GET', 'report/summary', function () {
@@ -104,7 +104,7 @@ class Record extends AbstractEntity
         $this->api('GET', 'report/summary/csv', function () {
             $records = self::find($this->wRequest()->query());
 
-            return new RecordsCsv($records);
+            return new DemoCategoriesCsv($records);
         });
 
         $this->api('POST', '{id}/report/send', function () {

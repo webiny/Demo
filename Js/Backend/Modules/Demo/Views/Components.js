@@ -9,7 +9,7 @@ class CustomLayout extends Webiny.Ui.Component {
     }
 
     downloadSummary(download) {
-        const submit = filters => download('GET', '/entities/demo/records/report/summary', null, filters);
+        const submit = filters => download('GET', '/entities/demo/records/report/summary', filters);
         const {Modal, Form, Grid, Select, Button} = this.props;
         return (
             <Modal.Dialog ui="exportModal">
