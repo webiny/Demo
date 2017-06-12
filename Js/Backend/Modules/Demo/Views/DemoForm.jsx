@@ -33,7 +33,7 @@ class Form extends Webiny.Ui.View {
         const {
             Growl, Dynamic, Grid, Input, Email, Button, Select, Form, View, Link, Copy, Tabs, Search, DateTime, Date, Time, DateRange,
             IconPicker, Switch, Password, Tags, Textarea, CheckboxGroup, Section, Checkbox, RadioGroup, Avatar, File, Image, Gallery,
-            ImageUploader, Draft, HtmlEditor, ButtonGroup
+            Draft, HtmlEditor, ButtonGroup
         } = this.props;
 
         const formProps = {
@@ -341,20 +341,6 @@ class Form extends Webiny.Ui.View {
                                                         height: 300
                                                     }
                                                 }}/>
-
-                                            <ImageUploader
-                                                onUploadSuccess={image => console.log(image)}
-                                                cropper={{
-                                                    title: 'Crop your image',
-                                                    action: 'Upload image',
-                                                    config: {
-                                                        aspectRatio: 1,
-                                                        closeOnClick: false,
-                                                        autoCropArea: 0.7,
-                                                        width: 300,
-                                                        height: 300
-                                                    }
-                                                }}/>
                                         </Grid.Col>
                                     </Grid.Row>
 
@@ -390,6 +376,6 @@ export default Webiny.createComponent(Form, {
     modules: [
         'Growl', 'Dynamic', 'Grid', 'Input', 'Email', 'Button', 'Select', 'Form', 'View', 'Link', 'Copy', 'Tabs', 'Search', 'DateTime', 'Date', 'Time',
         'DateRange', 'IconPicker', 'Switch', 'Password', 'Tags', 'Textarea', 'CheckboxGroup', 'Section', 'Checkbox', 'RadioGroup', 'Avatar',
-        'File', 'Image', 'Gallery', 'ImageUploader', 'Draft', 'HtmlEditor', 'ButtonGroup'
+        'File', 'Image', 'Gallery', 'Draft', 'HtmlEditor', 'ButtonGroup'
     ]
 });
