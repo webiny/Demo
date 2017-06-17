@@ -33,11 +33,10 @@ class Form extends Webiny.Ui.View {
         const {
             Growl, Dynamic, Grid, Input, Email, Button, Select, Form, View, Link, Copy, Tabs, Search, DateTime, Date, Time, DateRange,
             IconPicker, Switch, Password, Tags, Textarea, CheckboxGroup, Section, Checkbox, RadioGroup, Avatar, File, Image, Gallery,
-            Draft, HtmlEditor, ButtonGroup
+            Draft, HtmlEditor, ButtonGroup, MarkdownEditor
         } = this.props;
 
         const formProps = {
-            ui: 'myForm',
             api: '/entities/demo/records',
             fields: 'id,createdBy,assignedTo.id,name,email,contacts,enabled,avatar,datetime,date,time,daterange,access,description,tags,icon,gallery,html,draft,roles,users[id,user.id,user.email]',
             connectToRouter: true,
@@ -347,6 +346,7 @@ class Form extends Webiny.Ui.View {
                                 </Tabs.Tab>
                                 <Tabs.Tab label="WYSIWYG" icon="fa-font">
                                     <HtmlEditor name="html"/>
+                                    <MarkdownEditor name="markdown"/>
                                 </Tabs.Tab>
                                 <Tabs.Tab label="Draft Editor" icon="fa-font">
                                     <Button
@@ -376,6 +376,6 @@ export default Webiny.createComponent(Form, {
     modules: [
         'Growl', 'Dynamic', 'Grid', 'Input', 'Email', 'Button', 'Select', 'Form', 'View', 'Link', 'Copy', 'Tabs', 'Search', 'DateTime', 'Date', 'Time',
         'DateRange', 'IconPicker', 'Switch', 'Password', 'Tags', 'Textarea', 'CheckboxGroup', 'Section', 'Checkbox', 'RadioGroup', 'Avatar',
-        'File', 'Image', 'Gallery', 'Draft', 'HtmlEditor', 'ButtonGroup'
+        'File', 'Image', 'Gallery', 'Draft', 'HtmlEditor', 'ButtonGroup', 'MarkdownEditor'
     ]
 });

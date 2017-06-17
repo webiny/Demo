@@ -18,27 +18,36 @@ class List extends Webiny.Ui.View {
                     <DownloadLink type="secondary" align="right" download={download => {
                         const submit = filters => download('GET', '/entities/demo/records/report/summary', filters);
                         return (
-                            <Modal.Dialog ui="exportModal">
-                                <Modal.Header title="Export summary"/>
-                                <Modal.Body>
-                                    <Form ui="exportModalForm" onSubmit={submit}>
-                                        {() => (
-                                            <Grid.Row>
-                                                <Grid.Col all={12}>
-                                                    <Select name="enabled" label="Filter by status" placeholder="All records" allowClear
-                                                            tooltip="Filter me">
-                                                        <option value="true">Enabled</option>
-                                                        <option value="false">Disabled</option>
-                                                    </Select>
-                                                </Grid.Col>
-                                            </Grid.Row>
+                            <Modal.Dialog>
+                                {dialog => (
+                                    <Form onSubmit={submit}>
+                                        {(model, form) => (
+                                            <wrapper>
+                                                <Modal.Header title="Export summary"/>
+                                                <Modal.Body>
+
+                                                    <Grid.Row>
+                                                        <Grid.Col all={12}>
+                                                            <Select
+                                                                name="enabled"
+                                                                label="Filter by status"
+                                                                placeholder="All records"
+                                                                allowClear
+                                                                tooltip="Filter me">
+                                                                <option value="true">Enabled</option>
+                                                                <option value="false">Disabled</option>
+                                                            </Select>
+                                                        </Grid.Col>
+                                                    </Grid.Row>
+                                                </Modal.Body>
+                                                <Modal.Footer>
+                                                    <Button type="default" label="Cancel" onClick={dialog.hide}/>
+                                                    <Button type="primary" label="Export" onClick={form.submit}/>
+                                                </Modal.Footer>
+                                            </wrapper>
                                         )}
                                     </Form>
-                                </Modal.Body>
-                                <Modal.Footer align="right">
-                                    <Button type="default" label="Cancel" onClick={this.ui('exportModal:hide')}/>
-                                    <Button type="primary" label="Export" onClick={this.ui('exportModalForm:submit')}/>
-                                </Modal.Footer>
+                                )}
                             </Modal.Dialog>
                         );
                     }}>
@@ -102,30 +111,32 @@ class List extends Webiny.Ui.View {
                             <ClickConfirm renderDialog={(confirm, cancel, confirmation) => {
                                 return (
                                     <Modal.Dialog onCancel={cancel}>
-                                        {confirmation.renderLoader()}
-                                        <Modal.Header title="Select file to import"/>
-                                        <Modal.Body>
-                                            <Form ui="importFileForm" onSubmit={confirm}>
-                                                {() => (
-                                                    <Grid.Row>
-                                                        <Grid.Col all={12}>
-                                                            <File
-                                                                accept={['text/csv']}
-                                                                name="records"
-                                                                readAs="binary"
-                                                                label="Import from file"
-                                                                placeholder="Select a CSV file to import"
-                                                                description="Any file up to 2.5MB will do"
-                                                                validate="required"/>
-                                                        </Grid.Col>
-                                                    </Grid.Row>
-                                                )}
-                                            </Form>
-                                        </Modal.Body>
-                                        <Modal.Footer>
-                                            <Button type="primary" label="Import" align="right" onClick={this.ui('importFileForm:submit')}/>
-                                            <Button type="secondary" label="Cancel" align="right" onClick={cancel}/>
-                                        </Modal.Footer>
+                                        <Form onSubmit={confirm}>
+                                            {(model, form) => (
+                                                <wrapper>
+                                                    {confirmation.renderLoader()}
+                                                    <Modal.Header title="Select file to import"/>
+                                                    <Modal.Body>
+                                                        <Grid.Row>
+                                                            <Grid.Col all={12}>
+                                                                <File
+                                                                    accept={['text/csv']}
+                                                                    name="records"
+                                                                    readAs="binary"
+                                                                    label="Import from file"
+                                                                    placeholder="Select a CSV file to import"
+                                                                    description="Any file up to 2.5MB will do"
+                                                                    validate="required"/>
+                                                            </Grid.Col>
+                                                        </Grid.Row>
+                                                    </Modal.Body>
+                                                    <Modal.Footer>
+                                                        <Button label="Cancel" onClick={cancel}/>
+                                                        <Button type="primary" label="Import" onClick={form.submit}/>
+                                                    </Modal.Footer>
+                                                </wrapper>
+                                            )}
+                                        </Form>
                                     </Modal.Dialog>
                                 );
                             }}>
@@ -219,49 +230,54 @@ class List extends Webiny.Ui.View {
                                             <List.Table.Action label="Send to my email" icon="icon-doc-text" download={(download, data) => {
                                                 download('POST', data.reports.emailBusinessCard);
                                             }}/>
-                                            <List.Table.Action label="Export contacts" icon="icon-external-link"
-                                                               download={(download, record) => {
-                                                                   const submit = model => download('GET', record.reports.contacts, model);
-                                                                   return (
-                                                                       <Modal.Dialog ui="exportContactsModal">
-                                                                           <Modal.Header title={'Contacts for ' + record.name}/>
-                                                                           <Modal.Body>
-                                                                               <Form ui="exportModal" onSubmit={submit}>
-                                                                                   {model => (
-                                                                                       <DateRange
-                                                                                           name="range"
-                                                                                           label="Filter contacts by date"
-                                                                                           placeholder="Select a date range"
-                                                                                           validate="required"/>
-                                                                                   )}
-                                                                               </Form>
-                                                                               <Alert type="info">
-                                                                                   NOTE: this won't filter anything in the report, it's just
-                                                                                   here
-                                                                                   to show
-                                                                                   you an example of how you would create a report
-                                                                                   configuration
-                                                                                   dialog in
-                                                                                   your own app.<br/><br/>
-                                                                                   Once you submit the form, see how the parameters are
-                                                                                   appended
-                                                                                   to URL.
-                                                                                   It is up to you to handle the query parameters in you API
-                                                                                   methods and
-                                                                                   pass them to report itself or process the data passed to
-                                                                                   the
-                                                                                   report.
-                                                                               </Alert>
-                                                                           </Modal.Body>
-                                                                           <Modal.Footer align="right">
-                                                                               <Button type="default" label="Cancel"
-                                                                                       onClick={this.ui('exportContactsModal:hide')}/>
-                                                                               <Button type="primary" label="Export"
-                                                                                       onClick={this.ui('exportModal:submit')}/>
-                                                                           </Modal.Footer>
-                                                                       </Modal.Dialog>
-                                                                   );
-                                                               }}/>
+                                            <List.Table.Action
+                                                label="Export contacts"
+                                                icon="icon-external-link"
+                                                download={(download, record) => {
+                                                    const submit = model => download('GET', record.reports.contacts, model);
+                                                    return (
+                                                        <Modal.Dialog>
+                                                            {dialog => (
+                                                                <Form onSubmit={submit}>
+                                                                    {(model, form) => (
+                                                                        <wrapper>
+                                                                            <Modal.Header title={'Contacts for ' + record.name}/>
+                                                                            <Modal.Body>
+                                                                                <DateRange
+                                                                                    name="range"
+                                                                                    label="Filter contacts by date"
+                                                                                    placeholder="Select a date range"
+                                                                                    validate="required"/>
+                                                                                <Alert type="info">
+                                                                                    NOTE: this won't filter anything in the report, it's
+                                                                                    just here to show you an example of how you would create
+                                                                                    a report
+                                                                                    configuration dialog in your own app.<br/><br/>
+                                                                                    Once you submit the form, see how the parameters are
+                                                                                    appended to URL. It is up to you to handle the query
+                                                                                    parameters in you
+                                                                                    API methods and pass them to report itself or process
+                                                                                    the data passed to
+                                                                                    the report.
+                                                                                </Alert>
+                                                                            </Modal.Body>
+                                                                            <Modal.Footer>
+                                                                                <Button
+                                                                                    type="default"
+                                                                                    label="Cancel"
+                                                                                    onClick={dialog.hide}/>
+                                                                                <Button
+                                                                                    type="primary"
+                                                                                    label="Export"
+                                                                                    onClick={form.submit}/>
+                                                                            </Modal.Footer>
+                                                                        </wrapper>
+                                                                    )}
+                                                                </Form>
+                                                            )}
+                                                        </Modal.Dialog>
+                                                    );
+                                                }}/>
                                             <Dropdown.Divider/>
                                             <List.Table.DeleteAction/>
                                         </List.Table.Actions>
