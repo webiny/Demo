@@ -22,10 +22,9 @@ class List extends Webiny.Ui.View {
                                 {dialog => (
                                     <Form onSubmit={submit}>
                                         {(model, form) => (
-                                            <wrapper>
+                                            <Modal.Content>
                                                 <Modal.Header title="Export summary"/>
                                                 <Modal.Body>
-
                                                     <Grid.Row>
                                                         <Grid.Col all={12}>
                                                             <Select
@@ -44,7 +43,7 @@ class List extends Webiny.Ui.View {
                                                     <Button type="default" label="Cancel" onClick={dialog.hide}/>
                                                     <Button type="primary" label="Export" onClick={form.submit}/>
                                                 </Modal.Footer>
-                                            </wrapper>
+                                            </Modal.Content>
                                         )}
                                     </Form>
                                 )}
@@ -89,15 +88,17 @@ class List extends Webiny.Ui.View {
                                           renderDialog={(confirm, cancel, confirmation) => {
                                               return (
                                                   <Modal.Dialog onCancel={cancel}>
-                                                      {confirmation.renderLoader()}
-                                                      <Modal.Header title="Custom title"/>
-                                                      <Modal.Body>
-                                                          <p>Some custom dialog body...</p>
-                                                      </Modal.Body>
-                                                      <Modal.Footer>
-                                                          <Button type="primary" label="Confirm" align="right" onClick={confirm}/>
-                                                          <Button type="secondary" label="Cancel" align="right" onClick={cancel}/>
-                                                      </Modal.Footer>
+                                                      <Modal.Content>
+                                                          {confirmation.renderLoader()}
+                                                          <Modal.Header title="Custom title"/>
+                                                          <Modal.Body>
+                                                              <p>Some custom dialog body...</p>
+                                                          </Modal.Body>
+                                                          <Modal.Footer>
+                                                              <Button type="primary" label="Confirm" align="right" onClick={confirm}/>
+                                                              <Button type="secondary" label="Cancel" align="right" onClick={cancel}/>
+                                                          </Modal.Footer>
+                                                      </Modal.Content>
                                                   </Modal.Dialog>
                                               );
                                           }}>
@@ -113,7 +114,7 @@ class List extends Webiny.Ui.View {
                                     <Modal.Dialog onCancel={cancel}>
                                         <Form onSubmit={confirm}>
                                             {(model, form) => (
-                                                <wrapper>
+                                                <Modal.Content>
                                                     {confirmation.renderLoader()}
                                                     <Modal.Header title="Select file to import"/>
                                                     <Modal.Body>
@@ -134,7 +135,7 @@ class List extends Webiny.Ui.View {
                                                         <Button label="Cancel" onClick={cancel}/>
                                                         <Button type="primary" label="Import" onClick={form.submit}/>
                                                     </Modal.Footer>
-                                                </wrapper>
+                                                </Modal.Content>
                                             )}
                                         </Form>
                                     </Modal.Dialog>
@@ -240,7 +241,7 @@ class List extends Webiny.Ui.View {
                                                             {dialog => (
                                                                 <Form onSubmit={submit}>
                                                                     {(model, form) => (
-                                                                        <wrapper>
+                                                                        <Modal.Content>
                                                                             <Modal.Header title={'Contacts for ' + record.name}/>
                                                                             <Modal.Body>
                                                                                 <DateRange
@@ -271,7 +272,7 @@ class List extends Webiny.Ui.View {
                                                                                     label="Export"
                                                                                     onClick={form.submit}/>
                                                                             </Modal.Footer>
-                                                                        </wrapper>
+                                                                        </Modal.Content>
                                                                     )}
                                                                 </Form>
                                                             )}
