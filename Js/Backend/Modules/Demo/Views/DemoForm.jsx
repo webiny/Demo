@@ -240,7 +240,7 @@ class Form extends Webiny.Ui.View {
                                         {/* CHECKBOXES */}
                                         <Grid.Col all={6}>
                                             <Section title="Static checkboxes (hard-coded options)"/>
-                                            <CheckboxGroup name="roles" grid={12} validate="minLength:2">
+                                            <CheckboxGroup name="roles" validate="minLength:2">
                                                 <option value="Admin">Admin&nbsp;management</option>
                                                 <option value="Coupon">Coupon&nbsp;management</option>
                                                 <option value="Crm">CRM</option>
@@ -254,11 +254,11 @@ class Form extends Webiny.Ui.View {
 
                                             <div className="clearfix"/>
                                             <Section title="Single checkbox"/>
-                                            <Checkbox label="Single checkbox" name="singleCheckbox" grid={12} tooltip="Set immediately"/>
+                                            <Checkbox label="Single checkbox" name="singleCheckbox" tooltip="Set immediately"/>
 
                                             <div className="clearfix"/>
                                             <Section title="Custom checkbox markup (using 'checkboxRenderer' prop)"/>
-                                            <CheckboxGroup name="roles" grid={12} checkboxRenderer={function renderCheckbox() {
+                                            <CheckboxGroup name="roles" checkboxRenderer={function renderCheckbox() {
                                                 return (
                                                     <li className="list-item col-xs-offset-1">
                                                         <div className="form-group">
@@ -287,7 +287,7 @@ class Form extends Webiny.Ui.View {
                                     <Grid.Row>
                                         {/* RADIO */}
                                         <Grid.Col all={6}>
-                                            <RadioGroup label="Roles (static)" name="access" grid={12}>
+                                            <RadioGroup label="Roles (static)" name="access">
                                                 <option value="Admin">Admin</option>
                                                 <option value="Billing">Billing</option>
                                                 <option value="Crm">CRM</option>
@@ -303,8 +303,7 @@ class Form extends Webiny.Ui.View {
                                                 useDataAsValue={true}
                                                 onChange={newValue => {
                                                     console.log('Assigned to', newValue);
-                                                }}
-                                                grid={12}/>
+                                                }}/>
                                         </Grid.Col>
                                     </Grid.Row>
                                 </Tabs.Tab>
@@ -335,7 +334,7 @@ class Form extends Webiny.Ui.View {
                                                     config: {
                                                         closeOnClick: false,
                                                         autoCropArea: 0.7,
-                                                        aspectRatio: 1,
+                                                        // aspectRatio: 1,
                                                         width: 300,
                                                         height: 300
                                                     }
