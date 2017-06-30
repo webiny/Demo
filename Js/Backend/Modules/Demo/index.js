@@ -1,7 +1,7 @@
 import Webiny from 'Webiny';
 import Views from './Views/Views';
 
-class Demo extends Webiny.Module {
+class Demo extends Webiny.App.Module {
 
     init() {
         this.name = 'Demo';
