@@ -1,3 +1,4 @@
+import React from 'react';
 /* eslint-disable */
 import Webiny from 'Webiny';
 
