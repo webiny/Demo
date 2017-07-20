@@ -318,6 +318,23 @@ class List extends Webiny.Ui.View {
                                             );
                                         }}
                                     </List.DeleteMultiAction>
+                                    <List.ModalMultiAction label="Modal">
+                                        {rows => (
+                                            <Modal.Dialog>
+                                                {dialog => (
+                                                    <Modal.Content>
+                                                        <Modal.Header title="Export summary"/>
+                                                        <Modal.Body>
+                                                            {JSON.stringify(Array.from(rows))}
+                                                        </Modal.Body>
+                                                        <Modal.Footer>
+                                                            <Button type="default" label="Cancel" onClick={dialog.hide}/>
+                                                        </Modal.Footer>
+                                                    </Modal.Content>
+                                                )}
+                                            </Modal.Dialog>
+                                        )}
+                                    </List.ModalMultiAction>
                                 </List.MultiActions>
                             </List>
                         </Tabs.Tab>

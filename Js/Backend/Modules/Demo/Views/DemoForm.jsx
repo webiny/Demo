@@ -169,6 +169,7 @@ class Form extends Webiny.Ui.View {
                                                 fields="name,id,createdOn,ref"
                                                 searchFields="name"
                                                 allowFreeInput={false}
+                                                validate="required"
                                                 useDataAsValue={false}
                                                 filterBy="userRole"
                                                 onChange={(newValue, oldValue, input) => console.log(newValue, input)}/>
