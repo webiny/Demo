@@ -1,4 +1,4 @@
-import Webiny from 'Webiny';
+import Webiny from 'webiny';
 import DemoModule from './Modules/Demo';
 
 class Demo extends Webiny.App {

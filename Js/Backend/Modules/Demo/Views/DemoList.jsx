@@ -1,7 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 /* eslint-disable */
-import Webiny from 'Webiny';
+import Webiny from 'webiny';
 
 class List extends Webiny.Ui.View {
 

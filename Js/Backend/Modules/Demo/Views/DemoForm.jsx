@@ -1,6 +1,6 @@
 import React from 'react';
 /* eslint-disable */
-import Webiny from 'Webiny';
+import Webiny from 'webiny';
 
 class Form extends Webiny.Ui.View {
     constructor(props) {
