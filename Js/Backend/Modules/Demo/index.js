@@ -1,3 +1,4 @@
+import React from 'react';
 import Webiny from 'webiny';
 import Views from './Views/Views';
 
@@ -5,10 +6,9 @@ class Demo extends Webiny.App.Module {
 
     init() {
         this.name = 'Demo';
-        const Menu = Webiny.Ui.Menu;
 
         this.registerMenus(
-            new Menu('Demo', 'Demo.List', 'icon-website')
+            <Webiny.Ui.Menu label="Demo" route="Demo.List" icon="icon-website"/>
         );
 
         this.registerRoutes(
