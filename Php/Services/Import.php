@@ -1,8 +1,8 @@
 <?php
 namespace Apps\Demo\Php\Services;
 
-use Apps\Webiny\Php\DevTools\Interfaces\PublicApiInterface;
-use Apps\Webiny\Php\DevTools\Services\AbstractService;
+use Apps\Webiny\Php\Lib\Interfaces\PublicApiInterface;
+use Apps\Webiny\Php\Lib\Services\AbstractService;
 
 class Import extends AbstractService implements PublicApiInterface
 {

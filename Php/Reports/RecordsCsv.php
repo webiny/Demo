@@ -1,8 +1,8 @@
 <?php
 namespace Apps\Demo\Php\Reports;
 
-use Apps\Webiny\Php\DevTools\Entity\AbstractEntity;
-use Apps\Webiny\Php\DevTools\Reports\AbstractCsvReport;
+use Apps\Webiny\Php\Lib\Entity\AbstractEntity;
+use Apps\Webiny\Php\Lib\Reports\AbstractCsvReport;
 use Apps\Demo\Php\Entities\Record;
 
 /**

@@ -1,7 +1,7 @@
 <?php
 namespace Apps\Demo\Php\Reports;
 
-use Apps\Webiny\Php\DevTools\Reports\AbstractPdfReport;
+use Apps\Webiny\Php\Lib\Reports\AbstractPdfReport;
 use Apps\Demo\Php\Entities\Record;
 use Webiny\Component\Entity\EntityCollection;
 
