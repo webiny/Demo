@@ -1,15 +1,15 @@
 <?php
 namespace Apps\Demo\Php\Entities;
 
+use Apps\Demo\Php\Reports\ContactsReport;
+use Apps\Demo\Php\Reports\RecordsCsv;
+use Apps\Webiny\Php\Lib\Api\ApiContainer;
 use Apps\Webiny\Php\Lib\Entity\Attributes\ImageAttribute;
 use Apps\Webiny\Php\Lib\Entity\Attributes\ImagesAttribute;
 use Apps\Webiny\Php\Lib\Reports\ReportsArchive;
 use Apps\Webiny\Php\Lib\WebinyTrait;
 use Apps\Webiny\Php\Lib\Entity\AbstractEntity;
-use Apps\Webiny\Php\Entities\User;
 use Apps\Demo\Php\Reports\BusinessCardReport;
-use Apps\Demo\Php\Reports\DemoCategoriesPdf;
-use Apps\Demo\Php\Reports\DemoCategoriesCsv;
 use Apps\Demo\Php\Reports\RecordsReport;
 use Apps\NotificationManager\Php\Lib\Recipients\Email;
 
@@ -72,27 +72,34 @@ class Record extends AbstractEntity
         });
         $this->attr('reports')->dynamic(function () {
             return [
-                'businessCard' => $this->api('GET', '{id}/report/business-card')->getUrl(),
-                'emailBusinessCard' => $this->api('POST', '{id}/report/send')->getUrl(),
-                'contacts'     => $this->api('GET', '{id}/report/contacts')->getUrl()
+                'businessCard' => $api->get('{id}/report/business-card')->getUrl(),
+                'emailBusinessCard' => $api->post('{id}/report/send')->getUrl(),
+                'contacts'     => $api->get('{id}/report/contacts')->getUrl()
             ];
         });
 
-        $this->api('GET', '{id}/report/business-card', function () {
+        $this->attr('users')->one2many('record')->setEntity('\Apps\Demo\Php\Entities\Record2User');
+    }
+
+    protected function entityApi(ApiContainer $api)
+    {
+        parent::entityApi($api);
+
+        $api->get('{id}/report/business-card', function () {
             return new BusinessCardReport($this);
         });
 
-        $this->api('GET', '{id}/report/contacts', function () {
-            return new DemoCategoriesPdf($this);
+        $api->get('{id}/report/contacts', function () {
+            return new ContactsReport($this);
         });
 
-        $this->api('GET', 'report/summary', function () {
+        $api->get('report/summary', function () {
             $records = self::find($this->wRequest()->query());
 
             return new RecordsReport($records);
         });
 
-        $this->api('POST', 'report/business-cards', function () {
+        $api->post('report/business-cards', function () {
             $query = ['id' => $this->wRequest()->getRequestData()['ids']];
             $records = self::find($query);
 
@@ -101,13 +108,13 @@ class Record extends AbstractEntity
             }, 'records.zip');
         });
 
-        $this->api('GET', 'report/summary/csv', function () {
+        $api->get('report/summary/csv', function () {
             $records = self::find($this->wRequest()->query());
 
-            return new DemoCategoriesCsv($records);
+            return new RecordsCsv($records);
         });
 
-        $this->api('POST', '{id}/report/send', function () {
+        $api->post('{id}/report/send', function () {
             /* @var \Apps\NotificationManager\Php\Lib\Notification $notification */
             $notification = $this->wService('NotificationManager')->getNotification('demo-record');
             $notification->addEntity($this)->setRecipient(new Email($this->email, $this->name));
@@ -122,8 +129,6 @@ class Record extends AbstractEntity
 
             return true;
         });
-
-        $this->attr('users')->one2many('record')->setEntity('\Apps\Demo\Php\Entities\Record2User');
     }
 }
 
@@ -142,7 +147,3 @@ class Record2User extends AbstractEntity
         $this->attr('user')->many2one()->setEntity('\Apps\Webiny\Php\Entities\User');
     }
 }
-
-User::onExtend(function (User $user) {
-    $user->attr('records')->one2many('user')->setEntity('\Apps\Demo\Php\Entities\Record2User');
-});

@@ -1,15 +1,15 @@
 <?php
 namespace Apps\Demo\Php\Services;
 
+use Apps\Webiny\Php\Lib\Api\ApiContainer;
 use Apps\Webiny\Php\Lib\Interfaces\PublicApiInterface;
 use Apps\Webiny\Php\Lib\Services\AbstractService;
 
 class Import extends AbstractService implements PublicApiInterface
 {
-    function __construct()
+    protected function serviceApi(ApiContainer $api)
     {
-        parent::__construct();
-        $this->api('POST', 'import', function () {
+        $api->post('import', function () {
             $data = $this->wRequest()->getRequestData();
             $file = $this->str($data['records']['src'])->explode(',')->last()->base64Decode()->val();
             $lines = str_getcsv($file, "\n");
@@ -21,4 +21,5 @@ class Import extends AbstractService implements PublicApiInterface
             return $json;
         });
     }
+
 }
