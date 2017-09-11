@@ -2,6 +2,7 @@
     {
         "name" : "Demo Manager",
         "slug" : "demo-manager",
+        "isAdminRole": true,
         "description" : "This role allows user to manage demo app",
         "permissions": [
             "demo-app-manage-all"
