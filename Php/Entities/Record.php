@@ -3,6 +3,7 @@ namespace Apps\Demo\Php\Entities;
 
 use Apps\Demo\Php\Reports\ContactsReport;
 use Apps\Demo\Php\Reports\RecordsCsv;
+use Apps\Webiny\Php\Entities\User;
 use Apps\Webiny\Php\Lib\Api\ApiContainer;
 use Apps\Webiny\Php\Lib\Entity\Attributes\ImageAttribute;
 use Apps\Webiny\Php\Lib\Entity\Attributes\ImagesAttribute;
@@ -36,8 +37,8 @@ class Record extends AbstractEntity
     {
         parent::__construct();
 
-        $this->attr('author')->many2one()->setEntity('\Apps\Webiny\Php\Entities\User')->setDefaultValue($this->wAuth()->getUser());
-        $this->attr('assignedTo')->many2one()->setEntity('\Apps\Webiny\Php\Entities\User');
+        $this->attr('author')->many2one()->setEntity(User::class)->setDefaultValue($this->wAuth()->getUser());
+        $this->attr('assignedTo')->many2one()->setEntity(User::class);
         $this->attr('name')->char()->setValidators('required')->setToArrayDefault();
         $this->attr('description')->char();
         $this->attr('draft')->object();
@@ -78,7 +79,7 @@ class Record extends AbstractEntity
             ];
         });
 
-        $this->attr('users')->one2many('record')->setEntity('\Apps\Demo\Php\Entities\Record2User');
+        $this->attr('users')->one2many('record')->setEntity(Record2User::class);
     }
 
     protected function entityApi(ApiContainer $api)
@@ -143,7 +144,7 @@ class Record2User extends AbstractEntity
     function __construct()
     {
         parent::__construct();
-        $this->attr('record')->many2one()->setEntity('\Apps\Demo\Php\Entities\Record');
-        $this->attr('user')->many2one()->setEntity('\Apps\Webiny\Php\Entities\User');
+        $this->attr('record')->many2one()->setEntity(Record::class);
+        $this->attr('user')->many2one()->setEntity(User::class);
     }
 }
