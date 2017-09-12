@@ -6,10 +6,10 @@
         "permissions" : {
             "entities" : {
                 "Apps\\Demo\\Php\\Entities\\Record" : {
-                    "crudCreate" : true,
-                    "crudRead" : true,
-                    "crudUpdate" : true,
-                    "crudDelete" : true,
+                    "c" : true,
+                    "r" : true,
+                    "u" : true,
+                    "d" : true,
                     "{id}/report/contacts" : {
                         "get" : true
                     },
