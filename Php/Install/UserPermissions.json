@@ -1,41 +1,44 @@
 [
     {
-        "name" : "Manage demo app",
-        "slug" : "demo-app-manage-all",
-        "description" : "Allows user to  access all Demo app resources",
-        "permissions" : {
-            "entities" : {
-                "Apps\\Demo\\Php\\Entities\\Record" : {
-                    "c" : true,
-                    "r" : true,
-                    "u" : true,
-                    "d" : true,
-                    "{id}/report/contacts" : {
-                        "get" : true
+        "name": "Manage demo app",
+        "slug": "demo-app-manage-all",
+        "description": "Allows user to  access all Demo app resources",
+        "permissions": [
+            {
+                "classId": "entities",
+                "rules": {
+                    "Apps\\Demo\\Php\\Entities\\Record": {
+                        "c": true,
+                        "r": true,
+                        "u": true,
+                        "d": true,
+                        "{id}/report/contacts": {
+                            "get": true
+                        },
+                        "{id}/report/business-card": {
+                            "get": true
+                        },
+                        "report/summary": {
+                            "get": true
+                        },
+                        "report/business-cards": {
+                            "post": true
+                        },
+                        "report/summary/csv": {
+                            "get": true
+                        },
+                        "{id}/report/send": {
+                            "get": true
+                        }
                     },
-                    "{id}/report/business-card" : {
-                        "get" : true
-                    },
-                    "report/summary" : {
-                        "get" : true
-                    },
-                    "report/business-cards" : {
-                        "post" : true
-                    },
-                    "report/summary/csv" : {
-                        "get" : true
-                    },
-                    "{id}/report/send" : {
-                        "get" : true
-                    }
-                },
-                "Apps\\Demo\\Php\\Entities\\Settings" : {
-                    "/" : {
-                        "patch" : true,
-                        "get" : true
+                    "Apps\\Demo\\Php\\Entities\\Settings": {
+                        "/": {
+                            "patch": true,
+                            "get": true
+                        }
                     }
                 }
             }
-        }
+        ]
     }
 ]

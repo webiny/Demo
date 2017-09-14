@@ -8,7 +8,6 @@ use Apps\Webiny\Php\Lib\Api\ApiContainer;
 use Apps\Webiny\Php\Lib\Entity\Attributes\ImageAttribute;
 use Apps\Webiny\Php\Lib\Entity\Attributes\ImagesAttribute;
 use Apps\Webiny\Php\Lib\Reports\ReportsArchive;
-use Apps\Webiny\Php\Lib\WebinyTrait;
 use Apps\Webiny\Php\Lib\Entity\AbstractEntity;
 use Apps\Demo\Php\Reports\BusinessCardReport;
 use Apps\Demo\Php\Reports\RecordsReport;
@@ -23,14 +22,10 @@ use Apps\NotificationManager\Php\Lib\Recipients\Email;
  * @property string $daterange
  * @property string $date
  * @property bool   $enabled
- *
- * @package Apps\Webiny\Php\Entities
- *
  */
 class Record extends AbstractEntity
 {
-    use WebinyTrait;
-
+    protected static $classId = 'Demo.Entities.Record';
     protected static $entityCollection = 'DemoRecords';
 
     public function __construct()
@@ -135,10 +130,10 @@ class Record extends AbstractEntity
 
 /**
  * Class Record2User
- * @package Apps\Demo\Php\Entities
  */
 class Record2User extends AbstractEntity
 {
+    protected static $classId = 'Demo.Entities.Record2User';
     protected static $entityCollection = 'DemoRecord2User';
 
     function __construct()

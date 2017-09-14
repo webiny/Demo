@@ -7,6 +7,8 @@ use Apps\Webiny\Php\Lib\Services\AbstractService;
 
 class Import extends AbstractService implements PublicApiInterface
 {
+    protected static $classId = 'Demo.Services.Import';
+
     protected function serviceApi(ApiContainer $api)
     {
         $api->post('import', function () {
