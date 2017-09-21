@@ -1,12 +1,10 @@
 <?php
+
 namespace Apps\Demo\Php\Entities;
 
 use Apps\Demo\Php\Reports\ContactsReport;
 use Apps\Demo\Php\Reports\RecordsCsv;
-use Apps\Webiny\Php\Entities\User;
 use Apps\Webiny\Php\Lib\Api\ApiContainer;
-use Apps\Webiny\Php\Lib\Entity\Attributes\ImageAttribute;
-use Apps\Webiny\Php\Lib\Entity\Attributes\ImagesAttribute;
 use Apps\Webiny\Php\Lib\Reports\ReportsArchive;
 use Apps\Webiny\Php\Lib\Entity\AbstractEntity;
 use Apps\Demo\Php\Reports\BusinessCardReport;
@@ -26,14 +24,14 @@ use Apps\NotificationManager\Php\Lib\Recipients\Email;
 class Record extends AbstractEntity
 {
     protected static $classId = 'Demo.Entities.Record';
-    protected static $entityCollection = 'DemoRecords';
+    protected static $collection = 'DemoRecords';
 
     public function __construct()
     {
         parent::__construct();
 
-        $this->attr('author')->many2one()->setEntity(User::class)->setDefaultValue($this->wAuth()->getUser());
-        $this->attr('assignedTo')->many2one()->setEntity(User::class);
+        $this->attr('author')->user();
+        $this->attr('assignedTo')->user();
         $this->attr('name')->char()->setValidators('required')->setToArrayDefault();
         $this->attr('description')->char();
         $this->attr('draft')->object();
@@ -54,23 +52,19 @@ class Record extends AbstractEntity
         $this->attr('roles')->arr();
         $this->attr('tags')->arr();
         $this->attr('access')->char();
-        $this->attr('avatar')->smart(new ImageAttribute())->setDimensions([
+        $this->attr('avatar')->image()->setDimensions([
             'thumbnail'     => [200, 200],
             'wideThumbnail' => [300, 100],
         ])->setStorage($this->wStorage('Demo'))->setFolder('UserFiles/Avatars')->setOnDelete('cascade');
-        $this->attr('gallery')
-             ->smart(new ImagesAttribute())
-             ->setStorage($this->wStorage('Demo'))
-             ->setFolder('UserFiles/Gallery')
-             ->setTags(['demo-gallery']);
+        $this->attr('gallery')->images()->setStorage($this->wStorage('Demo'))->setFolder('UserFiles/Gallery')->setTags(['demo-gallery']);
         $this->attr('gravatar')->dynamic(function () {
             return md5($this->email);
         });
         $this->attr('reports')->dynamic(function () {
             return [
-                'businessCard' => $api->get('{id}/report/business-card')->getUrl(),
-                'emailBusinessCard' => $api->post('{id}/report/send')->getUrl(),
-                'contacts'     => $api->get('{id}/report/contacts')->getUrl()
+                'businessCard'      => $this->getApi()->get('{id}/report/business-card')->getUrl(),
+                'emailBusinessCard' => $this->getApi()->post('{id}/report/send')->getUrl(),
+                'contacts'          => $this->getApi()->get('{id}/report/contacts')->getUrl()
             ];
         });
 
@@ -134,12 +128,12 @@ class Record extends AbstractEntity
 class Record2User extends AbstractEntity
 {
     protected static $classId = 'Demo.Entities.Record2User';
-    protected static $entityCollection = 'DemoRecord2User';
+    protected static $collection = 'DemoRecord2User';
 
     function __construct()
     {
         parent::__construct();
         $this->attr('record')->many2one()->setEntity(Record::class);
-        $this->attr('user')->many2one()->setEntity(User::class);
+        $this->attr('user')->user();
     }
 }
