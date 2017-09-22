@@ -1,11 +1,11 @@
 Name: Demo
 Version: 0.1.0
-Link: http://www.webiny.com/store/webiny/demo/
+Link: https://github.com/Webiny/Demo
 Description: The Demo app is a showcase of different view types and components to be used as a starting point for creation of your own apps
-
-AuthorName: Webiny LTD
-AuthorLink: http://www.webiny.com
-AuthorEmail: info@webiny.com
+Author:
+    Name: Webiny LTD
+    Email: info@webiny.com
+    Link: https://www.webiny.com
 
 Storage:
     Services:
@@ -17,5 +17,5 @@ Storage:
                     ObjectArguments:
                         Config:
                             Directory: __DIR__/../../public_html/uploads/demo
-                            PublicUrl: __Application.WebPath__/uploads/demo
+                            PublicUrl: __Webiny.WebUrl__/uploads/demo
                             Create: true

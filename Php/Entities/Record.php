@@ -62,9 +62,9 @@ class Record extends AbstractEntity
         });
         $this->attr('reports')->dynamic(function () {
             return [
-                'businessCard'      => $this->getApi()->get('{id}/report/business-card')->getUrl(),
-                'emailBusinessCard' => $this->getApi()->post('{id}/report/send')->getUrl(),
-                'contacts'          => $this->getApi()->get('{id}/report/contacts')->getUrl()
+                'businessCard'      => $this->getApi()->get('{id}/report/business-card')->getUrl($this),
+                'emailBusinessCard' => $this->getApi()->post('{id}/report/send')->getUrl($this),
+                'contacts'          => $this->getApi()->get('{id}/report/contacts')->getUrl($this)
             ];
         });
 
@@ -77,17 +77,17 @@ class Record extends AbstractEntity
 
         $api->get('{id}/report/business-card', function () {
             return new BusinessCardReport($this);
-        });
+        })->setPublic();
 
         $api->get('{id}/report/contacts', function () {
             return new ContactsReport($this);
-        });
+        })->setPublic();
 
         $api->get('report/summary', function () {
             $records = self::find($this->wRequest()->query());
 
             return new RecordsReport($records);
-        });
+        })->setPublic();
 
         $api->post('report/business-cards', function () {
             $query = ['id' => $this->wRequest()->getRequestData()['ids']];
@@ -96,13 +96,13 @@ class Record extends AbstractEntity
             return new ReportsArchive($records, function ($record) {
                 return new BusinessCardReport($record);
             }, 'records.zip');
-        });
+        })->setPublic();
 
         $api->get('report/summary/csv', function () {
             $records = self::find($this->wRequest()->query());
 
             return new RecordsCsv($records);
-        });
+        })->setPublic();
 
         $api->post('{id}/report/send', function () {
             /* @var \Apps\NotificationManager\Php\Lib\Notification $notification */
@@ -119,21 +119,5 @@ class Record extends AbstractEntity
 
             return true;
         });
-    }
-}
-
-/**
- * Class Record2User
- */
-class Record2User extends AbstractEntity
-{
-    protected static $classId = 'Demo.Entities.Record2User';
-    protected static $collection = 'DemoRecord2User';
-
-    function __construct()
-    {
-        parent::__construct();
-        $this->attr('record')->many2one()->setEntity(Record::class);
-        $this->attr('user')->user();
     }
 }
