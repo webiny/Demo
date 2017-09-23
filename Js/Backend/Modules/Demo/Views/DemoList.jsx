@@ -342,7 +342,7 @@ class List extends Webiny.Ui.View {
                                 fields="id,enabled,name,email,createdOn"
                                 searchFields="name,email"
                                 layout={null}>
-                                {(data, meta, list) => {
+                                {({list, meta, $this}) => {
                                     return (
                                         <Grid.Row>
                                             <Grid.Col all={12}>
@@ -370,13 +370,13 @@ class List extends Webiny.Ui.View {
                                                     )}
                                                 </List.FormFilters>
                                                 <List.Loader/>
-                                                <List.Table.Empty renderIf={!data.length}/>
-                                                {data.map(row => {
+                                                <List.Table.Empty renderIf={!list.length}/>
+                                                {list.map(row => {
                                                     return (
                                                         <pre key={row.id}>
                                                         <strong>{row.name}</strong> ({row.email})
                                                         <ClickConfirm message="Delete this user?">
-                                                            <Link onClick={() => list.recordDelete(row.id)}>
+                                                            <Link onClick={() => $this.recordDelete(row.id)}>
                                                                 <Icon icon="icon-cancel"/>
                                                             </Link>
                                                         </ClickConfirm>
