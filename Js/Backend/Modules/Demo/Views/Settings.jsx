@@ -10,7 +10,7 @@ UiSettings.defaultProps = {
         const {Settings, View, Grid, Input, Button} = this.props;
         return (
             <Settings api="/entities/demo/setting">
-                {(model, container) => (
+                {({form}) => (
                     <View.Form>
                         <View.Header
                             title="Content Management Settings"
@@ -23,7 +23,7 @@ UiSettings.defaultProps = {
                             </Grid.Row>
                         </View.Body>
                         <View.Footer align="right">
-                            <Button type="primary" onClick={container.submit} label="Save settings"/>
+                            <Button type="primary" onClick={form.submit} label="Save settings"/>
                         </View.Footer>
                     </View.Form>
                 )}
