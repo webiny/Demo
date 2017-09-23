@@ -20,7 +20,7 @@ class Import extends AbstractService implements PublicApiInterface
             foreach($lines as $line) {
                 $json[] = array_combine($header, str_getcsv($line));
             }
-            return $json;
+            return 'Data imported!';
         });
     }
 

@@ -100,7 +100,7 @@ class Form extends Webiny.Ui.View {
         const settings = (
             <Dynamic.Fieldset name="contacts">
                 <Dynamic.Row>
-                    {function (record, actions) {
+                    {({data, actions}) => {
                         return (
                             <Grid.Row>
                                 <Grid.Col all={3}>
@@ -114,8 +114,8 @@ class Form extends Webiny.Ui.View {
                                 </Grid.Col>
                                 <Grid.Col all={3}>
                                     <ButtonGroup>
-                                        <Button type="primary" label="Add" onClick={actions.add(record)}/>
-                                        <Button type="secondary" label="x" onClick={actions.remove(record)}/>
+                                        <Button type="primary" label="Add" onClick={actions.add(data)}/>
+                                        <Button type="secondary" label="x" onClick={actions.remove(data)}/>
                                     </ButtonGroup>
                                 </Grid.Col>
                             </Grid.Row>
@@ -123,23 +123,21 @@ class Form extends Webiny.Ui.View {
                     }}
                 </Dynamic.Row>
                 <Dynamic.Empty>
-                    {function (actions) {
-                        return (
-                            <Grid.Row>
-                                <Grid.Col all={12}>
-                                    <h5>You have not created any settings yet. Click "Add settings" to start creating your settings!</h5>
-                                    <Button type="primary" label="Add settings" onClick={actions.add()}/>
-                                </Grid.Col>
-                            </Grid.Row>
-                        )
-                    }}
+                    {({actions}) => (
+                        <Grid.Row>
+                            <Grid.Col all={12}>
+                                <h5>You have not created any settings yet. Click "Add settings" to start creating your settings!</h5>
+                                <Button type="primary" label="Add settings" onClick={actions.add()}/>
+                            </Grid.Col>
+                        </Grid.Row>
+                    )}
                 </Dynamic.Empty>
             </Dynamic.Fieldset>
         );
 
         return (
             <Form {...formProps}>
-                {(model, form) => (
+                {({form}) => (
                     <View.Form>
                         <View.Header title="Demo Form" description="Demo form to demonstrate most of the input components Webiny offers">
                             <Link type="default" align="right" route="Demo.List">Back to list</Link>

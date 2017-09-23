@@ -5,8 +5,12 @@ import Webiny from 'webiny';
 
 class List extends Webiny.Ui.View {
 
-    log(data, actions) {
-        console.log("MULTI ACTION LOG", data);
+    log({data, actions}) {
+        console.log("MULTI ACTION LOG", data, actions);
+    }
+
+    delete(params) {
+        console.log('DELETE', params);
     }
 
     render() {
@@ -21,9 +25,9 @@ class List extends Webiny.Ui.View {
                         const submit = filters => download('GET', '/entities/demo/records/report/summary', filters);
                         return (
                             <Modal.Dialog>
-                                {dialog => (
+                                {({dialog}) => (
                                     <Form onSubmit={submit}>
-                                        {(model, form) => (
+                                        {({form}) => (
                                             <Modal.Content>
                                                 <Modal.Header title="Export summary"/>
                                                 <Modal.Body>
@@ -65,11 +69,10 @@ class List extends Webiny.Ui.View {
                     <Grid.Row>
                         <Grid.Col xs={12} style={{padding: 20}}>
                             <ClickSuccess message="Simple!" onClose={() => console.log("Me closed!")}>
-                                <Button type="primary" label="ClickSuccess" align="right" onClick={() => {
-                                }}/>
+                                <Button type="primary" label="ClickSuccess" align="right" onClick={_.noop}/>
                             </ClickSuccess>
                             <ClickSuccess message="Hell yeah!">
-                                {success => (
+                                {({success}) => (
                                     <ClickConfirm message="Do you really want to delete this user?" onComplete={success}>
                                         <Button type="primary" label="ClickSuccess with ClickConfirm" align="right" onClick={() => {
                                             return new Promise(r => {
@@ -86,24 +89,25 @@ class List extends Webiny.Ui.View {
                                     });
                                 }}/>
                             </ClickConfirm>
-                            <ClickConfirm message="Do you really want to delete this user?"
-                                          renderDialog={(confirm, cancel, confirmation) => {
-                                              return (
-                                                  <Modal.Dialog onCancel={cancel}>
-                                                      <Modal.Content>
-                                                          {confirmation.renderLoader()}
-                                                          <Modal.Header title="Custom title"/>
-                                                          <Modal.Body>
-                                                              <p>Some custom dialog body...</p>
-                                                          </Modal.Body>
-                                                          <Modal.Footer>
-                                                              <Button type="primary" label="Confirm" align="right" onClick={confirm}/>
-                                                              <Button type="secondary" label="Cancel" align="right" onClick={cancel}/>
-                                                          </Modal.Footer>
-                                                      </Modal.Content>
-                                                  </Modal.Dialog>
-                                              );
-                                          }}>
+                            <ClickConfirm
+                                message="Do you really want to delete this user?"
+                                renderDialog={({onConfirm, onCancel, dialog}) => {
+                                    return (
+                                        <Modal.Dialog onCancel={onCancel}>
+                                            <Modal.Content>
+                                                {dialog.renderLoader()}
+                                                <Modal.Header title="Custom title"/>
+                                                <Modal.Body>
+                                                    <p>Some custom dialog body...</p>
+                                                </Modal.Body>
+                                                <Modal.Footer>
+                                                    <Button type="primary" label="Confirm" align="right" onClick={onConfirm}/>
+                                                    <Button type="secondary" label="Cancel" align="right" onClick={onCancel}/>
+                                                </Modal.Footer>
+                                            </Modal.Content>
+                                        </Modal.Dialog>
+                                    );
+                                }}>
                                 <Button type="primary" label="ClickConfirm custom dialog" align="right" onClick={() => {
                                     return new Promise(r => {
                                         setTimeout(r, 1500);
@@ -111,13 +115,13 @@ class List extends Webiny.Ui.View {
                                 }}/>
                             </ClickConfirm>
                             {/* Import file example */}
-                            <ClickConfirm renderDialog={(confirm, cancel, confirmation) => {
+                            <ClickConfirm renderDialog={({onConfirm, onCancel, dialog}) => {
                                 return (
-                                    <Modal.Dialog onCancel={cancel}>
-                                        <Form onSubmit={confirm}>
-                                            {(model, form) => (
+                                    <Modal.Dialog onCancel={onCancel}>
+                                        <Form onSubmit={onConfirm}>
+                                            {({form}) => (
                                                 <Modal.Content>
-                                                    {confirmation.renderLoader()}
+                                                    {dialog.renderLoader()}
                                                     <Modal.Header title="Select file to import"/>
                                                     <Modal.Body>
                                                         <Grid.Row>
@@ -134,7 +138,7 @@ class List extends Webiny.Ui.View {
                                                         </Grid.Row>
                                                     </Modal.Body>
                                                     <Modal.Footer>
-                                                        <Button label="Cancel" onClick={cancel}/>
+                                                        <Button label="Cancel" onClick={onCancel}/>
                                                         <Button type="primary" label="Import" onClick={form.submit}/>
                                                     </Modal.Footer>
                                                 </Modal.Content>
@@ -143,8 +147,8 @@ class List extends Webiny.Ui.View {
                                     </Modal.Dialog>
                                 );
                             }}>
-                                <Button type="primary" label="Import file" align="right" onClick={model => {
-                                    return new Webiny.Api.Endpoint('/services/demo/import').post('import', model).then(res => {
+                                <Button type="primary" label="Import file" align="right" onClick={({data}) => {
+                                    return new Webiny.Api.Endpoint('/services/demo/import').post('import', data).then(res => {
                                         console.log(res.getData());
                                     })
                                 }}/>
@@ -240,9 +244,9 @@ class List extends Webiny.Ui.View {
                                                     const submit = model => download('GET', record.reports.contacts, model);
                                                     return (
                                                         <Modal.Dialog>
-                                                            {dialog => (
+                                                            {({dialog}) => (
                                                                 <Form onSubmit={submit}>
-                                                                    {(model, form) => (
+                                                                    {({form}) => (
                                                                         <Modal.Content>
                                                                             <Modal.Header title={'Contacts for ' + record.name}/>
                                                                             <Modal.Body>
@@ -286,7 +290,7 @@ class List extends Webiny.Ui.View {
                                         </List.Table.Actions>
                                     </List.Table.Row>
                                     <List.Table.RowDetails>
-                                        {(data, rowDetails) => {
+                                        {({data}) => {
                                             return (
                                                 <List data={data.contacts}>
                                                     <List.Loader/>
@@ -309,31 +313,21 @@ class List extends Webiny.Ui.View {
                                         download('POST', '/entities/demo/records/report/business-cards', {ids: _.map(Array.from(data), 'id')})
                                     }}/>
                                     <Dropdown.Divider/>
-                                    <List.DeleteMultiAction>
-                                        {rows => {
-                                            const props = {
-                                                message: 'Delete ' + rows.length + ' records?',
-                                                onConfirm: this.delete
-                                            };
-                                            return (
-                                                <Modal.Confirmation {...props}/>
-                                            );
-                                        }}
-                                    </List.DeleteMultiAction>
+                                    <List.DeleteMultiAction
+                                        onConfirm={this.delete}
+                                        message={({data}) => 'Delete ' + data.length + ' records?'}/>
                                     <List.ModalMultiAction label="Modal">
-                                        {rows => (
+                                        {({data, dialog}) => (
                                             <Modal.Dialog>
-                                                {dialog => (
-                                                    <Modal.Content>
-                                                        <Modal.Header title="Export summary"/>
-                                                        <Modal.Body>
-                                                            {JSON.stringify(Array.from(rows))}
-                                                        </Modal.Body>
-                                                        <Modal.Footer>
-                                                            <Button type="default" label="Cancel" onClick={dialog.hide}/>
-                                                        </Modal.Footer>
-                                                    </Modal.Content>
-                                                )}
+                                                <Modal.Content>
+                                                    <Modal.Header title="Export summary"/>
+                                                    <Modal.Body>
+                                                        {JSON.stringify(Array.from(data))}
+                                                    </Modal.Body>
+                                                    <Modal.Footer>
+                                                        <Button type="default" label="Cancel" onClick={dialog.hide}/>
+                                                    </Modal.Footer>
+                                                </Modal.Content>
                                             </Modal.Dialog>
                                         )}
                                     </List.ModalMultiAction>
@@ -357,7 +351,7 @@ class List extends Webiny.Ui.View {
                                             </Grid.Col>
                                             <Grid.Col all={12}>
                                                 <List.FormFilters>
-                                                    {(apply, reset) => (
+                                                    {({apply, reset}) => (
                                                         <Grid.Row>
                                                             <Grid.Col all={6}>
                                                                 <Select name="enabled" placeholder="All users" onChange={apply()}
