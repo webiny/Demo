@@ -5,11 +5,13 @@ namespace Apps\Demo\Php\Entities;
 use Apps\Demo\Php\Reports\ContactsReport;
 use Apps\Demo\Php\Reports\RecordsCsv;
 use Apps\Webiny\Php\Lib\Api\ApiContainer;
+use Apps\Webiny\Php\Lib\Entity\Indexes\IndexContainer;
 use Apps\Webiny\Php\Lib\Reports\ReportsArchive;
 use Apps\Webiny\Php\Lib\Entity\AbstractEntity;
 use Apps\Demo\Php\Reports\BusinessCardReport;
 use Apps\Demo\Php\Reports\RecordsReport;
 use Apps\NotificationManager\Php\Lib\Recipients\Email;
+use Webiny\Component\Mongo\Index\CompoundIndex;
 
 /**
  * Class User
@@ -119,5 +121,11 @@ class Record extends AbstractEntity
 
             return true;
         });
+    }
+
+    protected static function entityIndexes(IndexContainer $indexes)
+    {
+        parent::entityIndexes($indexes);
+        $indexes->add(new CompoundIndex('email', ['email', 'deletedOn'], false, true));
     }
 }
