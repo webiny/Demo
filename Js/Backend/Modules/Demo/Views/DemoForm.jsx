@@ -57,19 +57,19 @@ class Form extends Webiny.Ui.View {
             api: '/entities/webiny/user-roles',
             fields: 'slug,name,id,createdOn',
             perPage: 10,
-            optionRenderer: (item) => {
+            optionRenderer: ({option}) => {
                 return (
                     <div>
-                        <strong>{item.data.name}</strong><br/>
-                        <span>Tag: {item.data.slug}</span>
+                        <strong>{option.data.name}</strong><br/>
+                        <span>Tag: {option.data.slug}</span>
                     </div>
                 );
             },
-            selectedRenderer: (item) => {
-                return item.data.name;
+            selectedRenderer: ({option}) => {
+                return option.data.name;
             },
-            onChange: (newValue, oldValue, input) => {
-                console.log(newValue, input.getCurrentData());
+            onChange: ({value, component}) => {
+                console.log(value, component.getCurrentData());
             }
         };
 
@@ -92,7 +92,7 @@ class Form extends Webiny.Ui.View {
             textAttr: 'email',
             valueKey: 'user.id', // Used to map API options to form model
             useDataAsValue: true,
-            formatOptionValue: value => {
+            formatOptionValue: ({value}) => {
                 return {user: {id: value.id}};
             }
         };
