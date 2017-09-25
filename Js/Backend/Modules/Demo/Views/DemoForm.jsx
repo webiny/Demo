@@ -43,8 +43,8 @@ class Form extends Webiny.Ui.View {
             connectToRouter: true,
             onSubmitSuccess: 'Demo.List',
             onCancel: 'Demo.List',
-            onProgress: function (pe) {
-                const cmp = <div>Uploading form data...{pe.progress}%</div>;
+            onProgress({event}) {
+                const cmp = <div>Uploading form data...{event.progress}%</div>;
                 Webiny.Growl(<Growl.Warning id={this.growlId} title="Custom progress" sticky={true}>{cmp}</Growl.Warning>);
             }
         };

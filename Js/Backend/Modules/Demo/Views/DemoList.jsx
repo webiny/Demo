@@ -22,7 +22,7 @@ class List extends Webiny.Ui.View {
             <View.List>
                 <View.Header title="Demo List">
                     <DownloadLink type="secondary" align="right" download={download => {
-                        const submit = filters => download('GET', '/entities/demo/records/report/summary', filters);
+                        const submit = ({model: filters}) => download('GET', '/entities/demo/records/report/summary', filters);
                         return (
                             <Modal.Dialog>
                                 {({dialog}) => (
@@ -147,7 +147,7 @@ class List extends Webiny.Ui.View {
                                     </Modal.Dialog>
                                 );
                             }}>
-                                <Button type="primary" label="Import file" align="right" onClick={({data}) => {
+                                <Button type="primary" label="Import file" align="right" onClick={({model: data}) => {
                                     return new Webiny.Api.Endpoint('/services/demo/import').post('import', data).then(res => {
                                         console.log(res.getData());
                                     })
@@ -241,7 +241,7 @@ class List extends Webiny.Ui.View {
                                                 label="Export contacts"
                                                 icon="icon-external-link"
                                                 download={(download, record) => {
-                                                    const submit = model => download('GET', record.reports.contacts, model);
+                                                    const submit = ({model}) => download('GET', record.reports.contacts, model);
                                                     return (
                                                         <Modal.Dialog>
                                                             {({dialog}) => (
