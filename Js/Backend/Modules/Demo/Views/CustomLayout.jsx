@@ -22,7 +22,7 @@ class CustomLayout extends Webiny.Ui.Component {
         };
 
         const inputProps = _.assign({
-            onEnter: e => this.props.container.setSearchQuery(e.target.value),
+            onEnter: ({event}) => this.props.container.setSearchQuery(event.target.value),
             placeholder: 'Search...'
         }, this.bindTo('search'));
 

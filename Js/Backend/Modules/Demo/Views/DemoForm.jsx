@@ -171,7 +171,7 @@ class Form extends Webiny.Ui.View {
                                                 validate="required"
                                                 useDataAsValue={false}
                                                 filterBy="userRole"
-                                                onChange={(newValue, oldValue, input) => console.log(newValue, input)}/>
+                                                onChange={({value, component}) => console.log(value, component)}/>
                                         </Grid.Col>
                                     </Grid.Row>
                                     <Grid.Row>
