@@ -11,7 +11,7 @@ class Demo extends Webiny.App.Module {
         this.name = 'Demo';
 
         this.registerMenus(
-            <Webiny.Ui.Menu label={this.i18n('Demo')} route="Demo.List" icon="icon-website"/>
+            <Webiny.Ui.Menu label={Webiny.I18n('Demo')} route="Demo.List" icon="icon-website"/>
         );
 
         this.registerRoutes(
