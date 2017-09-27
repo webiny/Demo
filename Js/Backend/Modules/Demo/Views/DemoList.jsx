@@ -42,8 +42,8 @@ class List extends Webiny.Ui.View {
                                                                 placeholder={this.i18n('All records')}
                                                                 allowClear
                                                                 tooltip="Filter me">
-                                                                <option value="true">Enabled</option>
-                                                                <option value="false">Disabled</option>
+                                                                <option value="true">{this.i18n('Enabled')}</option>
+                                                                <option value="false">{this.i18n('Disabled')}</option>
                                                             </Select>
                                                         </Grid.Col>
                                                     </Grid.Row>
@@ -60,13 +60,13 @@ class List extends Webiny.Ui.View {
                         );
                     }}>
                         <Icon icon="icon-file-o"/>
-                        Export summary
+                        {this.i18n('Export summary')}
                     </DownloadLink>
                     <DownloadLink type="secondary" align="right" download="/entities/demo/records/report/summary/csv">
                         <Icon icon="icon-file-o"/>
-                        Export CSV
+                        {this.i18n('Export CSV')}
                     </DownloadLink>
-                    <Link type="secondary" route="Demo.Create" align="right"><Icon icon="icon-plus-circled"/>Create record</Link>
+                    <Link type="secondary" route="Demo.Create" align="right"><Icon icon="icon-plus-circled"/>{this.i18n('Create record')}</Link>
                 </View.Header>
                 <View.Body noPadding>
                     <Grid.Row>
@@ -77,11 +77,12 @@ class List extends Webiny.Ui.View {
                             <ClickSuccess message={this.i18n('Hell yeah!')}>
                                 {({success}) => (
                                     <ClickConfirm message={this.i18n('Do you really want to delete this user?')} onComplete={success}>
-                                        <Button type="primary" label={this.i18n('ClickSuccess with ClickConfirm')} align="right" onClick={() => {
-                                            return new Promise(r => {
-                                                setTimeout(r, 1500);
-                                            });
-                                        }}/>
+                                        <Button type="primary" label={this.i18n('ClickSuccess with ClickConfirm')} align="right"
+                                                onClick={() => {
+                                                    return new Promise(r => {
+                                                        setTimeout(r, 1500);
+                                                    });
+                                                }}/>
                                     </ClickConfirm>
                                 )}
                             </ClickSuccess>
@@ -101,7 +102,7 @@ class List extends Webiny.Ui.View {
                                                 {dialog.renderLoader()}
                                                 <Modal.Header title={this.i18n('Custom title')}/>
                                                 <Modal.Body>
-                                                    <p>Some custom dialog body...</p>
+                                                    <p>{this.i18n('Some custom dialog body...')}</p>
                                                 </Modal.Body>
                                                 <Modal.Footer>
                                                     <Button type="primary" label={this.i18n('Confirm')} align="right" onClick={onConfirm}/>
@@ -135,7 +136,7 @@ class List extends Webiny.Ui.View {
                                                                     readAs="binary"
                                                                     label={this.i18n('Import from file')}
                                                                     placeholder={this.i18n('Select a CSV file to import')}
-                                                                    description="Any file up to 2.5MB will do"
+                                                                    description={this.i18n('Any file up to 2.5MB will do')}
                                                                     validate="required"/>
                                                             </Grid.Col>
                                                         </Grid.Row>
@@ -162,7 +163,7 @@ class List extends Webiny.Ui.View {
                     <Tabs size="large">
                         <Tabs.Tab label={this.i18n('List with table')}>
                             <List
-                                connectToRouter={true}
+                                connectToRouter
                                 api="/entities/demo/records"
                                 sort="email"
                                 fields="id,enabled,name,email,createdOn,contacts,reports"
@@ -176,28 +177,30 @@ class List extends Webiny.Ui.View {
                                                     <table className="table table-simple">
                                                         <thead>
                                                         <tr>
-                                                            <th className="text-left">Label</th>
-                                                            <th className="text-left">Description</th>
+                                                            <th className="text-left">{this.i18n('Label')}</th>
+                                                            <th className="text-left">{this.i18n('Description')}</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
                                                         <tr>
-                                                            <td><span className="label label-danger">Inactive</span></td>
-                                                            <td>The site is currently not active, meaning you can only access the site
-                                                                administration,
-                                                                while the public part of the website is not accessible.
+                                                            <td><span className="label label-danger">{this.i18n('Inactive')}</span></td>
+                                                            <td>
+                                                                {this.i18n(`The site is currently not active, meaning you can only access the site
+                                                                administration, while the public part of the website is not accessible.`)}
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td><span className="label label-warning">Active but not CNAMEd</span></td>
-                                                            <td>Both public part and the administration are active,
-                                                                however the public part can only be accessed via the temporary domain.
+                                                            <td><span className="label label-warning">{this.i18n(`Active but not CNAMEd`)}</span></td>
+                                                            <td>
+                                                                {this.i18n(`Both public part and the administration are active,
+                                                                however the public part can only be accessed via the temporary domain.`)}
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td><span className="label label-success">Active and CNAMEd</span></td>
-                                                            <td>Both public part and the administration are active,
-                                                                and the domain can be accessed via the user domain.
+                                                            <td><span className="label label-success">{this.i18n('Active and CNAMEd')}</span></td>
+                                                            <td>
+                                                                {this.i18n(`Both public part and the administration are active,
+                                                                and the domain can be accessed via the user domain.`)}
                                                             </td>
                                                         </tr>
                                                         </tbody>
@@ -208,38 +211,40 @@ class List extends Webiny.Ui.View {
                                         <List.Table.Field name="email" align="left" sort="email" label={this.i18n('Email')}>
                                             <List.Table.FieldInfo title={this.i18n('About email')}>
                                                 <p>
-                                                    API Key is used if you wish to make API calls from other websites, or devices, to
+                                                    {this.i18n(`API Key is used if you wish to make API calls from other websites, or devices, to
                                                     retrieve
                                                     content
                                                     from a particular site.
-                                                    Only requests that have the matching API key will get a proper response.
+                                                    Only requests that have the matching API key will get a proper response.`)}
                                                     <br/><br/>
-                                                    The API key is sent via <span
-                                                    className="label label-default">X-Webiny-Authorization</span>
-                                                    HTTP
-                                                    request
-                                                    header.
+                                                    {this.i18n('The API key is sent via {header} HTTP request header.', {
+                                                        header: <span className="label label-default">X-Webiny-Authorization</span>
+                                                    })}
                                                     <br/>
                                                 </p>
                                             </List.Table.FieldInfo>
                                         </List.Table.Field>
                                         <List.Table.CaseField name="enabled" align="left" label={this.i18n('Status')} sort="enabled">
-                                            <case value={true}>Enabled</case>
-                                            <case value={false}>Disabled</case>
+                                            <case value={true}>{this.i18n('Enabled')}</case>
+                                            <case value={false}>{this.i18n('Disabled')}</case>
                                         </List.Table.CaseField>
                                         <List.Table.ToggleField name="enabled" align="center" label={this.i18n('Status')}/>
                                         <List.Table.Field name="createdOn" align="left" label={this.i18n('Created On')} sort="createdOn"/>
-                                        <List.Table.DateTimeField name="createdOn" align="left" label={this.i18n('Created On')} sort="createdOn"/>
-                                        <List.Table.TimeAgoField name="createdOn" align="left" label={this.i18n('Created On')} sort="createdOn"/>
+                                        <List.Table.DateTimeField name="createdOn" align="left" label={this.i18n('Created On')}
+                                                                  sort="createdOn"/>
+                                        <List.Table.TimeAgoField name="createdOn" align="left" label={this.i18n('Created On')}
+                                                                 sort="createdOn"/>
                                         <List.Table.Actions>
                                             <List.Table.EditAction route="Demo.Form"/>
                                             <Dropdown.Header title={this.i18n('Reports')}/>
-                                            <List.Table.Action label={this.i18n('Business Card')} icon="icon-doc-text" download={(download, data) => {
-                                                download('GET', data.reports.businessCard);
-                                            }}/>
-                                            <List.Table.Action label={this.i18n('Send to my email')} icon="icon-doc-text" download={(download, data) => {
-                                                download('POST', data.reports.emailBusinessCard);
-                                            }}/>
+                                            <List.Table.Action label={this.i18n('Business Card')} icon="icon-doc-text"
+                                                               download={(download, data) => {
+                                                                   download('GET', data.reports.businessCard);
+                                                               }}/>
+                                            <List.Table.Action label={this.i18n('Send to my email')} icon="icon-doc-text"
+                                                               download={(download, data) => {
+                                                                   download('POST', data.reports.emailBusinessCard);
+                                                               }}/>
                                             <List.Table.Action
                                                 label={this.i18n('Export contacts')}
                                                 icon="icon-external-link"
@@ -259,16 +264,17 @@ class List extends Webiny.Ui.View {
                                                                                     placeholder={this.i18n('Select a date range')}
                                                                                     validate="required"/>
                                                                                 <Alert type="info">
-                                                                                    NOTE: this won't filter anything in the report, it's
+                                                                                    {this.i18n(`NOTE: this won't filter anything in the report, it's
                                                                                     just here to show you an example of how you would create
                                                                                     a report
-                                                                                    configuration dialog in your own app.<br/><br/>
-                                                                                    Once you submit the form, see how the parameters are
+                                                                                    configuration dialog in your own app.`)}
+                                                                                    <br/><br/>
+                                                                                    {this.i18n(`Once you submit the form, see how the parameters are
                                                                                     appended to URL. It is up to you to handle the query
                                                                                     parameters in you
                                                                                     API methods and pass them to report itself or process
                                                                                     the data passed to
-                                                                                    the report.
+                                                                                    the report.`)}
                                                                                 </Alert>
                                                                             </Modal.Body>
                                                                             <Modal.Footer>
@@ -350,17 +356,23 @@ class List extends Webiny.Ui.View {
                                         <Grid.Row>
                                             <Grid.Col all={12}>
                                                 <Section
-                                                    title={`Found a total of ${meta.totalCount} records (showing ${meta.perPage} per page)`}/>
+                                                    title={this.i18n('Found a total of {totalCount} records (showing {perPage} per page)', {
+                                                        totalCount: meta.totalCount,
+                                                        perPage: meta.perPage
+                                                    })}/>
                                             </Grid.Col>
                                             <Grid.Col all={12}>
                                                 <List.FormFilters>
                                                     {({apply, reset}) => (
                                                         <Grid.Row>
                                                             <Grid.Col all={6}>
-                                                                <Select name="enabled" placeholder={this.i18n('All users')} onChange={apply()}
-                                                                        allowClear>
-                                                                    <option value={true}>Enabled</option>
-                                                                    <option value={false}>Disabled</option>
+                                                                <Select
+                                                                    name="enabled"
+                                                                    placeholder={this.i18n('All users')}
+                                                                    onChange={apply()}
+                                                                    allowClear>
+                                                                    <option value={true}>{this.i18n('Enabled')}</option>
+                                                                    <option value={false}>{this.i18n('Disabled')}</option>
                                                                 </Select>
                                                             </Grid.Col>
                                                             <Grid.Col all={6}>

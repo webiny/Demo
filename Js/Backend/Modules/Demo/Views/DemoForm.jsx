@@ -47,15 +47,14 @@ class Form extends Webiny.Ui.View {
             onSubmitSuccess: 'Demo.List',
             onCancel: 'Demo.List',
             onProgress({event}) {
-                const cmp = <div>Uploading form data...{event.progress}%</div>;
+                const cmp = <div>{this.i18n('Uploading form data... {progress}%', {progress: event.progress})}</div>;
                 Webiny.Growl(<Growl.Warning id={this.growlId} title={this.i18n('Custom progress')} sticky={true}>{cmp}</Growl.Warning>);
             }
         };
 
         const userRoleSelect = {
-            label: 'User role',
-            name: 'userRole',
-            placeholder: 'Select user role',
+            label: this.i18n('User role'),
+            name: 'userRoie',placeholder: this.i18n('Select user role'),
             allowClear: true,
             api: '/entities/webiny/user-roles',
             fields: 'slug,name,id,createdOn',
@@ -77,9 +76,9 @@ class Form extends Webiny.Ui.View {
         };
 
         const createdBySelect = {
-            label: 'Created by',
+            label: this.i18n('Created by'),
             name: 'createdBy',
-            placeholder: 'Select user',
+            placeholder: this.i18n('Select user'),
             allowClear: true,
             api: '/entities/webiny/users',
             fields: 'id,email',
@@ -88,7 +87,7 @@ class Form extends Webiny.Ui.View {
         };
 
         const recordUsers = {
-            label: 'Record users',
+            label: this.i18n('Record users'),
             name: 'users',
             api: '/entities/webiny/users',
             fields: 'id,email',
@@ -129,7 +128,7 @@ class Form extends Webiny.Ui.View {
                     {({actions}) => (
                         <Grid.Row>
                             <Grid.Col all={12}>
-                                <h5>You have not created any settings yet. Click "Add settings" to start creating your settings!</h5>
+                                <h5>{this.i18n('You have not created any settings yet. Click "Add settings" to start creating your settings!')}</h5>
                                 <Button type="primary" label={this.i18n('Add settings')} onClick={actions.add()}/>
                             </Grid.Col>
                         </Grid.Row>
@@ -142,8 +141,9 @@ class Form extends Webiny.Ui.View {
             <Form {...formProps}>
                 {({form}) => (
                     <View.Form>
-                        <View.Header title={this.i18n('Demo Form')} description="Demo form to demonstrate most of the input components Webiny offers">
-                            <Link type="default" align="right" route="Demo.List">Back to list</Link>
+                        <View.Header title={this.i18n('Demo Form')}
+                                     description={this.i18n('Demo form to demonstrate most of the input components Webiny offers')}>
+                            <Link type="default" align="right" route="Demo.List">{this.i18n('Back to list')}</Link>
                             <Copy.Button
                                 onSuccessmessage={this.i18n('Stolen!')}
                                 type="secondary"
@@ -157,10 +157,17 @@ class Form extends Webiny.Ui.View {
                                 <Tabs.Tab label={this.i18n('Input components')} icon="icon-gauge">
                                     <Grid.Row>
                                         <Grid.Col all={3}>
-                                            <Input label={this.i18n('Name')} name="name" validate="required,minLength:3"/>
+                                            <Input
+                                                label={this.i18n('Name')}
+                                                name="name"
+                                                validate="required,minLength:3"/>
                                         </Grid.Col>
                                         <Grid.Col all={3}>
-                                            <Email label={this.i18n('Email')} name="email" validate="required" tooltip="Your email address"/>
+                                            <Email
+                                                label={this.i18n('Email')}
+                                                name="email"
+                                                validate="required"
+                                                tooltip="Your email address"/>
                                         </Grid.Col>
                                         <Grid.Col all={6}>
                                             <Search
@@ -179,16 +186,29 @@ class Form extends Webiny.Ui.View {
                                     </Grid.Row>
                                     <Grid.Row>
                                         <Grid.Col all={3}>
-                                            <DateTime label={this.i18n('Date & Time')} name="datetime" placeholder={this.i18n('Select date and time')}/>
+                                            <DateTime
+                                                label={this.i18n('Date & Time')}
+                                                name="datetime"
+                                                placeholder={this.i18n('Select date and time')}/>
                                         </Grid.Col>
                                         <Grid.Col all={3}>
-                                            <Date label={this.i18n('Date')} name="date" placeholder={this.i18n('Select a date')} validate="required"/>
+                                            <Date
+                                                label={this.i18n('Date')}
+                                                name="date"
+                                                placeholder={this.i18n('Select a date')}
+                                                validate="required"/>
                                         </Grid.Col>
                                         <Grid.Col all={3}>
-                                            <Time label={this.i18n('Time')} name="time" placeholder={this.i18n('Select time')}/>
+                                            <Time
+                                                label={this.i18n('Time')}
+                                                name="time"
+                                                placeholder={this.i18n('Select time')}/>
                                         </Grid.Col>
                                         <Grid.Col all={3}>
-                                            <DateRange label={this.i18n('Date range')} name="daterange" placeholder={this.i18n('Select a date range')}/>
+                                            <DateRange
+                                                label={this.i18n('Date range')}
+                                                name="daterange"
+                                                placeholder={this.i18n('Select a date range')}/>
                                         </Grid.Col>
                                     </Grid.Row>
                                     <Grid.Row>
@@ -196,12 +216,15 @@ class Form extends Webiny.Ui.View {
                                             <Select {...userRoleSelect} />
                                         </Grid.Col>
                                         <Grid.Col all={4}>
-                                            <Select name="staticSelect" label={this.i18n('Static select')} placeholder={this.i18n('Select an option')}>
-                                                <option value="yes">Yes</option>
+                                            <Select
+                                                name="staticSelect"
+                                                label={this.i18n('Static select')}
+                                                placeholder={this.i18n('Select an option')}>
+                                                <option value="yes">{this.i18n('Yes')}</option>
                                                 <option value="no">
-                                                    <webiny-no>No</webiny-no>
+                                                    <webiny-no>{this.i18n('No')}</webiny-no>
                                                 </option>
-                                                <option value="maybe"><strong>Maybe</strong></option>
+                                                <option value="maybe"><strong>{this.i18n('Maybe')}</strong></option>
                                             </Select>
                                         </Grid.Col>
                                         <Grid.Col all={4}>
@@ -228,12 +251,15 @@ class Form extends Webiny.Ui.View {
                                     </Grid.Row>
                                     <Grid.Row>
                                         <Grid.Col all={12}>
-                                            <Textarea label={this.i18n('Description')} name="description" tooltip="Put any tooltip text here..."/>
+                                            <Textarea
+                                                label={this.i18n('Description')}
+                                                name="description"
+                                                tooltip="Put any tooltip text here..."/>
                                         </Grid.Col>
                                     </Grid.Row>
                                     <Grid.Row>
                                         <Grid.Col all={12}>
-                                            <h4>Settings</h4>
+                                            <h4>{this.i18n('Settings')}</h4>
                                             {settings}
                                         </Grid.Col>
                                     </Grid.Row>
@@ -244,15 +270,15 @@ class Form extends Webiny.Ui.View {
                                         <Grid.Col all={6}>
                                             <Section title={this.i18n('Static checkboxes (hard-coded options)')}/>
                                             <CheckboxGroup name="roles" validate="minLength:2">
-                                                <option value="Admin">Admin&nbsp;management</option>
-                                                <option value="Coupon">Coupon&nbsp;management</option>
-                                                <option value="Crm">CRM</option>
-                                                <option value="Dashboard">Dashboard</option>
-                                                <option value="anually"><strong>Annually</strong></option>
+                                                <option value="Admin">{this.i18n('Admin management')}</option>
+                                                <option value="Coupon">{this.i18n('Coupon management')}</option>
+                                                <option value="Crm">{this.i18n('CRM')}</option>
+                                                <option value="Dashboard">{this.i18n('Dashboard')}</option>
+                                                <option value="anually"><strong>{this.i18n('Annually')}</strong></option>
                                                 <option value="monthly">
-                                                    <div>Monthly&nbsp;<i>(One season minimum)</i></div>
+                                                    <div>{this.i18n('Monthly (One season minimum)')}</div>
                                                 </option>
-                                                <validator name="minLength">Please select at least 2 options</validator>
+                                                <validator name="minLength">{this.i18n('Please select at least 2 options')}</validator>
                                             </CheckboxGroup>
 
                                             <div className="clearfix"/>
@@ -266,8 +292,11 @@ class Form extends Webiny.Ui.View {
                                                     <li className="list-item col-xs-offset-1">
                                                         <div className="form-group">
                                                             <div className="checkbox">
-                                                                <input type="checkbox" id={this.id} disabled={this.isDisabled()}
-                                                                       checked={this.isChecked()} onChange={this.onChange}/>
+                                                                <input
+                                                                    type="checkbox"
+                                                                    id={this.id}
+                                                                    disabled={this.isDisabled()}
+                                                                    checked={this.isChecked()} onChange={this.onChange}/>
                                                                 <label htmlFor={this.id}><span className="form-icon"/>{this.props.label}
                                                                 </label>
                                                             </div>
@@ -275,9 +304,9 @@ class Form extends Webiny.Ui.View {
                                                     </li>
                                                 );
                                             }}>
-                                                <option value="Admin">Admin&nbsp;management</option>
-                                                <option value="Coupon">Coupon&nbsp;management</option>
-                                                <option value="Crm">CRM</option>
+                                                <option value="Admin">{this.i18n('Admin management')}</option>
+                                                <option value="Coupon">{this.i18n('Coupon management')}</option>
+                                                <option value="Crm">{this.i18n('CRM')}</option>
                                             </CheckboxGroup>
                                         </Grid.Col>
                                         <Grid.Col all={6}>
@@ -291,10 +320,10 @@ class Form extends Webiny.Ui.View {
                                         {/* RADIO */}
                                         <Grid.Col all={6}>
                                             <RadioGroup label={this.i18n('Roles (static)')} name="access">
-                                                <option value="Admin">Admin</option>
-                                                <option value="Billing">Billing</option>
-                                                <option value="Crm">CRM</option>
-                                                <option value="Dashboard">Dashboard</option>
+                                                <option value="Admin">{this.i18n('Admin')}</option>
+                                                <option value="Billing">{this.i18n('Billing')}</option>
+                                                <option value="Crm">{this.i18n('CRM')}</option>
+                                                <option value="Dashboard">{this.i18n('Dashboard')}</option>
                                             </RadioGroup>
                                         </Grid.Col>
                                         <Grid.Col all={6}>
@@ -319,7 +348,7 @@ class Form extends Webiny.Ui.View {
                                                 name="avatar"
                                                 label={this.i18n('Avatar image')}
                                                 placeholder={this.i18n('Select a file')}
-                                                description="Any file up to 2.5MB will do"
+                                                description={this.i18n('Any file up to 2.5MB will do')}
                                                 validate="required"/>
                                         </Grid.Col>
                                         <Grid.Col all={6}>

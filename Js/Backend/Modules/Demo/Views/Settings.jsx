@@ -17,7 +17,7 @@ UiSettings.defaultProps = {
                     <View.Form>
                         <View.Header
                             title={this.i18n('Content Management Settings')}
-                            description="Set your CMS preferences here"/>
+                            description={this.i18n('Set your CMS preferences here')}/>
                         <View.Body>
                             <Grid.Row>
                                 <Grid.Col all={12}>

@@ -20,13 +20,13 @@ class CustomLayout extends Webiny.Ui.Component {
             style: {marginTop: -10},
             className: 'pull-right',
             type: 'secondary',
-            label: 'Page 2',
+            label: this.i18n('Page 2'),
             onClick: this.props.container.setPage.bind(null, 2)
         };
 
         const inputProps = _.assign({
             onEnter: ({event}) => this.props.container.setSearchQuery(event.target.value),
-            placeholder: 'Search...'
+            placeholder: this.i18n('Search...')
         }, this.bindTo('search'));
 
         const {Panel, Button, Input} = this.props;
@@ -42,7 +42,7 @@ class CustomLayout extends Webiny.Ui.Component {
                     {this.props.pagination}
                 </Panel.Body>
                 <Panel.Footer>
-                    Filters: {this.props.filters}
+                    {this.i18n('Filters: {filters}', {filters: this.props.filters})}
                 </Panel.Footer>
             </Panel>
         );
