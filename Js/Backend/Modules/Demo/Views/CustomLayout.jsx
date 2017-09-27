@@ -2,6 +2,9 @@ import React from 'react';
 import _ from 'lodash';
 import Webiny from 'webiny';
 
+/**
+ * @i18n.namespace Demo.Backend.Demo.CustomLayout
+ */
 class CustomLayout extends Webiny.Ui.Component {
 
     constructor(props) {
@@ -30,7 +33,7 @@ class CustomLayout extends Webiny.Ui.Component {
 
         return (
             <Panel>
-                <Panel.Header title="Custom element layout">
+                <Panel.Header title={this.i18n('Custom element layout')}>
                     <Button {...buttonProps}/>
                 </Panel.Header>
                 <Panel.Body>

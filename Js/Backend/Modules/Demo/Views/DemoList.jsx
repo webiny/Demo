@@ -3,6 +3,9 @@ import _ from 'lodash';
 /* eslint-disable */
 import Webiny from 'webiny';
 
+/**
+ * @i18n.namespace Demo.Backend.Demo.List
+ */
 class List extends Webiny.Ui.View {
 
     log({data, actions}) {
@@ -20,7 +23,7 @@ class List extends Webiny.Ui.View {
         } = this.props;
         return (
             <View.List>
-                <View.Header title="Demo List">
+                <View.Header title={this.i18n('Demo List')}>
                     <DownloadLink type="secondary" align="right" download={download => {
                         const submit = ({model: filters}) => download('GET', '/entities/demo/records/report/summary', filters);
                         return (
@@ -29,14 +32,14 @@ class List extends Webiny.Ui.View {
                                     <Form onSubmit={submit}>
                                         {({form}) => (
                                             <Modal.Content>
-                                                <Modal.Header title="Export summary"/>
+                                                <Modal.Header title={this.i18n('Export summary')}/>
                                                 <Modal.Body>
                                                     <Grid.Row>
                                                         <Grid.Col all={12}>
                                                             <Select
                                                                 name="enabled"
-                                                                label="Filter by status"
-                                                                placeholder="All records"
+                                                                label={this.i18n('Filter by status')}
+                                                                placeholder={this.i18n('All records')}
                                                                 allowClear
                                                                 tooltip="Filter me">
                                                                 <option value="true">Enabled</option>
@@ -46,8 +49,8 @@ class List extends Webiny.Ui.View {
                                                     </Grid.Row>
                                                 </Modal.Body>
                                                 <Modal.Footer>
-                                                    <Button type="default" label="Cancel" onClick={dialog.hide}/>
-                                                    <Button type="primary" label="Export" onClick={form.submit}/>
+                                                    <Button type="default" label={this.i18n('Cancel')} onClick={dialog.hide}/>
+                                                    <Button type="primary" label={this.i18n('Export')} onClick={form.submit}/>
                                                 </Modal.Footer>
                                             </Modal.Content>
                                         )}
@@ -68,13 +71,13 @@ class List extends Webiny.Ui.View {
                 <View.Body noPadding>
                     <Grid.Row>
                         <Grid.Col xs={12} style={{padding: 20}}>
-                            <ClickSuccess message="Simple!" onClose={() => console.log("Me closed!")}>
-                                <Button type="primary" label="ClickSuccess" align="right" onClick={_.noop}/>
+                            <ClickSuccess message={this.i18n('Simple!')} onClose={() => console.log("Me closed!")}>
+                                <Button type="primary" label={this.i18n('ClickSuccess')} align="right" onClick={_.noop}/>
                             </ClickSuccess>
-                            <ClickSuccess message="Hell yeah!">
+                            <ClickSuccess message={this.i18n('Hell yeah!')}>
                                 {({success}) => (
-                                    <ClickConfirm message="Do you really want to delete this user?" onComplete={success}>
-                                        <Button type="primary" label="ClickSuccess with ClickConfirm" align="right" onClick={() => {
+                                    <ClickConfirm message={this.i18n('Do you really want to delete this user?')} onComplete={success}>
+                                        <Button type="primary" label={this.i18n('ClickSuccess with ClickConfirm')} align="right" onClick={() => {
                                             return new Promise(r => {
                                                 setTimeout(r, 1500);
                                             });
@@ -82,33 +85,33 @@ class List extends Webiny.Ui.View {
                                     </ClickConfirm>
                                 )}
                             </ClickSuccess>
-                            <ClickConfirm message="Do you really want to delete this user?">
-                                <Button type="primary" label="ClickConfirm" align="right" onClick={() => {
+                            <ClickConfirm message={this.i18n('Do you really want to delete this user?')}>
+                                <Button type="primary" label={this.i18n('ClickConfirm')} align="right" onClick={() => {
                                     return new Promise(r => {
                                         setTimeout(r, 1500);
                                     });
                                 }}/>
                             </ClickConfirm>
                             <ClickConfirm
-                                message="Do you really want to delete this user?"
+                                message={this.i18n('Do you really want to delete this user?')}
                                 renderDialog={({onConfirm, onCancel, dialog}) => {
                                     return (
                                         <Modal.Dialog onCancel={onCancel}>
                                             <Modal.Content>
                                                 {dialog.renderLoader()}
-                                                <Modal.Header title="Custom title"/>
+                                                <Modal.Header title={this.i18n('Custom title')}/>
                                                 <Modal.Body>
                                                     <p>Some custom dialog body...</p>
                                                 </Modal.Body>
                                                 <Modal.Footer>
-                                                    <Button type="primary" label="Confirm" align="right" onClick={onConfirm}/>
-                                                    <Button type="secondary" label="Cancel" align="right" onClick={onCancel}/>
+                                                    <Button type="primary" label={this.i18n('Confirm')} align="right" onClick={onConfirm}/>
+                                                    <Button type="secondary" label={this.i18n('Cancel')} align="right" onClick={onCancel}/>
                                                 </Modal.Footer>
                                             </Modal.Content>
                                         </Modal.Dialog>
                                     );
                                 }}>
-                                <Button type="primary" label="ClickConfirm custom dialog" align="right" onClick={() => {
+                                <Button type="primary" label={this.i18n('ClickConfirm custom dialog')} align="right" onClick={() => {
                                     return new Promise(r => {
                                         setTimeout(r, 1500);
                                     });
@@ -122,7 +125,7 @@ class List extends Webiny.Ui.View {
                                             {({form}) => (
                                                 <Modal.Content>
                                                     {dialog.renderLoader()}
-                                                    <Modal.Header title="Select file to import"/>
+                                                    <Modal.Header title={this.i18n('Select file to import')}/>
                                                     <Modal.Body>
                                                         <Grid.Row>
                                                             <Grid.Col all={12}>
@@ -130,16 +133,16 @@ class List extends Webiny.Ui.View {
                                                                     accept={['text/csv']}
                                                                     name="records"
                                                                     readAs="binary"
-                                                                    label="Import from file"
-                                                                    placeholder="Select a CSV file to import"
+                                                                    label={this.i18n('Import from file')}
+                                                                    placeholder={this.i18n('Select a CSV file to import')}
                                                                     description="Any file up to 2.5MB will do"
                                                                     validate="required"/>
                                                             </Grid.Col>
                                                         </Grid.Row>
                                                     </Modal.Body>
                                                     <Modal.Footer>
-                                                        <Button label="Cancel" onClick={onCancel}/>
-                                                        <Button type="primary" label="Import" onClick={form.submit}/>
+                                                        <Button label={this.i18n('Cancel')} onClick={onCancel}/>
+                                                        <Button type="primary" label={this.i18n('Import')} onClick={form.submit}/>
                                                     </Modal.Footer>
                                                 </Modal.Content>
                                             )}
@@ -147,7 +150,7 @@ class List extends Webiny.Ui.View {
                                     </Modal.Dialog>
                                 );
                             }}>
-                                <Button type="primary" label="Import file" align="right" onClick={({model: data}) => {
+                                <Button type="primary" label={this.i18n('Import file')} align="right" onClick={({model: data}) => {
                                     return new Webiny.Api.Endpoint('/services/demo/import').post('import', data).then(res => {
                                         console.log(res.getData());
                                     })
@@ -157,7 +160,7 @@ class List extends Webiny.Ui.View {
                         </Grid.Col>
                     </Grid.Row>
                     <Tabs size="large">
-                        <Tabs.Tab label="List with table">
+                        <Tabs.Tab label={this.i18n('List with table')}>
                             <List
                                 connectToRouter={true}
                                 api="/entities/demo/records"
@@ -167,8 +170,8 @@ class List extends Webiny.Ui.View {
                                 <List.Table>
                                     <List.Table.Row>
                                         <List.Table.RowDetailsField/>
-                                        <List.Table.Field name="name" align="left" label="Name" sort="name" route="Demo.Form">
-                                            <List.Table.FieldInfo title="About name">
+                                        <List.Table.Field name="name" align="left" label={this.i18n('Name')} sort="name" route="Demo.Form">
+                                            <List.Table.FieldInfo title={this.i18n('About name')}>
                                                 <div className="table-responsive">
                                                     <table className="table table-simple">
                                                         <thead>
@@ -202,8 +205,8 @@ class List extends Webiny.Ui.View {
                                                 </div>
                                             </List.Table.FieldInfo>
                                         </List.Table.Field>
-                                        <List.Table.Field name="email" align="left" sort="email" label="Email">
-                                            <List.Table.FieldInfo title="About email">
+                                        <List.Table.Field name="email" align="left" sort="email" label={this.i18n('Email')}>
+                                            <List.Table.FieldInfo title={this.i18n('About email')}>
                                                 <p>
                                                     API Key is used if you wish to make API calls from other websites, or devices, to
                                                     retrieve
@@ -220,25 +223,25 @@ class List extends Webiny.Ui.View {
                                                 </p>
                                             </List.Table.FieldInfo>
                                         </List.Table.Field>
-                                        <List.Table.CaseField name="enabled" align="left" label="Status" sort="enabled">
+                                        <List.Table.CaseField name="enabled" align="left" label={this.i18n('Status')} sort="enabled">
                                             <case value={true}>Enabled</case>
                                             <case value={false}>Disabled</case>
                                         </List.Table.CaseField>
-                                        <List.Table.ToggleField name="enabled" align="center" label="Status"/>
-                                        <List.Table.Field name="createdOn" align="left" label="Created On" sort="createdOn"/>
-                                        <List.Table.DateTimeField name="createdOn" align="left" label="Created On" sort="createdOn"/>
-                                        <List.Table.TimeAgoField name="createdOn" align="left" label="Created On" sort="createdOn"/>
+                                        <List.Table.ToggleField name="enabled" align="center" label={this.i18n('Status')}/>
+                                        <List.Table.Field name="createdOn" align="left" label={this.i18n('Created On')} sort="createdOn"/>
+                                        <List.Table.DateTimeField name="createdOn" align="left" label={this.i18n('Created On')} sort="createdOn"/>
+                                        <List.Table.TimeAgoField name="createdOn" align="left" label={this.i18n('Created On')} sort="createdOn"/>
                                         <List.Table.Actions>
                                             <List.Table.EditAction route="Demo.Form"/>
-                                            <Dropdown.Header title="Reports"/>
-                                            <List.Table.Action label="Business Card" icon="icon-doc-text" download={(download, data) => {
+                                            <Dropdown.Header title={this.i18n('Reports')}/>
+                                            <List.Table.Action label={this.i18n('Business Card')} icon="icon-doc-text" download={(download, data) => {
                                                 download('GET', data.reports.businessCard);
                                             }}/>
-                                            <List.Table.Action label="Send to my email" icon="icon-doc-text" download={(download, data) => {
+                                            <List.Table.Action label={this.i18n('Send to my email')} icon="icon-doc-text" download={(download, data) => {
                                                 download('POST', data.reports.emailBusinessCard);
                                             }}/>
                                             <List.Table.Action
-                                                label="Export contacts"
+                                                label={this.i18n('Export contacts')}
                                                 icon="icon-external-link"
                                                 download={(download, record) => {
                                                     const submit = ({model}) => download('GET', record.reports.contacts, model);
@@ -252,8 +255,8 @@ class List extends Webiny.Ui.View {
                                                                             <Modal.Body>
                                                                                 <DateRange
                                                                                     name="range"
-                                                                                    label="Filter contacts by date"
-                                                                                    placeholder="Select a date range"
+                                                                                    label={this.i18n('Filter contacts by date')}
+                                                                                    placeholder={this.i18n('Select a date range')}
                                                                                     validate="required"/>
                                                                                 <Alert type="info">
                                                                                     NOTE: this won't filter anything in the report, it's
@@ -271,11 +274,11 @@ class List extends Webiny.Ui.View {
                                                                             <Modal.Footer>
                                                                                 <Button
                                                                                     type="default"
-                                                                                    label="Cancel"
+                                                                                    label={this.i18n('Cancel')}
                                                                                     onClick={dialog.hide}/>
                                                                                 <Button
                                                                                     type="primary"
-                                                                                    label="Export"
+                                                                                    label={this.i18n('Export')}
                                                                                     onClick={form.submit}/>
                                                                             </Modal.Footer>
                                                                         </Modal.Content>
@@ -296,9 +299,9 @@ class List extends Webiny.Ui.View {
                                                     <List.Loader/>
                                                     <List.Table>
                                                         <List.Table.Row>
-                                                            <List.Table.Field name="key" label="Key"/>
-                                                            <List.Table.Field name="value" label="Value"/>
-                                                            <List.Table.Field name="createdBy" label="User ID"/>
+                                                            <List.Table.Field name="key" label={this.i18n('Key')}/>
+                                                            <List.Table.Field name="value" label={this.i18n('Value')}/>
+                                                            <List.Table.Field name="createdBy" label={this.i18n('User ID')}/>
                                                         </List.Table.Row>
                                                     </List.Table>
                                                 </List>
@@ -308,24 +311,24 @@ class List extends Webiny.Ui.View {
                                 </List.Table>
                                 <List.Pagination/>
                                 <List.MultiActions>
-                                    <List.MultiAction label="Log" onAction={this.log}/>
-                                    <List.MultiAction label="Export ZIP" download={(download, data) => {
+                                    <List.MultiAction label={this.i18n('Log')} onAction={this.log}/>
+                                    <List.MultiAction label={this.i18n('Export ZIP')} download={(download, data) => {
                                         download('POST', '/entities/demo/records/report/business-cards', {ids: _.map(Array.from(data), 'id')})
                                     }}/>
                                     <Dropdown.Divider/>
                                     <List.DeleteMultiAction
                                         onConfirm={this.delete}
                                         message={({data}) => 'Delete ' + data.length + ' records?'}/>
-                                    <List.ModalMultiAction label="Modal">
+                                    <List.ModalMultiAction label={this.i18n('Modal')}>
                                         {({data, dialog}) => (
                                             <Modal.Dialog>
                                                 <Modal.Content>
-                                                    <Modal.Header title="Export summary"/>
+                                                    <Modal.Header title={this.i18n('Export summary')}/>
                                                     <Modal.Body>
                                                         {JSON.stringify(Array.from(data))}
                                                     </Modal.Body>
                                                     <Modal.Footer>
-                                                        <Button type="default" label="Cancel" onClick={dialog.hide}/>
+                                                        <Button type="default" label={this.i18n('Cancel')} onClick={dialog.hide}/>
                                                     </Modal.Footer>
                                                 </Modal.Content>
                                             </Modal.Dialog>
@@ -334,7 +337,7 @@ class List extends Webiny.Ui.View {
                                 </List.MultiActions>
                             </List>
                         </Tabs.Tab>
-                        <Tabs.Tab label="Custom list view">
+                        <Tabs.Tab label={this.i18n('Custom list view')}>
                             <List
                                 api="/entities/demo/records"
                                 perPage={3}
@@ -354,7 +357,7 @@ class List extends Webiny.Ui.View {
                                                     {({apply, reset}) => (
                                                         <Grid.Row>
                                                             <Grid.Col all={6}>
-                                                                <Select name="enabled" placeholder="All users" onChange={apply()}
+                                                                <Select name="enabled" placeholder={this.i18n('All users')} onChange={apply()}
                                                                         allowClear>
                                                                     <option value={true}>Enabled</option>
                                                                     <option value={false}>Disabled</option>
@@ -363,7 +366,7 @@ class List extends Webiny.Ui.View {
                                                             <Grid.Col all={6}>
                                                                 <Input
                                                                     name="_searchQuery"
-                                                                    placeholder="Search by name"
+                                                                    placeholder={this.i18n('Search by name')}
                                                                     onEnter={apply()}/>
                                                             </Grid.Col>
                                                         </Grid.Row>
@@ -375,7 +378,7 @@ class List extends Webiny.Ui.View {
                                                     return (
                                                         <pre key={row.id}>
                                                         <strong>{row.name}</strong> ({row.email})
-                                                        <ClickConfirm message="Delete this user?">
+                                                        <ClickConfirm message={this.i18n('Delete this user?')}>
                                                             <Link onClick={() => $this.recordDelete(row.id)}>
                                                                 <Icon icon="icon-cancel"/>
                                                             </Link>

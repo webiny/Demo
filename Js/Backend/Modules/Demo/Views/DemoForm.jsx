@@ -2,6 +2,9 @@ import React from 'react';
 /* eslint-disable */
 import Webiny from 'webiny';
 
+/**
+ * @i18n.namespace Demo.Backend.Demo.Form
+ */
 class Form extends Webiny.Ui.View {
     constructor(props) {
         super(props);
@@ -45,7 +48,7 @@ class Form extends Webiny.Ui.View {
             onCancel: 'Demo.List',
             onProgress({event}) {
                 const cmp = <div>Uploading form data...{event.progress}%</div>;
-                Webiny.Growl(<Growl.Warning id={this.growlId} title="Custom progress" sticky={true}>{cmp}</Growl.Warning>);
+                Webiny.Growl(<Growl.Warning id={this.growlId} title={this.i18n('Custom progress')} sticky={true}>{cmp}</Growl.Warning>);
             }
         };
 
@@ -104,18 +107,18 @@ class Form extends Webiny.Ui.View {
                         return (
                             <Grid.Row>
                                 <Grid.Col all={3}>
-                                    <Input placeholder="Key" name="key" validate="required"/>
+                                    <Input placeholder={this.i18n('Key')} name="key" validate="required"/>
                                 </Grid.Col>
                                 <Grid.Col all={3}>
-                                    <Input placeholder="Value" name="value" validate="required"/>
+                                    <Input placeholder={this.i18n('Value')} name="value" validate="required"/>
                                 </Grid.Col>
                                 <Grid.Col all={3}>
                                     <Select {...createdBySelect} label={null}/>
                                 </Grid.Col>
                                 <Grid.Col all={3}>
                                     <ButtonGroup>
-                                        <Button type="primary" label="Add" onClick={actions.add(data)}/>
-                                        <Button type="secondary" label="x" onClick={actions.remove(data)}/>
+                                        <Button type="primary" label={this.i18n('Add')} onClick={actions.add(data)}/>
+                                        <Button type="secondary" label={this.i18n('x')} onClick={actions.remove(data)}/>
                                     </ButtonGroup>
                                 </Grid.Col>
                             </Grid.Row>
@@ -127,7 +130,7 @@ class Form extends Webiny.Ui.View {
                         <Grid.Row>
                             <Grid.Col all={12}>
                                 <h5>You have not created any settings yet. Click "Add settings" to start creating your settings!</h5>
-                                <Button type="primary" label="Add settings" onClick={actions.add()}/>
+                                <Button type="primary" label={this.i18n('Add settings')} onClick={actions.add()}/>
                             </Grid.Col>
                         </Grid.Row>
                     )}
@@ -139,31 +142,31 @@ class Form extends Webiny.Ui.View {
             <Form {...formProps}>
                 {({form}) => (
                     <View.Form>
-                        <View.Header title="Demo Form" description="Demo form to demonstrate most of the input components Webiny offers">
+                        <View.Header title={this.i18n('Demo Form')} description="Demo form to demonstrate most of the input components Webiny offers">
                             <Link type="default" align="right" route="Demo.List">Back to list</Link>
                             <Copy.Button
-                                onSuccessMessage="Stolen!"
+                                onSuccessmessage={this.i18n('Stolen!')}
                                 type="secondary"
                                 icon="icon-pencil"
                                 value="You just stole a record!"
-                                label="Steal it..."
+                                label={this.i18n('Steal it...')}
                                 align="right"/>
                         </View.Header>
                         <View.Body noPadding>
                             <Tabs size="large">
-                                <Tabs.Tab label="Input components" icon="icon-gauge">
+                                <Tabs.Tab label={this.i18n('Input components')} icon="icon-gauge">
                                     <Grid.Row>
                                         <Grid.Col all={3}>
-                                            <Input label="Name" name="name" validate="required,minLength:3"/>
+                                            <Input label={this.i18n('Name')} name="name" validate="required,minLength:3"/>
                                         </Grid.Col>
                                         <Grid.Col all={3}>
-                                            <Email label="Email" name="email" validate="required" tooltip="Your email address"/>
+                                            <Email label={this.i18n('Email')} name="email" validate="required" tooltip="Your email address"/>
                                         </Grid.Col>
                                         <Grid.Col all={6}>
                                             <Search
                                                 name="avatar"
                                                 textAttr="name"
-                                                label="Find file"
+                                                label={this.i18n('Find file')}
                                                 api="/entities/webiny/files"
                                                 fields="name,id,createdOn,ref"
                                                 searchFields="name"
@@ -176,16 +179,16 @@ class Form extends Webiny.Ui.View {
                                     </Grid.Row>
                                     <Grid.Row>
                                         <Grid.Col all={3}>
-                                            <DateTime label="Date & Time" name="datetime" placeholder="Select date and time"/>
+                                            <DateTime label={this.i18n('Date & Time')} name="datetime" placeholder={this.i18n('Select date and time')}/>
                                         </Grid.Col>
                                         <Grid.Col all={3}>
-                                            <Date label="Date" name="date" placeholder="Select a date" validate="required"/>
+                                            <Date label={this.i18n('Date')} name="date" placeholder={this.i18n('Select a date')} validate="required"/>
                                         </Grid.Col>
                                         <Grid.Col all={3}>
-                                            <Time label="Time" name="time" placeholder="Select time"/>
+                                            <Time label={this.i18n('Time')} name="time" placeholder={this.i18n('Select time')}/>
                                         </Grid.Col>
                                         <Grid.Col all={3}>
-                                            <DateRange label="Date range" name="daterange" placeholder="Select a date range"/>
+                                            <DateRange label={this.i18n('Date range')} name="daterange" placeholder={this.i18n('Select a date range')}/>
                                         </Grid.Col>
                                     </Grid.Row>
                                     <Grid.Row>
@@ -193,7 +196,7 @@ class Form extends Webiny.Ui.View {
                                             <Select {...userRoleSelect} />
                                         </Grid.Col>
                                         <Grid.Col all={4}>
-                                            <Select name="staticSelect" label="Static select" placeholder="Select an option">
+                                            <Select name="staticSelect" label={this.i18n('Static select')} placeholder={this.i18n('Select an option')}>
                                                 <option value="yes">Yes</option>
                                                 <option value="no">
                                                     <webiny-no>No</webiny-no>
@@ -202,30 +205,30 @@ class Form extends Webiny.Ui.View {
                                             </Select>
                                         </Grid.Col>
                                         <Grid.Col all={4}>
-                                            <IconPicker name="icon" label="Your icon"
-                                                        allowClear={true} placeholder="Select your icon"/>
+                                            <IconPicker name="icon" label={this.i18n('Your icon')}
+                                                        allowClear={true} placeholder={this.i18n('Select your icon')}/>
                                         </Grid.Col>
                                     </Grid.Row>
                                     <Grid.Row>
                                         <Grid.Col all={6}>
-                                            <Switch label="Enabled" name="enabled"/>
+                                            <Switch label={this.i18n('Enabled')} name="enabled"/>
                                         </Grid.Col>
                                         <Grid.Col all={6}>
-                                            <Password label="Password" name="password"/>
+                                            <Password label={this.i18n('Password')} name="password"/>
                                         </Grid.Col>
                                     </Grid.Row>
                                     <Grid.Row>
                                         <Grid.Col all={12}>
-                                            <Copy.Input label="Cron setup"
+                                            <Copy.Input label={this.i18n('Cron setup')}
                                                         value="* * * * * wget http://selecto.app:8001/api/services/cron-manager/runner/run >/dev/null 2>&1"/>
                                         </Grid.Col>
                                         <Grid.Col all={12}>
-                                            <Tags name="tags" placeholder="Add tag" label="Tags"/>
+                                            <Tags name="tags" placeholder={this.i18n('Add tag')} label={this.i18n('Tags')}/>
                                         </Grid.Col>
                                     </Grid.Row>
                                     <Grid.Row>
                                         <Grid.Col all={12}>
-                                            <Textarea label="Description" name="description" tooltip="Put any tooltip text here..."/>
+                                            <Textarea label={this.i18n('Description')} name="description" tooltip="Put any tooltip text here..."/>
                                         </Grid.Col>
                                     </Grid.Row>
                                     <Grid.Row>
@@ -235,11 +238,11 @@ class Form extends Webiny.Ui.View {
                                         </Grid.Col>
                                     </Grid.Row>
                                 </Tabs.Tab>
-                                <Tabs.Tab label="Checkboxes" icon="icon-columns">
+                                <Tabs.Tab label={this.i18n('Checkboxes')} icon="icon-columns">
                                     <Grid.Row>
                                         {/* CHECKBOXES */}
                                         <Grid.Col all={6}>
-                                            <Section title="Static checkboxes (hard-coded options)"/>
+                                            <Section title={this.i18n('Static checkboxes (hard-coded options)')}/>
                                             <CheckboxGroup name="roles" validate="minLength:2">
                                                 <option value="Admin">Admin&nbsp;management</option>
                                                 <option value="Coupon">Coupon&nbsp;management</option>
@@ -253,11 +256,11 @@ class Form extends Webiny.Ui.View {
                                             </CheckboxGroup>
 
                                             <div className="clearfix"/>
-                                            <Section title="Single checkbox"/>
-                                            <Checkbox label="Single checkbox" name="singleCheckbox" tooltip="Set immediately"/>
+                                            <Section title={this.i18n('Single checkbox')}/>
+                                            <Checkbox label={this.i18n('Single checkbox')} name="singleCheckbox" tooltip="Set immediately"/>
 
                                             <div className="clearfix"/>
-                                            <Section title="Custom checkbox markup (using 'checkboxRenderer' prop)"/>
+                                            <Section title={this.i18n('Custom checkbox markup using "checkboxRenderer" prop')}/>
                                             <CheckboxGroup name="roles" checkboxRenderer={function renderCheckbox() {
                                                 return (
                                                     <li className="list-item col-xs-offset-1">
@@ -278,16 +281,16 @@ class Form extends Webiny.Ui.View {
                                             </CheckboxGroup>
                                         </Grid.Col>
                                         <Grid.Col all={6}>
-                                            <Section title="Dynamic checkboxes for manual aggregation"/>
+                                            <Section title={this.i18n('Dynamic checkboxes for manual aggregation')}/>
                                             <CheckboxGroup {...recordUsers}/>
                                         </Grid.Col>
                                     </Grid.Row>
                                 </Tabs.Tab>
-                                <Tabs.Tab label="Radio buttons" icon="icon-columns">
+                                <Tabs.Tab label={this.i18n('Radio buttons')} icon="icon-columns">
                                     <Grid.Row>
                                         {/* RADIO */}
                                         <Grid.Col all={6}>
-                                            <RadioGroup label="Roles (static)" name="access">
+                                            <RadioGroup label={this.i18n('Roles (static)')} name="access">
                                                 <option value="Admin">Admin</option>
                                                 <option value="Billing">Billing</option>
                                                 <option value="Crm">CRM</option>
@@ -296,7 +299,7 @@ class Form extends Webiny.Ui.View {
                                         </Grid.Col>
                                         <Grid.Col all={6}>
                                             <RadioGroup
-                                                label="User (API)"
+                                                label={this.i18n('User (API)')}
                                                 name="assignedTo"
                                                 api="/entities/webiny/users"
                                                 textAttr="email"
@@ -307,15 +310,15 @@ class Form extends Webiny.Ui.View {
                                         </Grid.Col>
                                     </Grid.Row>
                                 </Tabs.Tab>
-                                <Tabs.Tab label="Upload components" icon="icon-picture-1">
+                                <Tabs.Tab label={this.i18n('Upload components')} icon="icon-picture-1">
                                     <Grid.Row>
                                         <Grid.Col all={6}>
                                             <Avatar name="avatar"/>
                                             <br/>
                                             <File
                                                 name="avatar"
-                                                label="Avatar image"
-                                                placeholder="Select a file"
+                                                label={this.i18n('Avatar image')}
+                                                placeholder={this.i18n('Select a file')}
                                                 description="Any file up to 2.5MB will do"
                                                 validate="required"/>
                                         </Grid.Col>
@@ -343,26 +346,26 @@ class Form extends Webiny.Ui.View {
                                     </Grid.Row>
 
                                 </Tabs.Tab>
-                                <Tabs.Tab label="WYSIWYG" icon="fa-font">
+                                <Tabs.Tab label={this.i18n('WYSIWYG')} icon="fa-font">
                                     <HtmlEditor name="html"/>
                                     <MarkdownEditor name="markdown"/>
                                 </Tabs.Tab>
-                                <Tabs.Tab label="Draft Editor" icon="fa-font">
+                                <Tabs.Tab label={this.i18n('Draft Editor')} icon="fa-font">
                                     <Button
                                         label={this.state.preview ? 'Edit' : 'Preview'}
                                         onClick={() => this.setState({preview: !this.state.preview})}/>
                                     <hr/>
                                     <Draft.Editor
                                         name="draft"
-                                        placeholder="Tell a story..."
+                                        placeholder={this.i18n('Tell a story...')}
                                         plugins={this.plugins}
                                         preview={this.state.preview}/>
                                 </Tabs.Tab>
                             </Tabs>
                         </View.Body>
                         <View.Footer>
-                            <Button type="default" onClick={form.cancel} label="Cancel"/>
-                            <Button type="primary" onClick={form.submit} label="Submit" align="right"/>
+                            <Button type="default" onClick={form.cancel} label={this.i18n('Cancel')}/>
+                            <Button type="primary" onClick={form.submit} label={this.i18n('Submit')} align="right"/>
                         </View.Footer>
                     </View.Form>
                 )}
