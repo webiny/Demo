@@ -26,6 +26,7 @@ use Webiny\Component\Mongo\Index\CompoundIndex;
 class Record extends AbstractEntity
 {
     protected static $classId = 'Demo.Entities.Record';
+    protected static $i18nNamespace = 'Demo.Entities.Record';
     protected static $collection = 'DemoRecords';
 
     public function __construct()
