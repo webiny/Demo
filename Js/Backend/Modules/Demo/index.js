@@ -2,13 +2,16 @@ import React from 'react';
 import Webiny from 'webiny';
 import Views from './Views/Views';
 
+/**
+ * @i18n.namespace Demo.Backend.Demo
+ */
 class Demo extends Webiny.App.Module {
 
     init() {
         this.name = 'Demo';
 
         this.registerMenus(
-            <Webiny.Ui.Menu label="Demo" route="Demo.List" icon="icon-website"/>
+            <Webiny.Ui.Menu label={Webiny.I18n('Demo')} route="Demo.List" icon="icon-website"/>
         );
 
         this.registerRoutes(
