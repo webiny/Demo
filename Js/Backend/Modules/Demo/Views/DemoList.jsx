@@ -24,7 +24,7 @@ class List extends Webiny.Ui.View {
         return (
             <View.List>
                 <View.Header title={this.i18n('Demo List')}>
-                    <DownloadLink type="secondary" align="right" download={download => {
+                    <DownloadLink type="secondary" align="right" download={({download}) => {
                         const submit = ({model: filters}) => download('GET', '/entities/demo/records/report/summary', filters);
                         return (
                             <Modal.Dialog>
@@ -238,17 +238,17 @@ class List extends Webiny.Ui.View {
                                             <List.Table.EditAction route="Demo.Form"/>
                                             <Dropdown.Header title={this.i18n('Reports')}/>
                                             <List.Table.Action label={this.i18n('Business Card')} icon="icon-doc-text"
-                                                               download={(download, data) => {
+                                                               download={({download, data}) => {
                                                                    download('GET', data.reports.businessCard);
                                                                }}/>
                                             <List.Table.Action label={this.i18n('Send to my email')} icon="icon-doc-text"
-                                                               download={(download, data) => {
+                                                               download={({download, data}) => {
                                                                    download('POST', data.reports.emailBusinessCard);
                                                                }}/>
                                             <List.Table.Action
                                                 label={this.i18n('Export contacts')}
                                                 icon="icon-external-link"
-                                                download={(download, record) => {
+                                                download={({download, record}) => {
                                                     const submit = ({model}) => download('GET', record.reports.contacts, model);
                                                     return (
                                                         <Modal.Dialog>
@@ -318,7 +318,7 @@ class List extends Webiny.Ui.View {
                                 <List.Pagination/>
                                 <List.MultiActions>
                                     <List.MultiAction label={this.i18n('Log')} onAction={this.log}/>
-                                    <List.MultiAction label={this.i18n('Export ZIP')} download={(download, data) => {
+                                    <List.MultiAction label={this.i18n('Export ZIP')} download={({download, data}) => {
                                         download('POST', '/entities/demo/records/report/business-cards', {ids: _.map(Array.from(data), 'id')})
                                     }}/>
                                     <Dropdown.Divider/>
